@@ -119,64 +119,6 @@ vim.opt.completeopt:remove('preview')
 
 vim.cmd.colorscheme('everforest')
 
--- vim global options
--- vim.cmd [[
--- 	let g:airline_mode_map = {
--- 		\ '__'     : '-',
--- 		\ 'c'      : 'C',
--- 		\ 'i'      : 'I',
--- 		\ 'ic'     : 'Ic',
--- 		\ 'ix'     : 'Ix',
--- 		\ 'n'      : 'N',
--- 		\ 'multi'  : 'M',
--- 		\ 'ni'     : 'Ni',
--- 		\ 'no'     : 'No',
--- 		\ 'R'      : 'R',
--- 		\ 'Rv'     : 'Rv',
--- 		\ 's'      : 's',
--- 		\ 'S'      : 'S',
--- 		\ ''     : 'cS',
--- 		\ 't'      : 'T',
--- 		\ 'v'      : 'v',
--- 		\ 'V'      : 'V',
--- 		\ ''     : 'Vb',
--- 	\ }
--- 	let g:airline_section_c = '%t'
--- 	let g:airline_section_x = ''
--- 	let g:airline_section_y = ''
--- 	let g:airline#extensions#tabline#buffer_nr_show = 1
--- 	let g:airline#extensions#tabline#formatter = 'unique_tail'
--- 	let g:incsearch#auto_nohlsearch = 1 
--- 	let g:airline_theme='bubblegum'
--- 	let g:airline#extensions#tabline#enabled = 1
--- 	let g:airline#extensions#tabline#show_buffers = 1
--- 	let g:airline#extensions#tabline#buffer_min_count = 2
--- 	let g:airline_skip_empty_sections = 1
--- 	let g:airline_powerline_fonts = 1
--- 	let g:airline_symbols.colnr = 'C:'
--- 	let g:airline#extensions#whitespace#enabled = 0
--- ]]
-
--- let g:airline_symbols = {}
--- let g:airline#extensions#branch#format = 'ModifyBranchName'
--- 	function! ModifyBranchName(name)
--- 		let parts = split(a:name, "-")
--- 		if len(parts) >= 2
--- 			return join(parts[0:1], "-")
--- 		endif
--- 		" for part in parts
--- 			" if part =~ '.*[0-9]\+'
--- 				" return part
--- 			" endif
--- 		" endfor
--- 		let length = strlen(a:name)
--- 		if length <= 12
--- 			return a:name
--- 		endif
--- 		return a:name[:12]
--- 	endfunction
--- autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
-
 -- autocmds
 -- reload config on save
 vim.api.nvim_create_autocmd('BufWritePost', {
@@ -213,6 +155,8 @@ vim.keymap.set('i', '<c-k>', '<c-o>A', {desc = 'End of line i'})
 vim.keymap.set('i', '<c-d>', '<left>', {desc = 'Input mode cursor left'})
 vim.keymap.set('i', '<c-f>', '<right>', {desc = 'Input mode cursor right'})
 vim.keymap.set('i', '<c-e>', '<BS>', {desc = 'Input mode delete'})
+
+vim.keymap.set('n', 'f', '/', {desc = 'f for search'})
 
 -- NvimTree keymaps
 vim.keymap.set('n', '<leader>t', '<cmd>NvimTreeToggle<cr>', {desc = 'Toggle NvimTree'})

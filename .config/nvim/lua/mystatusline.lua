@@ -137,7 +137,7 @@ local function updateGitFilesChanged()
       if changesPart[2]:sub(-2, -2) == "+" then
         lineAdditions = changesPart[2]:sub(2, 2)
       end
-      if changespart[2]:sub(-2, -2) == "-" then
+      if changesPart[2]:sub(-2, -2) == "-" then
         lineDeletions = changesPart[2]:sub(2, 2)
       end
     end
