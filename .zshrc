@@ -10,6 +10,7 @@ alias zsh='nvim ~/.zshrc'
 alias gds='git diff --shortstat'
 alias rs='fg'
 alias runall='/Users/xinjun.lin/Documents/VTS/repos/personalNotes/bpRunScript'
+alias nviml='nvim -u ~/.dotfiles/home/.config/nvim/init-wip.lua'
 
 source ~/.zsh_env_vars
 

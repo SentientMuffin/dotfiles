@@ -126,19 +126,20 @@ local function updateGitFilesChanged()
   local lineDeletions = 0
 
   if #changesPart > 0 then
-    filesCount = changesPart[1]:sub(2, 2)
+		filesCount = splitString(changesPart[1], " ")[1]
 
     if #changesPart == 3 then
-      lineAdditions = changesPart[2]:sub(2, 2)
-      lineDeletions = changesPart[3]:sub(2, 2)
+			lineAdditions = splitString(changesPart[2], " ")[1]
+			lineDeletions = splitString(changesPart[3], " ")[1]
     end
 
     if #changesPart == 2 then
       if changesPart[2]:sub(-2, -2) == "+" then
-        lineAdditions = changesPart[2]:sub(2, 2)
+        lineAdditions = splitString(changesPart[2], " ")[1]
       end
       if changesPart[2]:sub(-2, -2) == "-" then
         lineDeletions = changesPart[2]:sub(2, 2)
+        lineDeletions = splitString(changesPart[2], " ")[1]
       end
     end
 

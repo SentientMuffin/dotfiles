@@ -45,11 +45,12 @@ require("lazy").setup({
 	"vim-test/vim-test",
 	"nvim-lua/plenary.nvim",
 	"nvim-pack/nvim-spectre",
-  "nvim-tree/nvim-tree.lua",
+	"nvim-tree/nvim-tree.lua",
 	"nvim-tree/nvim-web-devicons",
 	{"lukas-reineke/indent-blankline.nvim", main = "ibl"},
 	{"nvim-treesitter/nvim-treesitter", build = "TSUpdate"},
 	{"autozimu/LanguageClient-neovim", branch = "next", build = "bash install.sh"},
+	{'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
 	-- disabled
 	{"yegappan/mru", enabled = false},
 	{"vim-airline/vim-airline", enabled = false},
@@ -89,15 +90,15 @@ require("nvim-tree").setup({
   on_attach = my_on_attach,
 })
 
+require("bufferline").setup{}
+
+-- doesn't work :'(
+-- require("mytabline")
 require("mystatusline")
 --
 
--- Auto commands
--- autocmd BufEnter * silent! lcd %:p:h
--- " open all folds
--- autocmd BufReadPost,FileReadPost * normal zR
--- " disable foldexpr in vimrc
--- autocmd BufEnter * if @% == '.vimrc' | set foldexpr=0 | else | set foldexpr=nvim_treesitter#foldexpr() | endif
+-- global vars for plugins
+vim.g.pear_tree_repeatable_expand = 0
 
 -- vim options
 vim.opt.number = true
@@ -114,6 +115,7 @@ vim.opt.expandtab = false
 vim.opt.guioptions = ''
 vim.opt.shell = 'zsh'
 vim.opt.mps:append('<:>')
+vim.opt.clipboard:append('unnamedplus')
 vim.opt.guicursor:append('a:blinkwait10-blinkon450-blinkoff40')
 vim.opt.completeopt:remove('preview')
 
@@ -122,12 +124,13 @@ vim.cmd.colorscheme('everforest')
 -- autocmds
 -- reload config on save
 vim.api.nvim_create_autocmd('BufWritePost', {
-  pattern = "**/.config/nvim/**/*.lua",
+	-- resourcing is not supported with lazy.nvim :(
+  pattern = {"**/.config/nvim/**/*.lua", "**/.config/nvim/**/*.vim"},
   callback = function()
     local filepath = vim.fn.expand("%")
 
     dofile(filepath)
-    vim.notify("Configuration reloaded \n" ..      filepath, nil)
+    -- vim.notify("Configuration reloaded \n" ..      filepath, nil)
   end,
   group = mygroup,
   desc = "Reload config on save",
@@ -135,7 +138,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 
 -- keymaps
 vim.keymap.set({
-  '', 'i', 'c',
+  '', 'i', 'c', 't',
 }, '<c-space>', '<esc>', {desc = 'Escape'})
 
 vim.keymap.set('n', '<leader>st', ToggleSectionB, {desc = 'Status Toggle'})
@@ -145,7 +148,6 @@ vim.keymap.set('i', '<c-s>', '<esc><cmd>write<cr>', {desc = 'Save'})
 vim.keymap.set('', '<c-s>', '<cmd>write<cr>', {desc = 'Save'})
 
 vim.keymap.set('n', '\'', ':call append(line(\'.\')-1, \'\')<cr>', {desc = 'Insert empty line above'}) 
-
 vim.keymap.set('', '<c-j>', '_', {desc = 'Start of line'})
 vim.keymap.set('i', '<c-j>', '<c-o>I', {desc = 'Start of line i'})
 
@@ -158,9 +160,26 @@ vim.keymap.set('i', '<c-e>', '<BS>', {desc = 'Input mode delete'})
 
 vim.keymap.set('n', 'f', '/', {desc = 'f for search'})
 
+vim.keymap.set('', '#', '_', {desc = 'beginning of line'})
+vim.keymap.set('', '$', 'g_', {desc = 'end of line'})
+
+vim.keymap.set('n', '<c-q>', '?\\<<cr>', {desc = 'previous word'})
+vim.keymap.set('n', '<c-p>', '/\\<<cr>', {desc = 'next word'})
+
+vim.keymap.set({'n', 'v'}, 't', '%', {desc = 'mps match'})
+
+-- buffer actions
+vim.keymap.set('n', '<leader>q', '<cmd>bp | bd #<cr>', {desc = 'delete current buffer'})
+vim.keymap.set('n', '<leader>aa', '<cmd>ls<cr>:b<space>', {desc = 'list and fuzzy search open buffers'})
+vim.keymap.set('n', '<leader>as', '<cmd>ls<cr>:sb<space>', {desc = 'list and fuzzy search buffers, open in split'})
+vim.keymap.set('n', '<leader>av', '<cmd>ls<cr>:vert sb<space>', {desc = 'list and fuzzy search bufers, open in vertical split'})
+vim.keymap.set('n', '<c-h>', '<cmd>bp<cr>', {desc = 'previous buffer'})
+vim.keymap.set('n', '<c-l>', '<cmd>bn<cr>', {desc = 'next buffer'})
+
 -- NvimTree keymaps
 vim.keymap.set('n', '<leader>t', '<cmd>NvimTreeToggle<cr>', {desc = 'Toggle NvimTree'})
 vim.keymap.set('n', '<leader>f', '<cmd>NvimTreeFindFileToggle<cr>', {desc = 'Refresh NvimTree'})
 
 -- Fugitive keymaps
 vim.keymap.set('n', '<c-g>', '<cmd>Git<cr>', {desc = 'Git'})
+vim.keymap.set('n', '<c-f>', '<cmd>GFiles<cr>', {desc = 'Git files'})
