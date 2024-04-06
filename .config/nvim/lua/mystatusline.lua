@@ -195,20 +195,14 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 
 -- ===================== Section C: File Info =====================
 
-local function filepath()
-  local fpath = vim.fn.fnamemodify(vim.fn.expand "%", ":~:.:h")
-  if fpath == "" or fpath == "." then
-      return " "
-  end
-
-  return string.format(" %%<%s/", fpath)
-end
-
 local function filename()
-  local fname = vim.fn.expand "%:t"
+	-- dont vim.fn.expand here, will set same name to all bufers
+	-- %F for full file path
+  local fname = "%t"
   if fname == "" then
       return ""
   end
+	-- fname = "%F"
   return fname .. " "
 end
 
@@ -246,6 +240,28 @@ local function lsp()
   return errors .. warnings .. hints .. info .. "%#Normal#"
 end
 
+-- better than nothing
+_G.lsp_progress = function()
+	if #vim.lsp.buf_get_clients() == 0 then
+		return ""
+	end
+
+	local lsp = vim.lsp.util.get_progress_messages()[1]
+	if lsp then
+		local name = lsp.name or ""
+		local msg = lsp.message or ""
+		local percentage = lsp.percentage or 0
+		local title = lsp.title or ""
+		if percentage == 0 then
+			return string.format(" | %%<%s: %s %s ", name, title, msg)
+		end
+		return string.format(" %%<%s: %s %s (%s%%%%) ", name, title, msg, percentage)
+	end
+	return ""
+end
+
+-- vim.opt.statusline = [[%{%v:lua.lsp_progress()%}]]
+
 local function filetype()
   return string.format(" %s ", vim.bo.filetype):upper()
 end
@@ -271,6 +287,7 @@ Statusline.active = function()
     filename(),
     "%#Normal#",
     lsp(),
+		[[%{%v:lua.lsp_progress()%}]],
     "%=%#StatusLineExtra#",
     --filetype(),
     fileInfo(),
