@@ -53,6 +53,7 @@ require("lazy").setup({
 	{"nvim-treesitter/nvim-treesitter", build = "TSUpdate"},
  	{"autozimu/LanguageClient-neovim", branch = "next", build = "bash install.sh"},
 	{'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
+	'kevinhwang91/nvim-bqf',
 	-- disabled
 	{"yegappan/mru", enabled = false},
 	{"vim-airline/vim-airline", enabled = false},
@@ -64,7 +65,6 @@ require("pluginSetup")
 require("vimSetup")
 require("lsps")
 Commentator = require("commentator")
-Qix = require("qix")
 require('keymaps')
 
 -- autocmds
@@ -75,9 +75,10 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 	pattern = "*.lua",
   callback = function()
     local filepath = vim.fn.expand("%")
-
     dofile(filepath)
-    vim.notify("Configuration reloaded \n" ..      filepath, nil)
+
+		-- write via <c-s> is silent!
+    -- vim.notify("[" .. filepath .. "]: Configuration reloaded", nil)
   end,
   -- group = mygroup,
   desc = "Reload config on save",

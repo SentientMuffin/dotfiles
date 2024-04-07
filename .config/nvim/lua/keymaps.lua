@@ -1,12 +1,10 @@
 local Commentator = require('commentator')
--- local Qix = require('qix')
 
 -- keymaps
-vim.keymap.set({
-  '', 'c', 't',
-}, '<c-space>', '<esc>', {desc = 'Escape'})
+vim.keymap.set({'', 't'}, '<c-space>', '<esc>', {desc = 'Escape'})
+vim.keymap.set('c', '<c-space>', '<c-c>', {desc = 'Ctrl-c to escape in command mode'})
 vim.keymap.set('i', '<c-space>', '<esc>l', {desc = 'Escape and move cursor right'})
--- vim.keymap.set('n', '<leader>st', ToggleSectionB, {desc = 'Status Toggle'})
+vim.keymap.set('n', '<leader>st', ToggleSectionB, {desc = 'Status Toggle'})
 vim.keymap.set('i', '<c-s>', '<esc><cmd>silent! write<cr>l', {desc = 'Save'})
 vim.keymap.set('', '<c-s>', '<cmd>silent! write<cr>', {desc = 'Save'})
 -- /\%9 searches line 9, <c-r>= executes the following vim expression and <cr> to take the output into the original expression
@@ -86,8 +84,8 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
 	callback = function()
 		local filetype = vim.bo[0].buftype
 		if filetype == 'quickfix' then
-			vim.keymap.set('n', '<cr>', '<c-M>')
-			vim.keymap.set('n', 'o', '<cr>zz<c-w><c-w>')
+			-- vim.keymap.set('n', '<cr>', '<c-M>')
+			-- vim.keymap.set('n', 'o', '<cr>zz<c-w><c-w>')
 			vim.keymap.set('n', '<leader>v', '<cmd>ccl<cr>', {desc = 'Close quickfix list'})
 		end
 	end,
@@ -97,8 +95,8 @@ vim.api.nvim_create_autocmd('BufLeave', {
 	callback = function()
 		local filetype = vim.bo[0].buftype
 		if filetype == 'quickfix' then
-			vim.keymap.set('n', '<cr>', '<cr>')
-			vim.keymap.set('n', 'o', 'o')
+			-- vim.keymap.set('n', '<cr>', '<cr>')
+			-- vim.keymap.set('n', 'o', 'o')
 			vim.keymap.set('n', '<leader>v', '<cmd>copen<cr>', {desc = 'Open quickfix list'})
 		end
 	end,

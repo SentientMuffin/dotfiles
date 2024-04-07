@@ -366,6 +366,13 @@ require('nvim-treesitter.configs').setup{
 	},
 }
 
+require('bqf').setup {
+	func_map = {
+		-- doesn't work, <c-f> is already mapped
+		-- fzffilter = '<c-f>',
+	},
+}
+
 -- doesn't work :'(
 -- require("mytabline")
 require("mystatusline")

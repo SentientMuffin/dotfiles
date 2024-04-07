@@ -96,6 +96,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
 			buffer = args.buf,
 			desc = 'Find definition of symbol under cursor',
 		})
+		vim.keymap.set('n', '<leader>i', lsp.buf.code_action, {
+			buffer = args.buf,
+			desc = 'Code action',
+		})
 		-- vim.notify('LSP attached!')
   end,
 })
