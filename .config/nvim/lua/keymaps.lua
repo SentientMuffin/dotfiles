@@ -1,4 +1,5 @@
-local commentator = require('commentator')
+local Commentator = require('commentator')
+-- local Qix = require('qix')
 
 -- keymaps
 vim.keymap.set({
@@ -8,19 +9,22 @@ vim.keymap.set('i', '<c-space>', '<esc>l', {desc = 'Escape and move cursor right
 -- vim.keymap.set('n', '<leader>st', ToggleSectionB, {desc = 'Status Toggle'})
 vim.keymap.set('i', '<c-s>', '<esc><cmd>silent! write<cr>l', {desc = 'Save'})
 vim.keymap.set('', '<c-s>', '<cmd>silent! write<cr>', {desc = 'Save'})
-vim.keymap.set('n', 'f', '/', {desc = 'f for search'})
+-- /\%9 searches line 9, <c-r>= executes the following vim expression and <cr> to take the output into the original expression
+-- line('.') returns the current line # of the cursor, and l allows for search
+vim.keymap.set('n', 'f', '/\\%<c-r>=line(\'.\')<cr>l', {desc = 'Search within the current line'})
+vim.keymap.set('n', 'F', '/', {desc = 'Search the current buffer'})
 vim.keymap.set('c', '<c-a>', '/g', {desc = 'replace all in command mode s&r'})
 vim.keymap.set('n', '<leader>c', '.', {desc = 'redo'})
-vim.keymap.set('n', 'm', 'q', {desc = 'record macro'})
+vim.keymap.set('n', 'M', 'q', {desc = 'record macro'})
 vim.keymap.set('n', '<c-2>', '@', {desc = 'access recording register'})
 
 -- text editting
-vim.keymap.set('n', '\'', ':call append(line(\'.\')-1, \'\')<cr>', {desc = 'Insert empty line above'}) 
+vim.keymap.set('n', '\'', ':call append(line(\'.\')-1, \'\')<cr>', {desc = 'Insert empty line above'})
 vim.keymap.set('n', 'K', 'i<cr><esc>k$', {desc = 'split line from cursor'})
-vim.keymap.set('n', '<leader>e', commentator.CommentLine, {desc = 'Comment current or highlighted lines'})
-vim.keymap.set('n', '<leader>r', commentator.UncommentLine, {desc = 'Uncomment current or highlighted lines'})
-vim.keymap.set('v', '<leader>e', ':lua commentator.CommentLines()<cr>', {desc = 'Comment current or highlighted lines'})
-vim.keymap.set('v', '<leader>r', ':lua commentator.UncommentLines()<cr>', {desc = 'Uncomment current or highlighted lines'})
+vim.keymap.set('n', '<leader>e', Commentator.CommentLine, {desc = 'Comment current or highlighted lines'})
+vim.keymap.set('n', '<leader>r', Commentator.UncommentLine, {desc = 'Uncomment current or highlighted lines'})
+vim.keymap.set('v', '<leader>e', ':lua Commentator.CommentLines()<cr>', {desc = 'Comment current or highlighted lines'})
+vim.keymap.set('v', '<leader>r', ':lua Commentator.UncommentLines()<cr>', {desc = 'Uncomment current or highlighted lines'})
 vim.keymap.set('n', '<leader>sr', ':%s/', {desc = "Search and replace entire file"})
 vim.keymap.set('v', '<leader>sr', ':s/', {desc = "Search and replace within visual selection"})
 
@@ -47,9 +51,9 @@ vim.keymap.set('n', 'n', 'nzz', {desc = 'Center next search to screen'})
 vim.keymap.set('n', 'N', 'Nzz', {desc = 'Center previous search to screen'})
 vim.keymap.set('n', '<c-d>', '<c-d>zz', {desc = 'Center screen on page down'})
 vim.keymap.set('n', '<c-u>', '<c-u>zz', {desc = 'Center screen on page up'})
-
--- not too useful
--- vim.keymap.set('n', '<leader>rl', '<cmd>luafile ~/.config/nvim/init.lua<cr>', {desc = 'Reload Nvim'})
+-- vim.keymap.set('n', 'M', 'm', {desc = 'Set mark'})
+vim.keymap.set('n', 'gm', '`', {desc = 'Jump to mark'})
+vim.keymap.set('n', '<c-p>', '<c-i>', {desc = 'Newer location, opposite of <c-o>'})
 
 -- buffer actions
 vim.keymap.set('n', '<leader>q', '<cmd>bp | bd #<cr>', {desc = 'delete current buffer'})
@@ -71,5 +75,32 @@ vim.keymap.set('n', '<leader>gp', '<cmd>G push<cr>', {desc = 'Git push'})
 vim.keymap.set('n', '<leader>gc', '<cmd>G branch<cr>', {desc = 'Git branch'})
 vim.keymap.set('n', '<leader>gb', '<cmd>G blame<cr>', {desc = 'Git blame'})
 
--- LSP keymaps
+-- LSP keymaps, unattached, attached keymaps are in lsps.lua
+vim.keymap.set('n', 'gr', '*', {desc = 'Place holder when no lsp to avoid accidentally hitting replace'})
+
+-- quickfix window
+vim.keymap.set('n', '<leader>v', '<cmd>copen<cr>', {desc = 'Open quickfix list'})
+vim.api.nvim_create_autocmd('BufWinEnter', {
+	-- group = "QuickFix",
+	-- pattern = {"qf", "quickfix"},
+	callback = function()
+		local filetype = vim.bo[0].buftype
+		if filetype == 'quickfix' then
+			vim.keymap.set('n', '<cr>', '<c-M>')
+			vim.keymap.set('n', 'o', '<cr>zz<c-w><c-w>')
+			vim.keymap.set('n', '<leader>v', '<cmd>ccl<cr>', {desc = 'Close quickfix list'})
+		end
+	end,
+})
+
+vim.api.nvim_create_autocmd('BufLeave', {
+	callback = function()
+		local filetype = vim.bo[0].buftype
+		if filetype == 'quickfix' then
+			vim.keymap.set('n', '<cr>', '<cr>')
+			vim.keymap.set('n', 'o', 'o')
+			vim.keymap.set('n', '<leader>v', '<cmd>copen<cr>', {desc = 'Open quickfix list'})
+		end
+	end,
+})
 

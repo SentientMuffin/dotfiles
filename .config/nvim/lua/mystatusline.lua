@@ -87,12 +87,12 @@ end
 -- ===================== Section B: Git Info =====================
 
 -- Global variables to save statusline update performance
-displayToggle = false
-branchName = ""
-filesChanged = ""
+DisplayToggle = false
+BranchName = ""
+FilesChanged = ""
 
 local function toggleDisplay()
-  displayToggle = not displayToggle
+  DisplayToggle = not DisplayToggle
 end
 
 local function splitString(inputstr, sep)
@@ -107,14 +107,14 @@ local function splitString(inputstr, sep)
 end
 
 local function updateGitBranchName()
-  branchName  = vim.fn.system("git branch --show-current 2> /dev/null | tr -d '\n'")
-  local splitBranch = splitString(branchName, "/")
+  BranchName  = vim.fn.system("git branch --show-current 2> /dev/null | tr -d '\n'")
+  local splitBranch = splitString(BranchName, "/")
   if #splitBranch > 1 then
-    branchName = splitBranch[2]
+    BranchName = splitBranch[2]
   end
 
   -- max 12 characters
-  branchName = string.sub(branchName, 1, 12)
+  BranchName = string.sub(BranchName, 1, 12)
 end
 
 local function updateGitFilesChanged()
@@ -145,7 +145,7 @@ local function updateGitFilesChanged()
 
   end
 
-  filesChanged = table.concat {
+  FilesChanged = table.concat {
     "%#GitFileChanges#",
     "f:" .. filesCount .. " ",
     "%#GitLineAdditions#",
@@ -154,22 +154,22 @@ local function updateGitFilesChanged()
     "--" .. lineDeletions .. " ",
   }
 
-  -- filesChanged = string.format("| f:%s, ++%s --%s ", filesCount, lineAdditions, lineDeletions)
+  -- FilesChanged = string.format("| f:%s, ++%s --%s ", filesCount, lineAdditions, lineDeletions)
 end
 
 local function statusline_section_b()
-  if branchName == "" then
+  if BranchName == "" then
     return ""
   end
 
-  local content = branchName
-  if displayToggle then
-    content = filesChanged
+  local content = BranchName
+  if DisplayToggle then
+    content = FilesChanged
   end
 
   return table.concat {
     "%#StatuslineSectionB#",
-    "  ", 
+    "  ",
     content,
     "%#StatuslineSectionBSeparator#",
     "",
@@ -246,12 +246,12 @@ _G.lsp_progress = function()
 		return ""
 	end
 
-	local lsp = vim.lsp.util.get_progress_messages()[1]
-	if lsp then
-		local name = lsp.name or ""
-		local msg = lsp.message or ""
-		local percentage = lsp.percentage or 0
-		local title = lsp.title or ""
+	local lspStatus = vim.lsp.util.get_progress_messages()[1]
+	if lspStatus then
+		local name = lspStatus.name or ""
+		local msg = lspStatus.message or ""
+		local percentage = lspStatus.percentage or 0
+		local title = lspStatus.title or ""
 		if percentage == 0 then
 			return string.format(" | %%<%s: %s %s ", name, title, msg)
 		end
@@ -262,17 +262,17 @@ end
 
 -- vim.opt.statusline = [[%{%v:lua.lsp_progress()%}]]
 
-local function filetype()
-  return string.format(" %s ", vim.bo.filetype):upper()
-end
+-- local function filetype()
+  -- return string.format(" %s ", vim.bo.filetype):upper()
+-- end
 
 local function fileInfo()
   return " %l/%L "
 end
 
-local function leftseparator(left, right)
-  local leftgroup = nvim_get_hl(0, left)
-end
+-- local function leftseparator(left, right)
+  -- local leftgroup = nvim_get_hl(0, left)
+-- end
 
 -- show statusline
 Statusline = {}
@@ -299,7 +299,7 @@ function Statusline.inactive()
 end
 
 function Statusline.short()
-  return
+  -- return
 end
 
 -- show statusline

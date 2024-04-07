@@ -100,7 +100,7 @@ bufferline.setup{
 			italic = false,
 		},
 		numbers = {
-			fg = '#444444',
+			-- fg = '#444444',
 			bg = '#444444',
 		},
 		numbers_visible = {

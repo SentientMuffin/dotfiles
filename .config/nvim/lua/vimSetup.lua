@@ -22,6 +22,5 @@ vim.opt.clipboard:append('unnamedplus')
 vim.opt.guicursor:append('a:blinkwait10-blinkon450-blinkoff40')
 vim.opt.completeopt:remove('preview')
 vim.cmd.colorscheme('everforest')
-vim.cmd('filetype plugin on')
 -- vim.opt.guifont = 'Meslo LG S for Powerline:h15'
 

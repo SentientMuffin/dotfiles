@@ -1,6 +1,6 @@
 -- they were here, moved to vimSetup
--- vim.g.loaded_netrw = 1
--- vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 -- vim.opt.termguicolors = true
 
 -- ======================= Start: plugins =======================
@@ -58,25 +58,27 @@ require("lazy").setup({
 	{"vim-airline/vim-airline", enabled = false},
 	{"vim-airline/vim-airline-themes", enabled = false},
 	{"fatih/vim-go", build = "GoUpdateBinaries", enabled = false},
-}, opts) 
+}) -- can add }, opts)
 
 require("pluginSetup")
 require("vimSetup")
 require("lsps")
-commentator = require("commentator")
+Commentator = require("commentator")
+Qix = require("qix")
 require('keymaps')
 
 -- autocmds
 -- reload config on save
 vim.api.nvim_create_autocmd('BufWritePost', {
 	-- resourcing is not supported with lazy.nvim :(
-  pattern = {"**/.config/nvim/**/*.lua", "**/.config/nvim/**/*.vim"},
+  -- pattern = "**/.config/nvim/**/*.lua",
+	pattern = "*.lua",
   callback = function()
     local filepath = vim.fn.expand("%")
 
     dofile(filepath)
-    -- vim.notify("Configuration reloaded \n" ..      filepath, nil)
+    vim.notify("Configuration reloaded \n" ..      filepath, nil)
   end,
-  group = mygroup,
+  -- group = mygroup,
   desc = "Reload config on save",
 })
