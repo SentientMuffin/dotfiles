@@ -100,6 +100,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 			buffer = args.buf,
 			desc = 'Code action',
 		})
+		vim.keymap.set('n', '<leader>se', '<cmd>lua vim.diagnostic.open_float(0, {scope="line"})<cr>', {desc = 'Show error/diagnostic from lsp'})
 		-- vim.notify('LSP attached!')
   end,
 })

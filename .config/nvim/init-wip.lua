@@ -51,6 +51,7 @@ require("lazy").setup({
 	"nvim-tree/nvim-web-devicons",
 	{"lukas-reineke/indent-blankline.nvim", main = "ibl"},
 	{"nvim-treesitter/nvim-treesitter", build = "TSUpdate"},
+	"nvim-treesitter/nvim-treesitter-textobjects",
  	{"autozimu/LanguageClient-neovim", branch = "next", build = "bash install.sh"},
 	{'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
 	'kevinhwang91/nvim-bqf',
