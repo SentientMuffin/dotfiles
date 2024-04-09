@@ -74,6 +74,22 @@ vim.keymap.set('n', '<c-f>', '<cmd>GFiles<cr>', {desc = 'Git files'})
 vim.keymap.set('n', '<leader>gp', '<cmd>G push<cr>', {desc = 'Git push'})
 vim.keymap.set('n', '<leader>gc', '<cmd>G branch<cr>', {desc = 'Git branch'})
 vim.keymap.set('n', '<leader>gb', '<cmd>G blame<cr>', {desc = 'Git blame'})
+-- git branch management
+vim.keymap.set('n', '<leader>d', function() GBranchDelete() end, {desc = 'Delete branch'})
+function GBranchDelete()
+	local filetype = vim.bo[0].filetype
+	if filetype ~= 'git' then
+		return
+	end
+
+	local branch = vim.fn.getline('.')
+	local cursorLocation = vim.api.nvim_win_get_cursor(0)
+
+	vim.cmd('G branch -D ' .. branch)
+	vim.api.nvim_buf_delete(0, {})
+	vim.cmd('G branch')
+	vim.api.nvim_win_set_cursor(0, cursorLocation)
+end
 
 -- LSP keymaps, unattached, attached keymaps are in lsps.lua
 vim.keymap.set('n', 'gr', '*', {desc = 'Place holder when no lsp to avoid accidentally hitting replace'})
@@ -81,11 +97,9 @@ vim.keymap.set('n', 'gr', '*', {desc = 'Place holder when no lsp to avoid accide
 -- quickfix window
 vim.keymap.set('n', '<leader>v', '<cmd>copen<cr>', {desc = 'Open quickfix list'})
 vim.api.nvim_create_autocmd('BufWinEnter', {
-	-- group = "QuickFix",
-	-- pattern = {"qf", "quickfix"},
 	callback = function()
-		local filetype = vim.bo[0].buftype
-		if filetype == 'quickfix' then
+		local filetype = vim.bo[0].filetype
+		if filetype == 'qf' then
 			-- vim.keymap.set('n', '<cr>', '<c-M>')
 			-- vim.keymap.set('n', 'o', '<cr>zz<c-w><c-w>')
 			vim.keymap.set('n', '<leader>v', '<cmd>ccl<cr>', {desc = 'Close quickfix list'})
@@ -95,10 +109,8 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
 
 vim.api.nvim_create_autocmd('BufLeave', {
 	callback = function()
-		local filetype = vim.bo[0].buftype
-		if filetype == 'quickfix' then
-			-- vim.keymap.set('n', '<cr>', '<cr>')
-			-- vim.keymap.set('n', 'o', 'o')
+		local filetype = vim.bo[0].filetype
+		if filetype == 'qf' then
 			vim.keymap.set('n', '<leader>v', '<cmd>copen<cr>', {desc = 'Open quickfix list'})
 		end
 	end,
