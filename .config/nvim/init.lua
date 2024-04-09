@@ -29,37 +29,37 @@ require("lazy").setup({
 	-- color themse
 	{"neanias/everforest-nvim", branch = "main"},
 	"NLKNguyen/papercolor-theme",
-	-- styling
-	"preservim/nerdtree",
-	-- language styling
+	-- editor
+	{"zbirenbaum/copilot.lua"},
 	"neovim/nvim-lspconfig",
-	"pangloss/vim-javascript",
-	"jparise/vim-graphql",
-	-- misc
 	"junegunn/vim-easy-align",
 	"osyo-manga/vim-over",
 	"tmsvg/pear-tree",
-	{"junegunn/fzf", dir = "~/.fzf", build = "./install -all"},
-	"junegunn/fzf.vim",
-	"tpope/vim-fugitive",
 	"farmergreg/vim-lastplace",
 	"tpope/vim-surround",
-	"vim-test/vim-test",
-	"nvim-lua/plenary.nvim",
-	"nvim-pack/nvim-spectre",
 	"nvim-tree/nvim-tree.lua",
 	"nvim-tree/nvim-web-devicons",
 	{"lukas-reineke/indent-blankline.nvim", main = "ibl"},
 	{"nvim-treesitter/nvim-treesitter", build = "TSUpdate"},
 	"nvim-treesitter/nvim-treesitter-textobjects",
- 	{"autozimu/LanguageClient-neovim", branch = "next", build = "bash install.sh"},
-	{'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
 	'kevinhwang91/nvim-bqf',
+	-- tools
+	{"junegunn/fzf", dir = "~/.fzf", build = "./install -all"},
+	"junegunn/fzf.vim",
+	"tpope/vim-fugitive",
+	-- "nvim-lua/plenary.nvim", -- needed for spectre
+	{"nvim-pack/nvim-spectre", dependencies = "nvim-lua/plenary.nvim"},
+	{'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
 	-- disabled
+	{"preservim/nerdtree", enabled = false},
+	{"vim-test/vim-test", enabled = false},
 	{"yegappan/mru", enabled = false},
 	{"vim-airline/vim-airline", enabled = false},
 	{"vim-airline/vim-airline-themes", enabled = false},
 	{"fatih/vim-go", build = "GoUpdateBinaries", enabled = false},
+ 	{"autozimu/LanguageClient-neovim", branch = "next", build = "bash install.sh", enabled = false},
+	{"pangloss/vim-javascript", enabled = false},
+	{"jparise/vim-graphql", enabled = false},
 }) -- can add }, opts)
 
 require("pluginSetup")

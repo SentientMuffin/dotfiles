@@ -26,13 +26,14 @@ require("nvim-tree").setup({
 	},
 	view = {
 		side = "right",
-		width = 40,
+		width = 60,
 	},
 	renderer = {
 		group_empty = true,
 	},
 	filters = {
-		dotfiles = true,
+		dotfiles = false,
+		git_ignored = false,
 	},
 	on_attach = my_on_attach,
 })
@@ -328,8 +329,8 @@ bufferline.setup{
 			bg = '#FFFFFF',
 		},
 		trunc_marker = {
-			fg = '#FFFFFF',
-			bg = '#FFFFFF',
+			-- fg = '#FFFFFF',
+			bg = '#333333',
 		},
 	},
 	options = {
@@ -420,6 +421,41 @@ require('bqf').setup {
 		-- fzffilter = '<c-f>',
 	},
 }
+
+function ToggleSpectre()
+	local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+	if vim.v.shell_error ~= 0 then
+		root = "%"
+	end
+
+	local state = require('spectre.state')
+	if state.is_open then
+		require('spectre').toggle()
+	else
+		require('spectre').open({ cwd=root })
+	end
+end
+
+vim.keymap.set('n', '<leader>ss', ToggleSpectre, { desc = "Toggle Spectre" })
+
+require('copilot').setup({
+  panel = { enabled = false },
+  suggestion = {
+    enabled = true,
+    auto_trigger = true,
+    debounce = 75,
+    keymap = {
+      accept = "<c-i>",
+      accept_word = "<a-w>",
+      accept_line = "<a-l>",
+      next = "<a-k>",
+      prev = "<a-j>",
+      dismiss = "<c-e>"
+    },
+  },
+  copilot_node_command = 'node', -- Node.js version must be > 18.x
+  server_opts_overrides = {},
+})
 
 -- doesn't work :'(
 -- require("mytabline")
