@@ -365,6 +365,9 @@ require('nvim-treesitter.configs').setup{
 			-- return fName == ".vimrc"
 		-- end,
 	},
+	ensure_installed = {
+		"c", "lua",
+	},
 	-- 'nvim-treesitter/nvim-treesitter-textobjects'
 	incremental_selection = {
 		enable = true,

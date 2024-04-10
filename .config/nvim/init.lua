@@ -40,7 +40,7 @@ require("lazy").setup({
 	"nvim-tree/nvim-tree.lua",
 	"nvim-tree/nvim-web-devicons",
 	{"lukas-reineke/indent-blankline.nvim", main = "ibl"},
-	{"nvim-treesitter/nvim-treesitter", build = "TSUpdate"},
+	{"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
 	"nvim-treesitter/nvim-treesitter-textobjects",
 	'kevinhwang91/nvim-bqf',
 	-- tools

@@ -246,18 +246,19 @@ _G.lsp_progress = function()
 		return ""
 	end
 
-	local lspStatus = vim.lsp.util.get_progress_messages()[1]
-	if lspStatus then
-		local name = lspStatus.name or ""
-		local msg = lspStatus.message or ""
-		local percentage = lspStatus.percentage or 0
-		local title = lspStatus.title or ""
-		if percentage == 0 then
-			return string.format(" | %%<%s: %s %s ", name, title, msg)
-		end
-		return string.format(" %%<%s: %s %s (%s%%%%) ", name, title, msg, percentage)
-	end
-	return ""
+	return vim.lsp.status()
+	-- local lspStatus = vim.lsp.util.get_progress_messages()[1]
+	-- if lspStatus then
+		-- local name = lspStatus.name or ""
+		-- local msg = lspStatus.message or ""
+		-- local percentage = lspStatus.percentage or 0
+		-- local title = lspStatus.title or ""
+		-- if percentage == 0 then
+			-- return string.format(" | %%<%s: %s %s ", name, title, msg)
+		-- end
+		-- return string.format(" %%<%s: %s %s (%s%%%%) ", name, title, msg, percentage)
+	-- end
+	-- return ""
 end
 
 -- vim.opt.statusline = [[%{%v:lua.lsp_progress()%}]]
