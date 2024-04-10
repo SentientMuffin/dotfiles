@@ -14,7 +14,7 @@ vim.opt.wrap = true
 vim.opt.breakindent = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
-vim.opt.expandtab = false
+vim.opt.expandtab = true
 vim.opt.guioptions = ''
 vim.opt.shell = 'zsh'
 vim.opt.mps:append('<:>')
