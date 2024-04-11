@@ -1,56 +1,40 @@
 -- Section breakdown of the tabline
--- |                         A                          |  T  |
--- A -- list of open buffers
+-- | A |                     B                          |  T  |
+-- A -- current buffer name
+-- B -- list of open buffers, dot represents current buffer
 -- T -- current workspace (vim tabs) should only show up if more than one
 
 -- global variable for recent list of buffers
-myBuffers = {}
-bufferPosition = {}
-currentBuffer = vim.api.nvim_get_current_buf
-bufferName = vim.api.nvim_buf_get_name
+MyBuffers = {}
+local currentBuffer = vim.api.nvim_get_current_buf
 
 -- functions
 local function filename()
-	print(vim.inspect(myBuffers))
-  local fname = vim.fn.expand "%:t"
-  if fname == "" then
-      return "N/A"
+  return "%t"
+end
+
+local function splitString(input, sep)
+  local t = {}
+  for str in string.gmatch(input, "([^" .. sep .. "]+)") do
+    table.insert(t, str)
   end
-  return fname
+  return t[#t]
 end
 
-local function addBuffer()
-	if vim.bo[currentBuffer()].buftype ~= "" then
-		return
-	end
+local function refreshBuffers()
+  local buffers = {}
+  for _, buf in pairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_loaded(buf) then
+      if buf == currentBuffer() then
+        table.insert(buffers, " • ")
+      else
+        local bufName = vim.api.nvim_buf_get_name(buf)
+        table.insert(buffers, splitString(bufName, "/"))
+      end
+    end
+  end
 
-	local fname = vim.fn.expand("%:f")
-	if fname ~= '' then
-		-- myBuffers[currentBuffer()] = fname
-		table.insert(myBuffers, currentBuffer(), fname)
-	end
-	-- if myBuffers[currentBuffer()] == nil then
-	-- 	local fname = vim.fn.expand("%:t")
-	-- 	if fname ~= '' then
-	-- 		table.insert(myBuffers, currentBuffer(), fname)
-	-- 	end
-	-- end
-end
-
-local function removeBuffer()
-	if not vim.bo[currentBuffer()].buflisted then
-		-- return
-	end
-
-	if myBuffers[currentBuffer()] ~= nil then
-		-- table.remove(myBuffers, currentBuffer())
-	end
-end
-
-local function removeCurrentBuffer()
-	local removeIndex = bufferPosition[currentBuffer()]
-	bufferPosition = table.remove(bufferPosition, currentBuffer())
-	myBuffers = table.remove(myBuffers, removeIndex)
+  MyBuffers = buffers
 end
 
 -- always show tabline
@@ -59,10 +43,11 @@ vim.opt.stal = 2
 Tabline = {}
 Tabline.active = function()
 	return table.concat {
-		" [",
+		"[",
 		filename(),
-		"] ",
-		-- table.concat(myBuffers, '|'),
+		"] |",
+    table.concat(MyBuffers, "|"),
+    "|",
 	}
 end
 
@@ -81,17 +66,25 @@ augroup("Tabline", {clear = true})
 autocmd("BufEnter", {
 	group = "Tabline",
 	callback = function()
-		-- removeBuffer()
-		addBuffer()
+    if vim.api.nvim_buf_is_loaded(0) then
+      refreshBuffers()
+    end
 	end
 })
+-- autocmd("BufDelete", {
+  -- group = "Tabline",
+  -- callback = function()
+    -- print("Deleting buffer " .. vim.fn.expand("#"))
+    -- MyBuffers[CurrentBuffer()] = nil
+  -- end
+-- })
 -- autocmd("BufLeave", {
 -- 	group = "Tabline",
 -- 	callback = function()
 -- 		addBuffer()
 -- 	end,
 -- })
-autocmd({"BufAdd", "BufWipeout", "BufEnter"}, {
+autocmd("BufEnter", {
 	group = "Tabline",
 	command = "setlocal tabline=%!v:lua.Tabline.active()",
 	desc = "Update tabline on buf add of removal"
