@@ -1,6 +1,6 @@
 -- global vars for plugins
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
 vim.g.pear_tree_repeatable_expand = 0
 
 -- vim options
@@ -15,7 +15,6 @@ vim.opt.breakindent = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
-vim.opt.guioptions = ''
 vim.opt.shell = 'zsh'
 vim.opt.mps:append('<:>')
 vim.opt.clipboard:append('unnamedplus')

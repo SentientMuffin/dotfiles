@@ -360,6 +360,9 @@ bufferline.setup{
 require('nvim-treesitter.configs').setup{
 	highlight = {
 		enable = true,
+    disable = {
+      "vimdoc",
+    },
 		-- disable = function(lang, buf)
 			-- local fName = vim.api.nvim_buf_get_name(buf)
 			-- return fName == ".vimrc"

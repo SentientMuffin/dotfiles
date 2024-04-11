@@ -22,7 +22,9 @@ vim.keymap.set('c', '<c-a>', '/g', {desc = 'replace all in command mode s&r'})
 vim.keymap.set('n', '<leader>c', '.', {desc = 'redo'})
 vim.keymap.set('n', 'M', 'q', {desc = 'record macro'})
 vim.keymap.set('n', '<c-2>', '@', {desc = 'access recording register'})
-vim.keymap.set('i', '<tab>', '<tab>', {desc = '<c-i> over writting <tab> in insert mode'})
+-- vim.keymap.set('n', '<c-e>', '<c-y>', {desc = 'Page down'})
+vim.keymap.set('n', '<c-r>', '<c-y>', {desc = 'Page down'})
+vim.keymap.set('n', 'R', '<c-r>', {desc = 'Redo'})
 
 -- text editting
 vim.keymap.set('n', '\'', ':call append(line(\'.\')-1, \'\')<cr>', {desc = 'Insert empty line above'})
@@ -33,6 +35,7 @@ vim.keymap.set('v', '<leader>e', ':lua Commentator.CommentLines()<cr>', {desc = 
 vim.keymap.set('v', '<leader>r', ':lua Commentator.UncommentLines()<cr>', {desc = 'Uncomment current or highlighted lines'})
 vim.keymap.set('n', '<leader>sr', ':%s/', {desc = "Search and replace entire file"})
 vim.keymap.set('v', '<leader>sr', ':s/', {desc = "Search and replace within visual selection"})
+vim.keymap.set('n', 'J', 'gJ', {desc = 'Join lines without space'})
 
 -- motion keymaps
 -- vim.keymap.set('', '#', '_', {desc = 'Beginning of line'})
