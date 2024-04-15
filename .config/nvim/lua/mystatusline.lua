@@ -189,9 +189,11 @@ vim.api.nvim_create_autocmd("BufEnter", {
   callback = function() updateGitBranchName() end,
 })
 -- update files changed info
-vim.api.nvim_create_autocmd("BufWritePost", {
-  callback = function() updateGitFilesChanged() end,
-})
+-- breaks on very large git repos!!!
+-- saving will hang for a really long time
+-- vim.api.nvim_create_autocmd("BufWritePost", {
+  -- callback = function() updateGitFilesChanged() end,
+-- })
 
 -- ===================== Section C: File Info =====================
 
