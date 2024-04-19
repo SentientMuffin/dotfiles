@@ -20,7 +20,10 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Make sure mapleader and maplocalleader is before requires
 -- leaderkey
-vim.g.mapleader = ';'
+-- vim.g.mapleader = ';'
+-- map leader to backspace for piantor_pro keyboard
+vim.g.mapleader = vim.api.nvim_replace_termcodes('<BS>', true, true, true)
+-- vim.g.mapleader = ' ';
 
 -- Startup Requires
 -- Lazy Plugin Manager
@@ -34,6 +37,10 @@ require("lazy").setup({
 	"neovim/nvim-lspconfig",
 	"junegunn/vim-easy-align",
 	"osyo-manga/vim-over",
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+  },
 	"tmsvg/pear-tree",
 	"farmergreg/vim-lastplace",
 	"tpope/vim-surround",
@@ -47,7 +54,6 @@ require("lazy").setup({
 	{"junegunn/fzf", dir = "~/.fzf", build = "./install -all"},
 	"junegunn/fzf.vim",
 	"tpope/vim-fugitive",
-	-- "nvim-lua/plenary.nvim", -- needed for spectre
 	{"nvim-pack/nvim-spectre", dependencies = "nvim-lua/plenary.nvim"},
 	{'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
 	-- disabled

@@ -6,6 +6,7 @@ vim.g.pear_tree_repeatable_expand = 0
 -- vim options
 vim.opt.termguicolors = true
 vim.opt.number = true
+vim.opt.relativenumber = true
 vim.opt.mouse = 'a'
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
@@ -21,5 +22,6 @@ vim.opt.clipboard:append('unnamedplus')
 vim.opt.guicursor:append('a:blinkwait10-blinkon450-blinkoff40')
 vim.opt.completeopt:remove('preview')
 vim.cmd.colorscheme('everforest')
+vim.wo.fillchars='eob: '
 -- vim.opt.guifont = 'Meslo LG S for Powerline:h15'
 
