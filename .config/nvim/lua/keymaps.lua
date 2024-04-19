@@ -3,6 +3,7 @@ local Commentator = require('commentator')
 -- keymaps
 vim.keymap.set({'n', 'v'}, '<BS>', '<nop>', {desc = 'leader key no stand alone action', noremap = true})
 vim.keymap.set({'', 'v'}, 'V', '<c-v>', {desc = 'Visual block mode'})
+vim.keymap.set({'', 'v'}, '<c-q>', 'V', {desc = 'Visual block mode for windows'})
 vim.keymap.set({'', 'v'}, '<c-v>', 'V', {desc = 'Visual line mode'})
 vim.keymap.set({'', 't'}, '<c-space>', '<esc>', {desc = 'Escape'})
 vim.keymap.set('c', '<c-space>', '<c-c>', {desc = 'Ctrl-c to escape in command mode'})

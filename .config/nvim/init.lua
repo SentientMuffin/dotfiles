@@ -29,7 +29,8 @@ vim.g.mapleader = vim.api.nvim_replace_termcodes('<BS>', true, true, true)
 -- Lazy Plugin Manager
 -- Has to live here, autoload does not work for Lazy
 require("lazy").setup({
-	-- color themse
+	-- looks are everything
+  'mhinz/vim-startify',
 	{"neanias/everforest-nvim", branch = "main"},
 	"NLKNguyen/papercolor-theme",
 	-- editor
