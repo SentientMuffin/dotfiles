@@ -109,7 +109,7 @@ vim.keymap.set('n', 'S', '<Plug>YSurround', {desc = 'Surround followed by textob
 -- Fugitive keymaps
 vim.keymap.set('n', '<c-g>', '<cmd>Git<cr>', {desc = 'Git'})
 vim.keymap.set('n', '<c-f>', '<cmd>GFiles<cr>', {desc = 'Git files'})
-vim.keymap.set('n', '<leader>gp', '<cmd>G push<cr>', {desc = 'Git push'})
+vim.keymap.set('n', '<leader>gg', '<cmd>G push<cr>', {desc = 'Git push'})
 vim.keymap.set('n', '<leader>gc', '<cmd>G branch<cr>', {desc = 'Git branch'})
 vim.keymap.set('n', '<leader>gb', '<cmd>G blame<cr>', {desc = 'Git blame'})
 -- git branch management
