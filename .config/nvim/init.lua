@@ -58,6 +58,7 @@ require("lazy").setup({
 	{"nvim-pack/nvim-spectre", dependencies = "nvim-lua/plenary.nvim"},
 	{'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
 	-- disabled
+  {'karb94/neoscroll.nvim', enabled = false},
 	{"preservim/nerdtree", enabled = false},
 	{"vim-test/vim-test", enabled = false},
 	{"yegappan/mru", enabled = false},
