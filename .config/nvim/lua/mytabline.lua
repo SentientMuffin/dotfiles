@@ -84,11 +84,16 @@ local function new_get_buffers()
 
   local i = 0
   for _, buf in pairs(vim.api.nvim_list_bufs()) do
+    -- extract to buffer exclusion helper function
     if not vim.api.nvim_buf_is_loaded(buf) then
       goto continue
     end
 
     if vim.bo[buf].buftype ~= '' then
+      goto continue
+    end
+
+    if vim.bo[buf].filetype == 'gitcommit' then
       goto continue
     end
 
