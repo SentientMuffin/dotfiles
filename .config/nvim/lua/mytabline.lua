@@ -46,7 +46,7 @@ end
 local function get_buffer_name(bufnr)
   local buf_name = vim.api.nvim_buf_get_name(bufnr)
 
-  if vim.bo[bufnr].buftype == '' then
+  if vim.bo[bufnr].buftype == '' and #buf_name > 0 then
     return get_short_fname(buf_name, "/")
   end
 
@@ -111,127 +111,36 @@ local function new_get_buffers()
     ::continue::
   end
 
-  -- CB.Set(index_buffers, currentBuffer())
   return index_buffers
-
-  -- print(vim.inspect(index_buffers))
-end
-
-local function get_buffers()
-  local buffers = {
-    current_display = false,
-    current_buf = "",
-    left_bufs = {},
-    right_bufs = {},
-  }
-  local add_to_left = true
-
-  for _, buf in pairs(vim.api.nvim_list_bufs()) do
-    if vim.api.nvim_buf_is_loaded(buf) then
-      local name = get_buffer_name(buf)
-
-      if vim.bo[buf].buftype ~= '' then
-        goto continue
-      end
-
-      if buf == currentBuffer() then
-        -- table.insert(buffers, "  •  ")
-        buffers.current_display = true
-        buffers.current_buf = "  •  "
-        add_to_left = false
-        goto continue
-      end
-
-      if add_to_left then
-        table.insert(buffers.left_bufs, string.sub(name, 1, 15))
-      else
-        table.insert(buffers.right_bufs, string.sub(name, 1, 15))
-      end
-    end
-
-    ::continue::
-  end
-
-  return buffers
 end
 
 local function get_section_b_width()
-  -- local width_percentage = 80
-  -- -- reserve one space to deal with odd even centering
-  -- return math.floor((current_app_width() - 1) * width_percentage / 100)
-  -- section a width is ~24
-  -- section c will mimic that size
   return current_app_width() - (24 * 2)
-end
-
-local function width_for_n_buffers(n)
-  return current_buf_width + (open_buf_width * n) + ((n + 1) * separator_width)
-end
-
-local function section_b_left(padding, bufs)
-  if #bufs == 0 then
-    return ""
-  end
-
-  local bufs_string = table.concat(bufs, " | ")
-  return table.concat {
-    string.rep(" ", padding),
-    " | ",
-    bufs_string,
-  }
-end
-
-local function section_b_center(display_buf)
-  if display_buf then
-    return " |   •   | "
-  else
-    return " | "
-  end
 end
 
 local function new_section_b()
   local new_buffers = new_get_buffers()
-  -- print(vim.inspect(#new_buffers))
-  -- print(vim.inspect(new_buffers))
   CB.Set(new_buffers, currentBuffer())
 
   local center = CB.index_bufs[CB.center]
-  -- print(vim.inspect(CB.center))
 
   local totalSpace = get_section_b_width()
-  local allowed_buf_count = math.floor((totalSpace - current_buf_width - separator_width) / (open_buf_width + separator_width))
   local buffersNeeded = CB.length - 1
   local leftCount = math.floor(buffersNeeded / 2)
   local rightCount = leftCount
   if buffersNeeded % 2 == 1 then
     rightCount = rightCount + 1
   end
-  -- print(vim.inspect(rightCount))
-  -- print(vim.inspect(leftCount))
-  -- print(vim.inspect(CyclingBuffers.center))
-  -- print(vim.inspect(#CyclingBuffers.index_bufs))
-  -- print(vim.inspect(buffersNeeded))
 
   local leftBuffers = CB.PreviousN(leftCount, 'bufname')
   local rightBuffers = CB.NextN(rightCount, 'bufname')
-  -- leftBuffers = {}
-  -- rightBuffers = {}
-  -- print(vim.inspect(leftBuffers))
-  -- print(vim.inspect(CB.index_bufs))
-  -- print(vim.inspect(buffersNeeded) .. ' ' .. vim.inspect(leftCount) .. ' ' .. vim.inspect(rightCount))
-  -- print(vim.inspect(rightBuffers))
 
   local leftSpace = math.floor((totalSpace - 11) / 2)
   local rightSpace = leftSpace
   if totalSpace % 2 == 0 then
     rightSpace = rightSpace + 1
   end
-  -- print(vim.inspect(totalSpace))
 
-  -- local leftPadding = leftSpace - width_for_n_buffers(leftCount)
-  -- local leftPadding = leftSpace
-  -- local rightPadding = rightSpace - width_for_n_buffers(rightCount)
-  -- local rightPadding = rightSpace
   local leftBuffersString = table.concat(leftBuffers, " | ")
   local rightBuffersString = table.concat(rightBuffers, " | ")
   local leftPadding = leftSpace - #leftBuffersString
@@ -250,59 +159,6 @@ local function new_section_b()
   }
 end
 
-local function section_b()
-  local buffers = get_buffers()
-  local current_display = buffers.current_display
-  local current_buf = buffers.current_buf
-  local left_bufs = buffers.left_bufs
-  local right_bufs = buffers.right_bufs
-
-  local total_bufs = #left_bufs + #right_bufs
-  if current_display then
-    total_bufs = total_bufs + 1
-  end
-
-  if total_bufs <= 1 then
-    return ""
-  end
-
-  -- there is 1 more space
-  local total_space = get_section_b_width()
-  -- change 3 to var representing separator width
-  local allowed_buf_count = math.floor((total_space - current_buf_width - separator_width) / (open_buf_width + separator_width))
-
-  -- local separator_count = #buffers + 1
-  local padding = 0
-  if total_bufs <= allowed_buf_count then
-    local remaining_space = total_space - width_for_n_buffers(total_bufs)
-    padding = math.floor(remaining_space / 2)
-    if remaining_space % 2 == 1 then
-      -- not sure about this, this adds two extra spaces instead of 1
-      padding = padding + 1
-    end
-
-    return table.concat {
-      string.rep(" ", padding),
-      -- " | ",
-      -- table.concat(left_bufs, " | "),
-      section_b_left(padding, left_bufs),
-      -- " | ",
-      -- current_buf,
-      -- " | ",
-      section_b_center(current_display),
-      table.concat(right_bufs, " | "),
-      " | ",
-      string.rep(" ", padding),
-    }
-  end
-
-  return table.concat {
-    " | ",
-    table.concat(buffers, " | "),
-    " | ",
-  }
-end
-
 -- always show tabline
 vim.opt.stal = 2
 
@@ -310,7 +166,6 @@ Tabline = {}
 Tabline.active = function()
 	return table.concat {
     section_a(),
-    -- section_b(),
     new_section_b(),
 	}
 end

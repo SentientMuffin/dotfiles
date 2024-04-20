@@ -23,10 +23,11 @@ vim.keymap.set('i', '<c-s>', '<esc><cmd>silent! write<cr>l', {desc = 'Save'})
 vim.keymap.set('', '<c-s>', '<cmd>silent! write<cr>', {desc = 'Save'})
 -- /\%9 searches line 9, <c-r>= executes the following vim expression and <cr> to take the output into the original expression
 -- line('.') returns the current line # of the cursor, and l allows for search
+-- idea: have ff, fh, fl, and another for file search
 vim.keymap.set('n', 'f', '/\\%<c-r>=line(\'.\')<cr>l', {desc = 'Search within the current line'})
 vim.keymap.set('v', 'f', '<esc>/\\%V', {desc = 'Search within the visual selection'})
 vim.keymap.set('n', 'F', '/', {desc = 'Search the current buffer'})
-vim.keymap.set('c', '<c-a>', '/g', {desc = 'replace all in command mode s&r'})
+vim.keymap.set('c', '<c-g>', '/g', {desc = 'replace all in command mode s&r'})
 vim.keymap.set('n', '<leader>c', '.', {desc = 'redo'})
 vim.keymap.set('n', 'M', 'q', {desc = 'record macro'})
 vim.keymap.set('n', '<c-2>', '@', {desc = 'access recording register'})
