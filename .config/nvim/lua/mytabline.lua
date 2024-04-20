@@ -217,7 +217,9 @@ local function new_section_b()
   -- leftBuffers = {}
   -- rightBuffers = {}
   -- print(vim.inspect(leftBuffers))
-  print(vim.inspect(rightBuffers))
+  -- print(vim.inspect(CB.index_bufs))
+  -- print(vim.inspect(buffersNeeded) .. ' ' .. vim.inspect(leftCount) .. ' ' .. vim.inspect(rightCount))
+  -- print(vim.inspect(rightBuffers))
 
   local leftSpace = math.floor((totalSpace - 11) / 2)
   local rightSpace = leftSpace
@@ -226,19 +228,23 @@ local function new_section_b()
   end
   -- print(vim.inspect(totalSpace))
 
-  local leftPadding = leftSpace - width_for_n_buffers(leftCount)
+  -- local leftPadding = leftSpace - width_for_n_buffers(leftCount)
   -- local leftPadding = leftSpace
-  local rightPadding = rightSpace - width_for_n_buffers(rightCount)
+  -- local rightPadding = rightSpace - width_for_n_buffers(rightCount)
   -- local rightPadding = rightSpace
+  local leftBuffersString = table.concat(leftBuffers, " | ")
+  local rightBuffersString = table.concat(rightBuffers, " | ")
+  local leftPadding = leftSpace - #leftBuffersString
+  local rightPadding = rightSpace - #rightBuffersString
 
   return table.concat {
     string.rep(" ", leftPadding),
     " | ",
-    table.concat(leftBuffers, " | "),
+    leftBuffersString,
     " | ",
     center.bufname,
     " | ",
-    table.concat(rightBuffers, " | "),
+    rightBuffersString,
     " | ",
     string.rep(" ", rightPadding),
   }

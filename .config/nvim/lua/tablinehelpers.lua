@@ -106,17 +106,11 @@ function CyclingBuffers.PreviousN(n, scope)
   local prevN = {}
   local index = CyclingBuffers.center
   while i <= n do
-    local prev= getNext(index)
+    local prev= getPrev(index)
     if scope == nil then
       table.insert(prevN, prev)
     else
       table.insert(prevN, prev[scope])
-    end
-
-    if index == 1 then
-      index = CyclingBuffers.length
-    else
-      index = index - 1
     end
 
     i = i + 1
