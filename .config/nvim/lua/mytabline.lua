@@ -106,7 +106,7 @@ local function new_get_buffers()
     index_buf.bufnr = buf
 
     if buf == currentBuffer() then
-      index_buf.bufname = "  •  "
+      index_buf.bufname = "•"
     else
       index_buf.bufname = get_buffer_name(buf)
     end
@@ -120,7 +120,7 @@ local function new_get_buffers()
 end
 
 local function get_section_b_width()
-  return current_app_width() - (24 * 2)
+  return current_app_width() - (21 * 2)
 end
 
 local function new_section_b()
