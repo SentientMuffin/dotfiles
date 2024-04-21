@@ -22,6 +22,15 @@ function CyclingBuffers.Set(bufs, centerBuf)
   end
 end
 
+local function wrap_in_highlight(bufnr, text)
+  local modified = vim.bo[bufnr].modified or false
+  if modified then
+    return "✶ " .. text
+  end
+
+  return text
+end
+
 local function indexOutOfBounds(index, length)
   return index < 1 or length < index
 end
@@ -75,11 +84,10 @@ function CyclingBuffers.NextN(n, scope)
   local index = CyclingBuffers.center
   while i <= n do
     local next = getNext(index)
-    if scope == nil then
-      table.insert(nextN, next)
-    else
-      table.insert(nextN, next[scope])
+    if scope ~= nil then
+      next = wrap_in_highlight(next.bufnr, next[scope])
     end
+    table.insert(nextN, next)
 
     if index == CyclingBuffers.length then
       index = 1
@@ -107,11 +115,10 @@ function CyclingBuffers.PreviousN(n, scope)
   local index = CyclingBuffers.center
   while i <= n do
     local prev = getPrev(index)
-    if scope == nil then
-      table.insert(prevN, prev)
-    else
-      table.insert(prevN, prev[scope])
+    if scope ~= nil then
+      prev = wrap_in_highlight(prev.bufnr, prev[scope])
     end
+    table.insert(prevN, prev)
 
     if index == 1 then
       index = CyclingBuffers.length

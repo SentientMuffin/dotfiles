@@ -22,11 +22,11 @@ end
 config.color_scheme = 'Everforest Dark (Gogh)'
 
 config.font_dirs = { '/Users/xinjun.lin/Library/Fonts' }
-config.font = wezterm.font('JetBrains Mono NL', { 
+config.font = wezterm.font('JetBrains Mono NL', {
   weight = 'DemiBold'
-}) 
+})
 
-config.cell_width = 1 
+config.cell_width = 1
 
 -- config.bold_brightens_ansi_colors = 'No'
 -- config.custom_block_glyphs = true
@@ -37,12 +37,12 @@ config.foreground_text_hsb = {
 }
 
 config.line_height = 1.0
-config.font_size = 15
+config.font_size = 12
 
 config.force_reverse_video_cursor = true
 config.cursor_blink_rate = 500
-config.cursor_blink_ease_in = 'Constant'  
-config.cursor_blink_ease_out = 'Constant'  
+config.cursor_blink_ease_in = 'Constant'
+config.cursor_blink_ease_out = 'Constant'
 
 config.window_close_confirmation = 'NeverPrompt'
 

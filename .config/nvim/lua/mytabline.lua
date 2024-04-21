@@ -7,9 +7,9 @@
 -- global variable for recent list of buffers
 
 CB = require('tablinehelpers')
+require('tablinecolors')
 
 local main_file_name_width = 16
-local open_buffers_width = 0
 local currentBuffer = vim.api.nvim_get_current_buf
 local filetype_name = {
   ['fugitive'] = 'Git',
@@ -17,10 +17,42 @@ local filetype_name = {
   ['NvimTree'] = 'NvimTree',
   ['qf'] = 'Qfix',
 }
+  local separator = " | "
+local padding_char = " "
+-- local current_buffer_char = "•"
+local current_buffer_char = "⭘"
+local current_buffer_mod_char = "⏼"
+-- i.e.: _...
+local section_b_min_padding = 5
 
 -- functions
 local function current_app_width()
   return vim.o.columns
+end
+
+local function get_current_buffer_char()
+  if vim.bo[0].modified then
+    return current_buffer_mod_char
+  end
+
+  return current_buffer_char
+end
+
+local function get_highlight_group(bufnr)
+  local buffer_modified = vim.bo[bufnr].modified
+  if buffer_modified and bufnr == 0 then
+    return "%#CurrentBufferModified#"
+  end
+
+  if buffer_modified then
+    return "%#BufferModified#"
+  end
+
+  if bufnr == 0 then
+    return "%#CurrentBufferNormal#"
+  end
+
+  return "%##"
 end
 
 local function get_short_fname(input, sep)
@@ -60,26 +92,24 @@ local function section_a()
   local left_bracket = " [ "
   local right_bracket = " ]"
   local rep = (main_file_name_width - #name) / 2
-  local padding = string.rep(" ", rep)
   if odd_name then
     left_bracket = "[ "
-    padding = padding .. " "
+    rep = rep + 1
   end
+  local padding = string.rep(padding_char, rep)
 
   return table.concat {
     left_bracket,
     padding,
+    get_highlight_group(0),
     name,
+    "%##",
     padding,
     right_bracket,
   }
 end
 
-local current_buf_width = 5
-local open_buf_width = 15
-local separator_width = 3
-
-local function new_get_buffers()
+local function get_buffers()
   local index_buffers = {}
 
   local i = 0
@@ -106,7 +136,8 @@ local function new_get_buffers()
     index_buf.bufnr = buf
 
     if buf == currentBuffer() then
-      index_buf.bufname = "•"
+      index_buf.bufname = current_buffer_char
+      index_buf.bufname = get_current_buffer_char()
     else
       index_buf.bufname = get_buffer_name(buf)
     end
@@ -123,8 +154,8 @@ local function get_section_b_width()
   return current_app_width() - (21 * 2)
 end
 
-local function new_section_b()
-  local new_buffers = new_get_buffers()
+local function section_b()
+  local new_buffers = get_buffers()
   CB.Set(new_buffers, currentBuffer())
 
   local center = CB.index_bufs[CB.center]
@@ -146,21 +177,41 @@ local function new_section_b()
     rightSpace = rightSpace + 1
   end
 
-  local leftBuffersString = table.concat(leftBuffers, " | ")
-  local rightBuffersString = table.concat(rightBuffers, " | ")
-  local leftPadding = leftSpace - #leftBuffersString
-  local rightPadding = rightSpace - #rightBuffersString
+  local leftBuffersString = table.concat(leftBuffers, separator)
+  local rightBuffersString = table.concat(rightBuffers, separator)
+  local leftPaddingSize = leftSpace - #leftBuffersString
+  local rightPaddingSize = rightSpace - #rightBuffersString
+ 
+  local leftPadding = ""
+  if leftPaddingSize < 0 then
+    local leftLength = #leftBuffersString
+    leftBuffersString = string.sub(leftBuffersString, leftLength - leftSpace + section_b_min_padding)
+    leftPadding = " ..."
+  else
+    leftPadding = string.rep(padding_char, leftPaddingSize)
+  end
+
+  local rightPadding = ""
+  if rightPaddingSize < 0 then
+    local rightLength = #rightBuffersString
+    rightBuffersString = string.sub(rightBuffersString, rightLength - rightSpace + section_b_min_padding)
+    -- has to be one char less than the minimum padding,
+    -- because there is an extra space from separator
+    rightPadding = "... "
+  else
+    rightPadding = string.rep(padding_char, rightPaddingSize)
+  end
 
   return table.concat {
-    string.rep(" ", leftPadding),
-    " | ",
+    leftPadding,
+    separator,
     leftBuffersString,
-    " | ",
+    separator,
     center.bufname,
-    " | ",
+    separator,
     rightBuffersString,
-    " | ",
-    string.rep(" ", rightPadding),
+    separator,
+    rightPadding,
   }
 end
 
@@ -171,7 +222,7 @@ Tabline = {}
 Tabline.active = function()
 	return table.concat {
     section_a(),
-    new_section_b(),
+    section_b(),
 	}
 end
 
