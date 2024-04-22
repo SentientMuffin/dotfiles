@@ -88,6 +88,9 @@ vim.keymap.set('n', '<c-k>', 'Hzz', {desc = 'Center screen on page up'})
 vim.keymap.set('n', 'gm', '`', {desc = 'Jump to mark'})
 vim.keymap.set('n', '<c-p>', '<c-i>', {desc = 'Newer location, opposite of <c-o>'})
 vim.keymap.set('n', 'gw', '*', {desc = 'Search word under cursor'})
+vim.keymap.set('n', 'ge', 'G', {desc = 'End of buffer'})
+vim.keymap.set('n', ';', 'n', {desc = 'Next search'})
+vim.keymap.set('n', 'b', 'N', {desc = 'Previous search'})
 
 -- buffer actions
 vim.keymap.set('n', '<leader>q', '<cmd>bp | bd #<cr>', {desc = 'delete current buffer'})
