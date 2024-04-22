@@ -181,7 +181,7 @@ local function section_b()
   local rightBuffersString = table.concat(rightBuffers, separator)
   local leftPaddingSize = leftSpace - #leftBuffersString
   local rightPaddingSize = rightSpace - #rightBuffersString
- 
+
   local leftPadding = ""
   if leftPaddingSize < 0 then
     local leftLength = #leftBuffersString

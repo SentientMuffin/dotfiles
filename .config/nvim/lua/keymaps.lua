@@ -24,9 +24,10 @@ vim.keymap.set('', '<c-s>', '<cmd>silent! write<cr>', {desc = 'Save'})
 -- /\%9 searches line 9, <c-r>= executes the following vim expression and <cr> to take the output into the original expression
 -- line('.') returns the current line # of the cursor, and l allows for search
 -- idea: have ff, fh, fl, and another for file search
-vim.keymap.set('n', 'f', '/\\%<c-r>=line(\'.\')<cr>l', {desc = 'Search within the current line'})
-vim.keymap.set('v', 'f', '<esc>/\\%V', {desc = 'Search within the visual selection'})
-vim.keymap.set('n', 'F', '/', {desc = 'Search the current buffer'})
+vim.keymap.set('n', 'f', '/', {desc = 'Search in current file'})
+-- vim.keymap.set('n', 'f', '/\\%<c-r>=line(\'.\')<cr>l', {desc = 'Search within the current line'})
+-- vim.keymap.set('v', 'f', '<esc>/\\%V', {desc = 'Search within the visual selection'})
+vim.keymap.set('n', '<c-f>', '/', {desc = 'Search the current buffer'})
 vim.keymap.set('c', '<c-g>', '/g', {desc = 'replace all in command mode s&r'})
 vim.keymap.set('n', '<leader>c', '.', {desc = 'redo'})
 vim.keymap.set('n', 'M', 'q', {desc = 'record macro'})
@@ -103,13 +104,18 @@ vim.keymap.set('n', '<leader>t', '<cmd>NvimTreeFocus<cr>', {desc = 'Toggle NvimT
 vim.keymap.set('n', '<leader>f', '<cmd>NvimTreeFindFile<cr>', {desc = 'Refresh NvimTree'})
 
 -- Vim surround override on s
-vim.keymap.set('n', 's', '<Plug>Ysurround', {desc = 'surround followed by textobject'})
+-- vim.keymap.set('n', 's', '<Plug>Ysurround', {desc = 'surround followed by textobject'})
 vim.keymap.set('v', 's', '<Plug>VSurround', {desc = 'visual surround selection'})
 vim.keymap.set('n', 'S', '<Plug>YSurround', {desc = 'Surround followed by textobject'})
 
+-- nvim leap
+vim.keymap.set({'n', 'x', 'o'}, 'sf',  '<Plug>(leap-forward)')
+vim.keymap.set({'n', 'x', 'o'}, 'sd',  '<Plug>(leap-backward)')
+vim.keymap.set({'n', 'x', 'o'}, 'sg', '<Plug>(leap-from-window)')
+
 -- Fugitive keymaps
 vim.keymap.set('n', '<c-g>', '<cmd>Git<cr>', {desc = 'Git'})
-vim.keymap.set('n', '<c-f>', '<cmd>GFiles<cr>', {desc = 'Git files'})
+-- vim.keymap.set('n', '<c-f>', '<cmd>GFiles<cr>', {desc = 'Git files'})
 vim.keymap.set('n', '<leader>gg', '<cmd>G push<cr>', {desc = 'Git push'})
 vim.keymap.set('n', '<leader>gc', '<cmd>G branch<cr>', {desc = 'Git branch'})
 vim.keymap.set('n', '<leader>gb', '<cmd>G blame<cr>', {desc = 'Git blame'})

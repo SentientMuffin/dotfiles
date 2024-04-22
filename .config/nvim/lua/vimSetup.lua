@@ -6,9 +6,12 @@ vim.g.surround_no_mapping = 1
 
 -- vim options
 vim.opt.termguicolors = true
+-- vim.g.have_nerd_font = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.mouse = 'a'
+vim.opt.showmode = false
+vim.opt.breakindent = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.hlsearch = false
@@ -17,6 +20,8 @@ vim.opt.breakindent = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
+vim.opt.splitright = true
+vim.opt.splitbelow = true
 vim.opt.shell = 'bash'
 vim.opt.mps:append('<:>')
 vim.opt.clipboard:append('unnamedplus')

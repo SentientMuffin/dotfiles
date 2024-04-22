@@ -34,6 +34,7 @@ require("lazy").setup({
 	{"neanias/everforest-nvim", branch = "main"},
 	"NLKNguyen/papercolor-theme",
 	-- editor
+  "ggandor/leap.nvim",
 	{"zbirenbaum/copilot.lua"},
 	"neovim/nvim-lspconfig",
 	"junegunn/vim-easy-align",
@@ -56,8 +57,16 @@ require("lazy").setup({
 	"junegunn/fzf.vim",
 	"tpope/vim-fugitive",
 	{"nvim-pack/nvim-spectre", dependencies = "nvim-lua/plenary.nvim"},
-	{'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
+  {
+    "nvim-telescope/telescope.nvim",
+    tag = "0.1.6",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope-fzf-native.nvim",
+    },
+  },
 	-- disabled
+	{'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons', enabled = false},
   {'karb94/neoscroll.nvim', enabled = false},
 	{"preservim/nerdtree", enabled = false},
 	{"vim-test/vim-test", enabled = false},

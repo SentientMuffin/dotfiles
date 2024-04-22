@@ -436,21 +436,65 @@ require('bqf').setup {
 	},
 }
 
-function ToggleSpectre()
+-- function ToggleSpectre()
+	-- local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+	-- if vim.v.shell_error ~= 0 then
+		-- root = "%"
+	-- end
+
+	-- local state = require('spectre.state')
+	-- if state.is_open then
+		-- require('spectre').toggle()
+	-- else
+		-- require('spectre').open({ cwd=root })
+	-- end
+-- end
+
+-- vim.keymap.set('n', '<leader>ss', ToggleSpectre, { desc = "Toggle Spectre" })
+
+
+local tele = require('telescope.builtin')
+
+local function rg_under_git_root()
 	local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
 	if vim.v.shell_error ~= 0 then
 		root = "%"
 	end
-
-	local state = require('spectre.state')
-	if state.is_open then
-		require('spectre').toggle()
-	else
-		require('spectre').open({ cwd=root })
-	end
+  tele.live_grep({cwd = root, hidden = true})
 end
 
-vim.keymap.set('n', '<leader>ss', ToggleSpectre, { desc = "Toggle Spectre" })
+local function find_file_under_git()
+	local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+	if vim.v.shell_error ~= 0 then
+		root = "%"
+	end
+  tele.find_files({cwd = root, hidden = true})
+end
+
+vim.keymap.set('n', '<c-f>',
+  function()
+    find_file_under_git()
+  end,
+{})
+vim.keymap.set('n', '<leader>s', function() rg_under_git_root() end, {})
+vim.keymap.set('n', '<leader>b', tele.buffers, {})
+
+require('telescope').setup {
+  defaults = {
+    mappings = {
+      i = {
+        ["<c-f>"] = require("telescope.actions").close,
+        ["<c-t>"] = require("telescope.actions").select_default,
+      },
+      n = {
+        ["<c-f>"] = require("telescope.actions").close,
+      },
+    }
+  }
+}
+pcall(require('telescope').load_extension, 'fzf')
+
+-- require('leap').create_default_mappings()
 
 -- require('copilot').setup({
   -- panel = { enabled = false },
