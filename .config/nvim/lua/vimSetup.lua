@@ -21,7 +21,7 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.splitright = true
-vim.opt.splitbelow = true
+vim.opt.splitbelow = false
 vim.opt.shell = 'bash'
 vim.opt.mps:append('<:>')
 vim.opt.clipboard:append('unnamedplus')
