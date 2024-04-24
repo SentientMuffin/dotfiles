@@ -56,7 +56,8 @@ require("lazy").setup({
 	{"junegunn/fzf", dir = "~/.fzf", build = "./install -all"},
 	"junegunn/fzf.vim",
 	"tpope/vim-fugitive",
-	{"nvim-pack/nvim-spectre", dependencies = "nvim-lua/plenary.nvim"},
+	-- disabled
+	{"nvim-pack/nvim-spectre", dependencies = "nvim-lua/plenary.nvim", enabled = false},
   {
     "nvim-telescope/telescope.nvim",
     tag = "0.1.6",
@@ -64,8 +65,8 @@ require("lazy").setup({
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-fzf-native.nvim",
     },
+    enabled = false,
   },
-	-- disabled
 	{'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons', enabled = false},
   {'karb94/neoscroll.nvim', enabled = false},
 	{"preservim/nerdtree", enabled = false},

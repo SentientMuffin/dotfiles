@@ -27,7 +27,6 @@ vim.keymap.set('', '<c-s>', '<cmd>silent! write<cr>', {desc = 'Save'})
 vim.keymap.set('n', 'f', '/', {desc = 'Search in current file'})
 -- vim.keymap.set('n', 'f', '/\\%<c-r>=line(\'.\')<cr>l', {desc = 'Search within the current line'})
 -- vim.keymap.set('v', 'f', '<esc>/\\%V', {desc = 'Search within the visual selection'})
-vim.keymap.set('n', '<c-f>', '/', {desc = 'Search the current buffer'})
 vim.keymap.set('c', '<c-g>', '/g', {desc = 'replace all in command mode s&r'})
 vim.keymap.set('n', '<leader>c', '.', {desc = 'redo'})
 vim.keymap.set('n', 'M', 'q', {desc = 'record macro'})
@@ -116,9 +115,27 @@ vim.keymap.set({'n', 'x', 'o'}, 'sf',  '<Plug>(leap-forward)')
 vim.keymap.set({'n', 'x', 'o'}, 'sd',  '<Plug>(leap-backward)')
 vim.keymap.set({'n', 'x', 'o'}, 'sg', '<Plug>(leap-from-window)')
 
+-- fzf
+local function vim_grep(args, bang)
+  local query = ''
+  if args ~= nil then
+    query = vim.fn.shellescape(args)
+  end
+
+  local sh = 'git grep --line-number -- ' .. query
+  local root = {dir = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")}
+  vim.call('fzf#vim#grep', sh, 1, vim.call('fzf#vim#with_preview', root, 'right:50%', 'ctrl-/'), bang)
+end
+vim.api.nvim_create_user_command('GitGrep', function(c)
+  vim_grep(c.args, c.bang)
+end, { bang = true, nargs = '*' })
+vim.keymap.set('n', 'G', '<cmd>GitGrep<cr>', {desc = 'Git Grep'})
+vim.keymap.set('n', '<c-f>', '<cmd>GFiles<cr>', {desc = 'Git files'})
+vim.keymap.set('n', '<leader>b', '<cmd>Buffers<cr>', {desc = 'Buffer fuzzy search'})
+
+
 -- Fugitive keymaps
 vim.keymap.set('n', '<c-g>', '<cmd>Git<cr>', {desc = 'Git'})
--- vim.keymap.set('n', '<c-f>', '<cmd>GFiles<cr>', {desc = 'Git files'})
 vim.keymap.set('n', '<leader>gg', '<cmd>G push<cr>', {desc = 'Git push'})
 vim.keymap.set('n', '<leader>gc', '<cmd>G branch<cr>', {desc = 'Git branch'})
 vim.keymap.set('n', '<leader>gb', '<cmd>G blame<cr>', {desc = 'Git blame'})
