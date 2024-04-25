@@ -193,7 +193,7 @@ local function section_b()
 
   local rightPadding = ""
   if rightPaddingSize < 0 then
-    rightBuffersString = string.sub(1, rightSpace - section_b_min_padding)
+    rightBuffersString = string.sub(rightBuffersString, 1, rightSpace - section_b_min_padding)
     -- has to be one char less than the minimum padding,
     -- because there is an extra space from separator
     rightPadding = "... "
