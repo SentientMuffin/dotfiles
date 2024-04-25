@@ -118,7 +118,7 @@ function CyclingBuffers.PreviousN(n, scope)
     if scope ~= nil then
       prev = wrap_in_highlight(prev.bufnr, prev[scope])
     end
-    table.insert(prevN, prev)
+    table.insert(prevN, 1, prev)
 
     if index == 1 then
       index = CyclingBuffers.length
