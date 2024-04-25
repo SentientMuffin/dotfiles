@@ -99,7 +99,7 @@ vim.keymap.set('n', '<leader>av', '<cmd>ls<cr>:vert sb<space>', {desc = 'list an
 vim.keymap.set('n', '<a-s>', '<cmd>bp<cr>', {desc = 'previous buffer in list'})
 vim.keymap.set('n', '<a-f>', '<cmd>bn<cr>', {desc = 'next buffer in list'})
 vim.keymap.set('n', '<leader>6', '<c-6>', {desc = 'toggle previous buffer'})
-vim.keymap.set('n', 'gs', '<c-w>o<c-w>v<c-w>lgd', {desc = 'split and move definition to the right'})
+vim.keymap.set('n', 'gs', '<c-w>o<c-w>v<c-w><right>gd', {desc = 'split and move definition to the right'})
 
 -- NvimTree keymaps
 vim.keymap.set('n', '<leader>t', '<cmd>NvimTreeFocus<cr>', {desc = 'Toggle NvimTree'})
