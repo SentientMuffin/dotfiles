@@ -54,6 +54,7 @@ config.window_padding = {
 }
 
 config.show_tab_index_in_tab_bar = true
+config.enable_tab_bar = false
 
 config.initial_cols = 120
 config.initial_rows = 50

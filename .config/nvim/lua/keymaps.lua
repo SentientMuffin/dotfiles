@@ -1,15 +1,19 @@
 local Commentator = require('commentator')
 
 -- keymaps
-vim.keymap.set({'n', 'v'}, '<BS>', '<nop>', {desc = 'leader key no stand alone action', noremap = true})
-vim.keymap.set({'', 'v'}, 'V', '<c-v>', {desc = 'Visual block mode'})
-vim.keymap.set({'', 'v'}, '<c-q>', 'V', {desc = 'Visual block mode for windows'})
-vim.keymap.set({'', 'v'}, '<c-v>', 'V', {desc = 'Visual line mode'})
+-- vim.keymap.set({'n', 'v'}, '<BS>', '<nop>', {desc = 'leader key no stand alone action', noremap = true})
+-- vim.keymap.set({'', 'v'}, 'V', '<c-v>', {desc = 'Visual block mode'})
+-- vim.keymap.set({'', 'v'}, '<c-q>', 'V', {desc = 'Visual block mode for windows'})
+-- vim.keymap.set({'', 'v'}, '<c-v>', 'V', {desc = 'Visual line mode'})
 vim.keymap.set({'', 't'}, '<c-space>', '<esc>', {desc = 'Escape'})
 vim.keymap.set('c', '<c-space>', '<c-c>', {desc = 'Ctrl-c to escape in command mode'})
 vim.keymap.set('i', '<c-space>', '<esc>l', {desc = 'Escape and move cursor right'})
+vim.keymap.set('i', '<c-[>', '<c-o>:stopinsert<cr>', {desc = 'Escape and move cursor right', noremap = true})
+vim.keymap.set('i', '<c-[>', 'asdfasdfasdfasdf', {desc = 'Escape and move cursor right', noremap = true})
+-- vim.keymap.set('c', '<leader><space>', '<c-c>', {desc = 'Ctrl-c to escape in command mode'})
+-- vim.keymap.set('i', '<leader><space>', '<esc>l', {desc = 'Escape and move cursor right'})
 vim.keymap.set({'n', 'v'}, '<c-c>', ':', {desc = 'Command mode'})
-vim.keymap.set('i', '<c-c>', '<c-c><right>', {desc = 'Escape insert mode'})
+vim.keymap.set('i', '<c-c>', '<c-o>:stopinsert<cr>', {desc = 'Escape insert mode'})
 -- <c-i> is <tab> by default
 -- vim.keymap.set('c', '<c-i>', '<cr>', {desc = 'Enter in command mode'})
 -- vim.keymap.set('c', '<c-h>', '<left>', {desc = 'Command mode cursor left'})
@@ -115,6 +119,30 @@ vim.keymap.set({'n', 'x', 'o'}, 'sf',  '<Plug>(leap-forward)')
 vim.keymap.set({'n', 'x', 'o'}, 'sd',  '<Plug>(leap-backward)')
 vim.keymap.set({'n', 'x', 'o'}, 'sg', '<Plug>(leap-from-window)')
 
+-- GrugFar
+vim.keymap.set('', '<a-f>', '<cmd>GrugFar<cr>')
+
+-- Spectre
+vim.keymap.set('', '<a-s>', '<cmd>ToggleSpectre<cr>')
+function ToggleSpectre()
+  local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+  if vim.v.shell_error ~= 0 then
+    root = "%"
+  end
+
+  local state = require('spectre.state')
+  if state.is_open then
+    require('spectre').toggle()
+  else
+    require('spectre').open({
+      cwd=root,
+    })
+  end
+end
+vim.api.nvim_create_user_command('ToggleSpectre', function()
+  ToggleSpectre()
+end, { bang = true, nargs = '*' })
+
 -- fzf
 local function vim_grep(args, bang)
   local query = ''
@@ -160,26 +188,26 @@ end
 vim.keymap.set('n', 'gr', '*', {desc = 'Place holder when no lsp to avoid accidentally hitting replace'})
 
 -- quickfix window
-vim.keymap.set('n', '<leader>v', '<cmd>copen<cr>', {desc = 'Open quickfix list'})
-vim.api.nvim_create_autocmd('BufWinEnter', {
-	callback = function()
-		local filetype = vim.bo[0].filetype
-		if filetype == 'qf' then
-			-- vim.keymap.set('n', '<cr>', '<c-M>')
-			-- vim.keymap.set('n', 'o', '<cr>zz<c-w><c-w>')
-			vim.keymap.set('n', '<leader>v', '<cmd>ccl<cr>', {desc = 'Close quickfix list'})
-		end
-	end,
-})
+-- vim.keymap.set('n', '<leader>v', '<cmd>copen<cr>', {desc = 'Open quickfix list'})
+-- vim.api.nvim_create_autocmd('BufWinEnter', {
+	-- callback = function()
+		-- local filetype = vim.bo[0].filetype
+		-- if filetype == 'qf' then
+			-- -- vim.keymap.set('n', '<cr>', '<c-M>')
+			-- -- vim.keymap.set('n', 'o', '<cr>zz<c-w><c-w>')
+			-- vim.keymap.set('n', '<leader>v', '<cmd>ccl<cr>', {desc = 'Close quickfix list'})
+		-- end
+	-- end,
+-- })
 
-vim.api.nvim_create_autocmd('BufLeave', {
-	callback = function()
-		local filetype = vim.bo[0].filetype
-		if filetype == 'qf' then
-			vim.keymap.set('n', '<leader>v', '<cmd>copen<cr>', {desc = 'Open quickfix list'})
-		end
-	end,
-})
+-- vim.api.nvim_create_autocmd('BufLeave', {
+	-- callback = function()
+		-- local filetype = vim.bo[0].filetype
+		-- if filetype == 'qf' then
+			-- vim.keymap.set('n', '<leader>v', '<cmd>copen<cr>', {desc = 'Open quickfix list'})
+		-- end
+	-- end,
+-- })
 
 -- special keyboard layout
 -- N <> J switch !!!

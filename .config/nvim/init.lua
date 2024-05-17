@@ -22,7 +22,7 @@ vim.opt.rtp:prepend(lazypath)
 -- leaderkey
 -- vim.g.mapleader = ';'
 -- map leader to backspace for piantor_pro keyboard
-vim.g.mapleader = vim.api.nvim_replace_termcodes('<BS>', true, true, true)
+vim.g.mapleader = vim.api.nvim_replace_termcodes('<space>', true, true, true)
 -- vim.g.mapleader = ' ';
 
 -- Startup Requires
@@ -56,8 +56,9 @@ require("lazy").setup({
 	{"junegunn/fzf", dir = "~/.fzf", build = "./install -all"},
 	"junegunn/fzf.vim",
 	"tpope/vim-fugitive",
+  'MagicDuck/grug-far.nvim',
+	{"nvim-pack/nvim-spectre", dependencies = "nvim-lua/plenary.nvim"},
 	-- disabled
-	{"nvim-pack/nvim-spectre", dependencies = "nvim-lua/plenary.nvim", enabled = false},
   {
     "nvim-telescope/telescope.nvim",
     tag = "0.1.6",

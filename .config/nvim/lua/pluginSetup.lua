@@ -20,6 +20,8 @@ local function my_on_attach(bufnr)
 	vim.keymap.set("n", "i", api.tree.change_root_to_node, opts("In"))
 end
 
+require('grug-far').setup({})
+
 require("nvim-tree").setup({
 	sort = {
 		sorter = "case_sensitive",
@@ -192,7 +194,6 @@ require('bqf').setup {
   -- server_opts_overrides = {},
 -- })
 
--- doesn't work :'(
-require("mytabline")
+-- require("mytabline")
 require("mystatusline")
 --
