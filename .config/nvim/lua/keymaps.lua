@@ -106,7 +106,7 @@ vim.keymap.set('n', '<leader>6', '<c-6>', {desc = 'toggle previous buffer'})
 vim.keymap.set('n', 'gs', '<c-w>o<c-w>v<c-w><right>gd', {desc = 'split and move definition to the right'})
 
 -- NvimTree keymaps
-vim.keymap.set('n', '<leader>t', '<cmd>NvimTreeFocus<cr>', {desc = 'Toggle NvimTree'})
+vim.keymap.set('n', '<leader>t', '<cmd>NvimTreeClose<cr>', {desc = 'Close NvimTree'})
 vim.keymap.set('n', '<leader>f', '<cmd>NvimTreeFindFile<cr>', {desc = 'Refresh NvimTree'})
 
 -- Vim surround override on s

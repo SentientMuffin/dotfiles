@@ -26,6 +26,8 @@ config.font = wezterm.font('JetBrains Mono NL', {
   weight = 'DemiBold'
 })
 
+config.audible_bell = "Disabled"
+
 config.cell_width = 1
 
 -- config.bold_brightens_ansi_colors = 'No'

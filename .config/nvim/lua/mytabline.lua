@@ -214,6 +214,11 @@ local function section_b()
   }
 end
 
+local function section_c()
+  local tabnr = vim.api.nvim_get_current_tabpage()
+  return tostring(tabnr)
+end
+
 -- always show tabline
 vim.opt.stal = 2
 
@@ -222,6 +227,7 @@ Tabline.active = function()
 	return table.concat {
     section_a(),
     section_b(),
+    section_c(),
 	}
 end
 
