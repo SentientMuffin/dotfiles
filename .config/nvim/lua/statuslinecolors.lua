@@ -26,6 +26,13 @@ vim.api.nvim_set_hl(0, "StatuslineInsertAccent", {
   ctermbg = cp.cterm_blue,
   bold = true,
 })
+vim.api.nvim_set_hl(0, "StatusLineFileModified", {
+  fg = cp.gui_blue,
+  bg = cp.gui_dark_gray,
+  ctermfg = cp.cterm_blue,
+  ctermbg = cp.cterm_dark_gray,
+  bold = true,
+})
 vim.api.nvim_set_hl(0, "StatusLineITriangle", {
   fg = cp.separator_blue,
   bg = cp.gui_med_gray_lo,

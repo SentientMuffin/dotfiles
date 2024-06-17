@@ -22,8 +22,9 @@ vim.opt.rtp:prepend(lazypath)
 -- leaderkey
 -- vim.g.mapleader = ';'
 -- map leader to backspace for piantor_pro keyboard
-vim.g.mapleader = vim.api.nvim_replace_termcodes('<space>', true, true, true)
+-- vim.g.mapleader = vim.api.nvim_replace_termcodes('<space>', true, true, true)
 -- vim.g.mapleader = ' ';
+vim.g.mapleader = ';';
 
 -- Startup Requires
 -- Lazy Plugin Manager
@@ -46,8 +47,48 @@ require("lazy").setup({
 	"tmsvg/pear-tree",
 	"farmergreg/vim-lastplace",
 	"tpope/vim-surround",
-	"nvim-tree/nvim-tree.lua",
-	"nvim-tree/nvim-web-devicons",
+  {
+    "mikavilpas/yazi.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    event = "VeryLazy",
+    keys = {
+      -- 👇 in this section, choose your own keymappings!
+      {
+        "<leader>f",
+        function()
+          require("yazi").yazi()
+        end,
+        desc = "Open the file manager",
+      },
+      {
+        -- Open in the current working directory
+        "<c-f>",
+        function()
+          -- require("yazi").yazi(nil, vim.fn.getcwd())
+          require("yazi").yazi(nil, vim.fn.expand('%'))
+        end,
+        desc = "Open the file manager in nvim's working directory" ,
+      },
+      {
+        -- Open in the current git project root
+        "<leader>f",
+        function()
+          local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+          if vim.v.shell_error ~= 0 then
+            root = "%"
+          end
+          require("yazi").yazi(nil, root)
+        end,
+        desc = "Open the file manager in current git root" ,
+      },
+    },
+    opts = {
+      open_for_directories = false,
+    },
+  },
+  "nvim-tree/nvim-web-devicons",
 	{"lukas-reineke/indent-blankline.nvim", main = "ibl"},
 	{"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
 	"nvim-treesitter/nvim-treesitter-textobjects",
@@ -59,6 +100,10 @@ require("lazy").setup({
   'MagicDuck/grug-far.nvim',
 	{"nvim-pack/nvim-spectre", dependencies = "nvim-lua/plenary.nvim"},
 	-- disabled
+	{
+    "nvim-tree/nvim-tree.lua",
+    enabled = false,
+  },
   {
     "nvim-telescope/telescope.nvim",
     tag = "0.1.6",

@@ -205,6 +205,9 @@ local function filename()
       return ""
   end
 	-- fname = "%F"
+  if vim.bo[0].modified then
+    fname = "%#StatusLineFileModified#" .. fname
+  end
   return fname .. " "
 end
 
@@ -290,7 +293,6 @@ Statusline.active = function()
     "%#Git#",
     statusline_section_b(),
     "%#Normal# ",
-    -- filepath(),
     filename(),
     "%#Normal#",
     lsp(),

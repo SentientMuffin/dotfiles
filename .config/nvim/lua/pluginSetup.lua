@@ -5,48 +5,50 @@ require("ibl").setup({
 	},
 })
 
-local function my_on_attach(bufnr)
-	local api = require "nvim-tree.api"
+-- local function my_on_attach(bufnr)
+-- 	local api = require "nvim-tree.api"
+-- 
+-- 	local function opts(desc)
+-- 		return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+-- 	end
+-- 
+-- 	-- default mappings
+-- 	api.config.mappings.default_on_attach(bufnr)
+-- 
+-- 	-- custom mappings
+-- 	vim.keymap.set("n", "u", api.tree.change_root_to_parent, opts("Up"))
+-- 	vim.keymap.set("n", "i", api.tree.change_root_to_node, opts("In"))
+-- end
 
-	local function opts(desc)
-		return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-	end
-
-	-- default mappings
-	api.config.mappings.default_on_attach(bufnr)
-
-	-- custom mappings
-	vim.keymap.set("n", "u", api.tree.change_root_to_parent, opts("Up"))
-	vim.keymap.set("n", "i", api.tree.change_root_to_node, opts("In"))
-end
-
-require('grug-far').setup({})
-
-require("nvim-tree").setup({
-	sort = {
-		sorter = "case_sensitive",
-	},
-	view = {
-		side = "right",
-		width = 60,
-	},
-	renderer = {
-		group_empty = true,
-	},
-	filters = {
-		dotfiles = false,
-		git_ignored = false,
-	},
-  actions = {
-    open_file = {
-      quit_on_open = true,
-      window_picker = {
-        chars = 'DFJKASLGH',
-      },
-    },
-  },
-	on_attach = my_on_attach,
+require('grug-far').setup({
+  startInInsertMode = false,
 })
+
+-- require("nvim-tree").setup({
+-- 	sort = {
+-- 		sorter = "case_sensitive",
+-- 	},
+-- 	view = {
+-- 		side = "right",
+-- 		width = 60,
+-- 	},
+-- 	renderer = {
+-- 		group_empty = true,
+-- 	},
+-- 	filters = {
+-- 		dotfiles = false,
+-- 		git_ignored = false,
+-- 	},
+--   actions = {
+--     open_file = {
+--       quit_on_open = true,
+--       window_picker = {
+--         chars = 'DFJKASLGH',
+--       },
+--     },
+--   },
+-- 	on_attach = my_on_attach,
+-- })
 
 require('nvim-treesitter.configs').setup{
 	highlight = {
@@ -174,6 +176,7 @@ require('bqf').setup {
 -- pcall(require('telescope').load_extension, 'fzf')
 
 -- require('leap').create_default_mappings()
+require('leap').opts.safe_labels = 'sfnut,?\'SFNLHMUGTZ'
 
 -- require('copilot').setup({
   -- panel = { enabled = false },
