@@ -55,7 +55,7 @@ vim.keymap.set('n', '<c-m>', '<cmd>marks<cr>', {desc = 'Show list of marks'})
 vim.keymap.set('n', '<c-p>', '<c-i>', {desc = 'Newer location, opposite of <c-o>'})
 vim.keymap.set('n', 'gw', '*', {desc = 'Search word under cursor'})
 vim.keymap.set('n', 'ge', 'G', {desc = 'End of buffer'})
-vim.keymap.set('n', '~', 'n', {desc = 'Next search'})
+vim.keymap.set('n', 't', 'n', {desc = 'Next search'})
 vim.keymap.set('n', 'b', 'N', {desc = 'Previous search'})
 
 -- buffer actions
