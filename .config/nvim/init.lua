@@ -34,12 +34,25 @@ require("lazy").setup({
   'mhinz/vim-startify',
 	{"neanias/everforest-nvim", branch = "main"},
 	"NLKNguyen/papercolor-theme",
+  {
+    "eldritch-theme/eldritch.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
+  {"shortcuts/no-neck-pain.nvim", version = "*"},
 	-- editor
+  {
+    "neoclide/coc.nvim",
+    branch = "master",
+    build = "npm ci",
+  },
   "ggandor/leap.nvim",
 	{"zbirenbaum/copilot.lua"},
 	"neovim/nvim-lspconfig",
 	"junegunn/vim-easy-align",
 	"osyo-manga/vim-over",
+  -- "yioneko/nvim-vtsls",
   {
     "pmizio/typescript-tools.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
@@ -64,7 +77,7 @@ require("lazy").setup({
       },
       {
         -- Open in the current working directory
-        "<c-f>",
+        "F",
         function()
           -- require("yazi").yazi(nil, vim.fn.getcwd())
           require("yazi").yazi(nil, vim.fn.expand('%'))
@@ -97,7 +110,21 @@ require("lazy").setup({
 	{"junegunn/fzf", dir = "~/.fzf", build = "./install -all"},
 	"junegunn/fzf.vim",
 	"tpope/vim-fugitive",
-  'MagicDuck/grug-far.nvim',
+  {
+    'MagicDuck/grug-far.nvim',
+    config = function()
+      local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+      if vim.v.shell_error ~= 0 then
+        root = "%"
+      end
+      require('grug-far').setup({
+        startInInsertMode = false,
+        prefills = {
+          paths = root,
+        }
+      })
+    end
+  },
 	{"nvim-pack/nvim-spectre", dependencies = "nvim-lua/plenary.nvim"},
 	-- disabled
 	{

@@ -58,6 +58,9 @@ vim.keymap.set('n', 'ge', 'G', {desc = 'End of buffer'})
 vim.keymap.set('n', 't', 'n', {desc = 'Next search'})
 vim.keymap.set('n', 'b', 'N', {desc = 'Previous search'})
 
+vim.keymap.set({'n', 'v'}, 'zj', 'zjzz', {desc = 'Center next fold below'})
+vim.keymap.set({'n', 'v'}, 'zk', 'zkzz', {desc = 'Center previous fold above'})
+
 -- buffer actions
 vim.keymap.set('n', '<leader>q', '<cmd>bp | bd #<cr>', {desc = 'delete current buffer'})
 vim.keymap.set('n', '<leader>aa', '<cmd>ls<cr>:b<space>', {desc = 'list and fuzzy search open buffers'})
@@ -72,8 +75,8 @@ vim.keymap.set('v', 's', '<Plug>VSurround', {desc = 'visual surround selection'}
 vim.keymap.set('n', 'S', '<Plug>YSurround', {desc = 'Surround followed by textobject'})
 
 -- nvim leap
-vim.keymap.set({'n', 'x', 'o'}, 'f',  '<Plug>(leap-forward)')
-vim.keymap.set({'n', 'x', 'o'}, 's',  '<Plug>(leap-backward)')
+-- vim.keymap.set({'n', 'x', 'o'}, 'f',  '<Plug>(leap-forward)')
+vim.keymap.set({'n', 'x', 'o'}, 's',  '<Plug>(leap)')
 -- vim.keymap.set({'n', 'x', 'o'}, 'sg', '<Plug>(leap-from-window)')
 
 -- GrugFar
@@ -115,7 +118,7 @@ vim.api.nvim_create_user_command('GitGrep', function(c)
   vim_grep(c.args, c.bang)
 end, { bang = true, nargs = '*' })
 vim.keymap.set('n', 'G', '<cmd>GitGrep<cr>', {desc = 'Git Grep'})
-vim.keymap.set('n', 'F', '<cmd>GFiles<cr>', {desc = 'Git files'})
+vim.keymap.set('n', '<c-f>', '<cmd>GFiles<cr>', {desc = 'Git files'})
 vim.keymap.set('n', 'q', '<cmd>Buffers<cr>', {desc = 'Buffer fuzzy search'})
 
 
@@ -143,6 +146,17 @@ end
 
 -- LSP keymaps, unattached, attached keymaps are in lsps.lua
 vim.keymap.set('n', 'gr', '*', {desc = 'Place holder when no lsp to avoid accidentally hitting replace'})
+-- coc.nvim
+-- GoTo code navigation
+local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
+vim.keymap.set("n", "gd", "<Plug>(coc-definition)", {silent = true})
+vim.keymap.set("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
+vim.keymap.set("n", "gi", "<Plug>(coc-implementation)", {silent = true})
+vim.keymap.set("n", "gr", "<Plug>(coc-references)", {silent = true})
+-- vim.keymap.set("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
+vim.keymap.set("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : "<TAB>"', opts)
+vim.keymap.set("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
+vim.keymap.set("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
 
 -- quickfix window
 -- vim.keymap.set('n', '<leader>v', '<cmd>copen<cr>', {desc = 'Open quickfix list'})
@@ -166,6 +180,9 @@ vim.keymap.set('n', 'gr', '*', {desc = 'Place holder when no lsp to avoid accide
 	-- end,
 -- })
 
+-- no neck pain
+vim.keymap.set({'n'}, '<leader>p', '<cmd>NoNeckPain<cr>', {desc = 'Toggle NoNeckPain'})
+
 -- special keyboard layout
 -- N <> J switch !!!
 -- vim.keymap.set('n', 'n', 'nzz', {desc = 'Center next search to screen'})
@@ -182,6 +199,10 @@ function NtoJ()
   vim.keymap.set({'n', 'v'}, '<c-w>j', '<c-w>n', {desc = 'Switch n and j'})
   vim.keymap.set({'n', 'v'}, '<c-w>J', '<c-w>N', {desc = 'Switch n and j'})
   vim.keymap.set({'n', 'v'}, '<c-w><c-j>', '<c-w><c-n>', {desc = 'Switch n and j'})
+  vim.keymap.set({'n', 'v'}, 'zn', 'zjzz', {desc = 'Switch n and j'})
+  vim.keymap.set({'n', 'v'}, 'zN', 'zJ', {desc = 'Switch n and j'})
+  vim.keymap.set({'n', 'v'}, 'zj', 'zn', {desc = 'Switch n and j'})
+  vim.keymap.set({'n', 'v'}, 'zJ', 'zN', {desc = 'Switch n and j'})
 
   -- O <> L switch !!!
   vim.keymap.set({'', 'v'}, 'l', 'o', {desc = 'Switch o and l'})
@@ -196,6 +217,10 @@ function NtoJ()
   vim.keymap.set({'n', 'v'}, '<c-w><c-o>', '<c-w>l', {desc = 'Switch o and l'})
   vim.keymap.set({'n', 'v'}, '<c-w>l', '<c-w>o', {desc = 'Switch o and l'})
   vim.keymap.set({'n', 'v'}, '<c-w><c-l>', '<c-w><c-o>', {desc = 'Switch o and l'})
+  vim.keymap.set({'n', 'v'}, 'zo', 'zl', {desc = 'Switch n and j'})
+  vim.keymap.set({'n', 'v'}, 'zO', 'zL', {desc = 'Switch n and j'})
+  vim.keymap.set({'n', 'v'}, 'zl', 'zo', {desc = 'Switch n and j'})
+  vim.keymap.set({'n', 'v'}, 'zL', 'zO', {desc = 'Switch n and j'})
 end
 vim.keymap.set('n', '<leader>asdf', function() NtoJ() end, {desc = 'Switch n and j'})
 -- defualt for now
@@ -213,6 +238,10 @@ function JtoN()
   vim.keymap.set({'n', 'v'}, '<c-w>n', '<c-w>n', {desc = 'Switch n and j'})
   vim.keymap.set({'n', 'v'}, '<c-w>N', '<c-w>N', {desc = 'Switch n and j'})
   vim.keymap.set({'n', 'v'}, '<c-w><c-n>', '<c-w><c-n>', {desc = 'Switch n and j'})
+  vim.keymap.set({'n', 'v'}, 'zn', 'zn', {desc = 'Switch n and j'})
+  vim.keymap.set({'n', 'v'}, 'zN', 'zN', {desc = 'Switch n and j'})
+  vim.keymap.set({'n', 'v'}, 'zj', 'zjzz', {desc = 'Switch n and j'})
+  vim.keymap.set({'n', 'v'}, 'zJ', 'zJ', {desc = 'Switch n and j'})
 
   -- O <> L switch !!!
   vim.keymap.set({'', 'v'}, 'l', 'l', {desc = 'Switch o and l'})
@@ -227,5 +256,9 @@ function JtoN()
   vim.keymap.set({'n', 'v'}, '<c-w><c-l>', '<c-w>l', {desc = 'Switch o and l'})
   vim.keymap.set({'n', 'v'}, '<c-w>o', '<c-w>o', {desc = 'Switch o and l'})
   vim.keymap.set({'n', 'v'}, '<c-w><c-o>', '<c-w><c-o>', {desc = 'Switch o and l'})
+  vim.keymap.set({'n', 'v'}, 'zo', 'zo', {desc = 'Switch n and j'})
+  vim.keymap.set({'n', 'v'}, 'zO', 'zO', {desc = 'Switch n and j'})
+  vim.keymap.set({'n', 'v'}, 'zl', 'zl', {desc = 'Switch n and j'})
+  vim.keymap.set({'n', 'v'}, 'zL', 'zL', {desc = 'Switch n and j'})
 end
 vim.keymap.set('n', '<leader>,', function() JtoN() end, {desc = 'Switch j and n'})

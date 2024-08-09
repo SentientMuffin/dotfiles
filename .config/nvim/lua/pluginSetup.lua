@@ -5,6 +5,8 @@ require("ibl").setup({
 	},
 })
 
+require("eldritch")
+
 -- local function my_on_attach(bufnr)
 -- 	local api = require "nvim-tree.api"
 -- 
@@ -20,9 +22,9 @@ require("ibl").setup({
 -- 	vim.keymap.set("n", "i", api.tree.change_root_to_node, opts("In"))
 -- end
 
-require('grug-far').setup({
-  startInInsertMode = false,
-})
+-- require('grug-far').setup({
+  -- startInInsertMode = false,
+-- })
 
 -- require("nvim-tree").setup({
 -- 	sort = {
@@ -62,16 +64,16 @@ require('nvim-treesitter.configs').setup{
 		-- end,
 	},
 	ensure_installed = {
-		"c", "lua",
+		"c", "lua", "go", "tsx",
 	},
 	-- 'nvim-treesitter/nvim-treesitter-textobjects'
 	incremental_selection = {
 		enable = true,
 		keymaps = {
-			init_selection = "<leader>gi", -- set to `false` to disable one of the mappings
-			node_incremental = "<c-3>",
+			init_selection = "<leader><space>", -- set to `false` to disable one of the mappings
+			node_incremental = "<a-a>",
+			node_decremental = "<a-d>",
 			-- scope_incremental = "<a-h>",
-			node_decremental = "<c-4>",
 			-- init_selection = "<leader>gi",
 			-- node_incremental = "<leader>ga",
 			-- node_decremental = "<leader>gd",

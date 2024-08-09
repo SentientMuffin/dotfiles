@@ -19,7 +19,8 @@ end
 
 -- This is where you actually apply your config choices
 -- For example, changing the color scheme:
-config.color_scheme = 'Everforest Dark (Gogh)'
+-- config.color_scheme = 'Everforest Dark (Gogh)'
+config.color_scheme = 'Eldritch'
 
 config.font_dirs = { '/Users/xinjun.lin/Library/Fonts' }
 config.font = wezterm.font('JetBrains Mono NL', {
@@ -30,7 +31,7 @@ config.audible_bell = "Disabled"
 
 config.cell_width = 1
 
--- config.bold_brightens_ansi_colors = 'No'
+config.bold_brightens_ansi_colors = 'No'
 -- config.custom_block_glyphs = true
 config.foreground_text_hsb = {
   hue = 1.0,
