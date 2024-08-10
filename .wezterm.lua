@@ -40,7 +40,7 @@ config.foreground_text_hsb = {
 }
 
 config.line_height = 1.0
-config.font_size = 12
+config.font_size = 8
 
 config.force_reverse_video_cursor = true
 config.cursor_blink_rate = 500
