@@ -6,16 +6,16 @@ local autocmd = vim.api.nvim_create_autocmd
 -- vim.lsp.log.set_level(vim.log.levels.DEBUG)
 -- vim.lsp.set_log_level(vim.log.levels.DEBUG)
 
--- lspconfig.tsserver.setup {}
--- lspconfig.tsserver.setup {
-	-- cmd = {"typescript-language-server", "--stdio"},
-	-- filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
-	-- init_options = {
-		-- hostInfo = "neovim",
-	-- },
-	-- root_dir = util.root_pattern(".git"), -- for currrent work, it will always be a git repo
-  -- single_file_support = false,
--- }
+lspconfig.tsserver.setup {}
+lspconfig.tsserver.setup {
+	cmd = {"typescript-language-server", "--stdio"},
+	filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+	init_options = {
+		hostInfo = "neovim",
+	},
+	root_dir = util.root_pattern(".git"), -- for currrent work, it will always be a git repo
+  single_file_support = false,
+}
 
 -- require("lspconfig.configs").vtsls = require("vtsls").lspconfig -- set default server config, optional but recommended
 

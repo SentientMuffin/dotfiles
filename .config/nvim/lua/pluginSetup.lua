@@ -6,6 +6,16 @@ require("ibl").setup({
 })
 
 require("eldritch")
+require("no-neck-pain").setup({
+  width = 120,
+  buffers = {
+    right = {
+      -- When `false`, the buffer won't be created.
+      --- @type boolean
+      enabled = false,
+    }
+  }
+})
 
 -- local function my_on_attach(bufnr)
 -- 	local api = require "nvim-tree.api"
@@ -56,7 +66,8 @@ require('nvim-treesitter.configs').setup{
 	highlight = {
 		enable = true,
     disable = {
-      "vimdoc",
+      -- "vimdoc",
+      -- "txt",
     },
 		-- disable = function(lang, buf)
 			-- local fName = vim.api.nvim_buf_get_name(buf)
@@ -70,9 +81,10 @@ require('nvim-treesitter.configs').setup{
 	incremental_selection = {
 		enable = true,
 		keymaps = {
-			init_selection = "<leader><space>", -- set to `false` to disable one of the mappings
-			node_incremental = "<a-a>",
-			node_decremental = "<a-d>",
+			init_selection = "t", -- set to `false` to disable one of the mappings
+      scope_incremental = false,
+			node_incremental = "t",
+			node_decremental = "b",
 			-- scope_incremental = "<a-h>",
 			-- init_selection = "<leader>gi",
 			-- node_incremental = "<leader>ga",
@@ -82,13 +94,15 @@ require('nvim-treesitter.configs').setup{
 	textobjects = {
     select = {
       enable = true,
-      lookahead = true,
+      lookahead = false,
       keymaps = {
         -- You can use the capture groups defined in textobjects.scm
         ["af"] = "@function.outer",
         ["if"] = "@function.inner",
 				["ir"] = "@assignment.rhs",
 				["il"] = "@assignment.lhs",
+				["ap"] = "@parameter.outer",
+				["ip"] = "@parameter.inner",
       },
       -- You can choose the select mode (default is charwise 'v')
       --
@@ -112,6 +126,24 @@ require('nvim-treesitter.configs').setup{
       -- * selection_mode: eg 'v'
       -- and should return true or false
       -- include_surrounding_whitespace = false,
+    },
+    move = {
+      enable = true,
+      set_jumps = true, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        -- ["]]"] = "@parameter.inner",
+        ["}}"] = "@function.outer",
+      },
+      goto_next_end = {
+        ["]]"] = "@parameter.inner",
+      },
+      goto_previous_start = {
+        -- ["[["] = "@parameter.inner",
+        ["{{"] = "@function.outer",
+      },
+      goto_previous_end = {
+        ["[["] = "@parameter.inner",
+      },
     },
   },
 }
@@ -177,8 +209,33 @@ require('bqf').setup {
 -- }
 -- pcall(require('telescope').load_extension, 'fzf')
 
--- require('leap').create_default_mappings()
-require('leap').opts.safe_labels = 'sfnut,?\'SFNLHMUGTZ'
+local leap = require('leap')
+leap.opts.safe_labels = 'sfwetgbjuqz,.?\'\"SFWETLHUBMQZJ'
+leap.opts.labels = 'sfwetgbjuqz,.?\'\"SFWETLHUBMQZJ'
+leap.opts.special_keys =    {
+  next_target = '<space>',
+  prev_target = { '<backspace>', '<tab>' },
+  next_group = '<enter>',
+  prev_group = { '<backspace>', '<tab>' },
+}
+vim.api.nvim_create_autocmd('ColorScheme', {
+  callback = function ()
+    if vim.g.colors_name == "eldritch" then
+      -- Force using the defaults of Leap:
+      require('leap').init_highlight(true)
+      -- And/or make your own tweaks:
+      vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'ModeMsg' })
+      vim.api.nvim_set_hl(0, 'LeapLabel', {
+        bold = true,
+        underline = true,
+        fg = '#ebfafa',
+        bg = '#bf4f8e',
+      })
+    end
+  end
+})
+
+-- require('leap').opts.safe_labels = 'sfnut,?\'SFNLHMUGTZ'
 
 -- require('copilot').setup({
   -- panel = { enabled = false },

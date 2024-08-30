@@ -24,7 +24,10 @@ vim.opt.rtp:prepend(lazypath)
 -- map leader to backspace for piantor_pro keyboard
 -- vim.g.mapleader = vim.api.nvim_replace_termcodes('<space>', true, true, true)
 -- vim.g.mapleader = ' ';
-vim.g.mapleader = ';';
+-- vim.g.mapleader = ';';
+vim.keymap.set({''}, ' ', '<nop>', {desc = 'remove default behaviour of <space>'});
+vim.g.mapleader = ' ';
+-- vim.g.maplocalleader = ';';
 
 -- Startup Requires
 -- Lazy Plugin Manager
@@ -68,34 +71,34 @@ require("lazy").setup({
     event = "VeryLazy",
     keys = {
       -- 👇 in this section, choose your own keymappings!
-      {
-        "<leader>f",
-        function()
-          require("yazi").yazi()
-        end,
-        desc = "Open the file manager",
-      },
+      -- {
+        -- "<leader>f",
+        -- function()
+          -- require("yazi").yazi()
+        -- end,
+        -- desc = "Open the file manager",
+      -- },
       {
         -- Open in the current working directory
-        "F",
+        "<leader>f",
         function()
           -- require("yazi").yazi(nil, vim.fn.getcwd())
           require("yazi").yazi(nil, vim.fn.expand('%'))
         end,
         desc = "Open the file manager in nvim's working directory" ,
       },
-      {
-        -- Open in the current git project root
-        "<leader>f",
-        function()
-          local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
-          if vim.v.shell_error ~= 0 then
-            root = "%"
-          end
-          require("yazi").yazi(nil, root)
-        end,
-        desc = "Open the file manager in current git root" ,
-      },
+      -- {
+        -- -- Open in the current git project root
+        -- "<leader>f",
+        -- function()
+          -- local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+          -- if vim.v.shell_error ~= 0 then
+            -- root = "%"
+          -- end
+          -- require("yazi").yazi(nil, root)
+        -- end,
+        -- desc = "Open the file manager in current git root" ,
+      -- },
     },
     opts = {
       open_for_directories = false,
@@ -158,6 +161,7 @@ require("vimSetup")
 require("lsps")
 Commentator = require("commentator")
 require('keymaps')
+-- require('mycmdline')
 
 -- autocmds
 -- reload config on save
