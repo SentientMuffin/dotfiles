@@ -1,3 +1,97 @@
+-- local Input = require("nui.input")
+-- local event = require("nui.utils.autocmd").event
+
+-- local input = Input({
+  -- relative = "cursor",
+  -- position = {
+    -- row = 2,
+    -- col = 0,
+  -- },
+  -- size = {
+    -- width = 20,
+  -- },
+  -- border = {
+    -- style = "single",
+    -- text = {
+      -- top = "Cmd",
+      -- top_align = "left",
+    -- },
+  -- },
+  -- win_options = {
+    -- winhighlight = "Normal:Normal,FloatBorder:Normal",
+  -- },
+-- }, {
+  -- prompt = "",
+  -- default_value = "",
+  -- on_close = function()
+    -- -- print("Input Closed!")
+  -- end,
+  -- on_submit = function(value)
+    -- print("Input Submitted: " .. value)
+
+    -- local ok, err = pcall(vim.cmd, value)
+    -- if not ok then
+      -- local idx = err:find(':E')
+      -- if type(idx) ~= 'number' then
+        -- return
+      -- end
+      -- local msg = err:sub(idx + 1):gsub('\t', '    ')
+      -- vim.notify(msg, vim.log.levels.ERROR)
+    -- end
+  -- end,
+-- })
+-- -- mount/open the component
+-- vim.keymap.set('n', ':', function () input:mount() end, {noremap = true})
+
+-- -- unmount component when cursor leaves buffer
+-- input:on(event.BufLeave, function()
+  -- local bufnr = vim.api.nvim_get_current_buf()
+  -- print("Left Buffer" .. bufnr)
+  -- -- pcall(vim.api.nvim_buf_delete, bufnr, {force = true})
+  -- input:unmount()
+-- end)
+
+-- input:map("n", "<esc>", "dd<cr>", { noremap = true })
+-- input:map("n", "<esc>", "<cr>", { noremap = true })
+
+local cmp = require("cmp")
+cmp.setup({
+  snippet = {
+    -- REQUIRED - you must specify a snippet engine
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+      -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+      -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+      -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+      -- vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
+    end,
+  },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<TAB>'] = cmp.mapping.select_next_item(),
+    ['<S-TAB>'] = cmp.mapping.select_prev_item(),
+    -- ['<C-Space>'] = cmp.mapping.complete(),
+    -- ['<C-Space>'] = cmp.mapping.abort(),
+    ['<C-c>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+  }),
+  completion = {
+    keyword_length = 1,
+  },
+  sources = cmp.config.sources({
+    -- { name = 'nvim_lsp' },
+    { name = 'vsnip' }, -- For vsnip users.
+    -- { name = 'luasnip' }, -- For luasnip users.
+    -- { name = 'ultisnips' }, -- For ultisnips users.
+    -- { name = 'snippy' }, -- For snippy users.
+  }, {
+    { name = 'buffer' },
+  })
+})
+
 require("ibl").setup({
 	indent = {
 		char = "╎",
@@ -84,7 +178,7 @@ require('nvim-treesitter.configs').setup{
 			init_selection = "t", -- set to `false` to disable one of the mappings
       scope_incremental = false,
 			node_incremental = "t",
-			node_decremental = "b",
+			node_decremental = "T",
 			-- scope_incremental = "<a-h>",
 			-- init_selection = "<leader>gi",
 			-- node_incremental = "<leader>ga",
@@ -136,6 +230,7 @@ require('nvim-treesitter.configs').setup{
       },
       goto_next_end = {
         ["]]"] = "@parameter.inner",
+        ["{}"] = "@function.outer",
       },
       goto_previous_start = {
         -- ["[["] = "@parameter.inner",
@@ -143,6 +238,7 @@ require('nvim-treesitter.configs').setup{
       },
       goto_previous_end = {
         ["[["] = "@parameter.inner",
+        ["}{"] = "@function.outer",
       },
     },
   },
@@ -214,9 +310,9 @@ leap.opts.safe_labels = 'sfwetgbjuqz,.?\'\"SFWETLHUBMQZJ'
 leap.opts.labels = 'sfwetgbjuqz,.?\'\"SFWETLHUBMQZJ'
 leap.opts.special_keys =    {
   next_target = '<space>',
-  prev_target = { '<backspace>', '<tab>' },
+  prev_target = { '<backspace>' },
   next_group = '<enter>',
-  prev_group = { '<backspace>', '<tab>' },
+  prev_group = { '<backspace>' },
 }
 vim.api.nvim_create_autocmd('ColorScheme', {
   callback = function ()
@@ -227,7 +323,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
       vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'ModeMsg' })
       vim.api.nvim_set_hl(0, 'LeapLabel', {
         bold = true,
-        underline = true,
+        underline = false,
         fg = '#ebfafa',
         bg = '#bf4f8e',
       })
@@ -258,4 +354,3 @@ vim.api.nvim_create_autocmd('ColorScheme', {
 
 -- require("mytabline")
 require("mystatusline")
---

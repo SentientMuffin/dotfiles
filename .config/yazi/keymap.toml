@@ -6,7 +6,7 @@
 
 keymap = [
 	# { on = [ "<Esc>" ], run = "escape",             desc = "Exit visual mode, clear selected, or cancel search" },
-	{ on = [ "<Esc>" ], run = "quit",             desc = "Exit visual mode, clear selected, or cancel search" },
+	{ on = [ "<C-Space>" ], run = "quit",             desc = "Exit visual mode, clear selected, or cancel search" },
 	{ on = [ "<C-[>" ], run = "escape",             desc = "Exit visual mode, clear selected, or cancel search" },
 	{ on = [ "q" ],     run = "escape",               desc = "Exit the process" },
 	{ on = [ "Q" ],     run = "quit --no-cwd-file", desc = "Exit the process without writing cwd-file" },
@@ -93,7 +93,7 @@ keymap = [
 
 	# Copy
 	{ on = [ "c", "c" ], run = "copy path",             desc = "Copy the absolute path" },
-	{ on = [ "c", "d" ], run = "copy dirname",          desc = "Copy the path of the parent directory" },
+	{ on = [ "c", "d" ], run = ["copy dirname", "quit"],          desc = "Copy the path of the parent directory and exit" },
 	{ on = [ "c", "f" ], run = "copy filename",         desc = "Copy the name of the file" },
 	{ on = [ "c", "n" ], run = "copy name_without_ext", desc = "Copy the name of the file without the extension" },
 

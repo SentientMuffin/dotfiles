@@ -26,8 +26,8 @@ vim.opt.rtp:prepend(lazypath)
 -- vim.g.mapleader = ' ';
 -- vim.g.mapleader = ';';
 vim.keymap.set({''}, ' ', '<nop>', {desc = 'remove default behaviour of <space>'});
-vim.g.mapleader = ' ';
--- vim.g.maplocalleader = ';';
+vim.g.mapleader = ';';
+-- vim.g.maplocalleader = '^';
 
 -- Startup Requires
 -- Lazy Plugin Manager
@@ -46,9 +46,8 @@ require("lazy").setup({
   {"shortcuts/no-neck-pain.nvim", version = "*"},
 	-- editor
   {
-    "neoclide/coc.nvim",
-    branch = "master",
-    build = "npm ci",
+    "hrsh7th/nvim-cmp",
+    dependencies = { "hrsh7th/vim-vsnip", "hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp" },
   },
   "ggandor/leap.nvim",
 	{"zbirenbaum/copilot.lua"},
@@ -80,25 +79,26 @@ require("lazy").setup({
       -- },
       {
         -- Open in the current working directory
-        "<leader>f",
+        -- "<leader>f",
+        "<c-d>",
         function()
           -- require("yazi").yazi(nil, vim.fn.getcwd())
           require("yazi").yazi(nil, vim.fn.expand('%'))
         end,
         desc = "Open the file manager in nvim's working directory" ,
       },
-      -- {
-        -- -- Open in the current git project root
-        -- "<leader>f",
-        -- function()
-          -- local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
-          -- if vim.v.shell_error ~= 0 then
-            -- root = "%"
-          -- end
-          -- require("yazi").yazi(nil, root)
-        -- end,
-        -- desc = "Open the file manager in current git root" ,
-      -- },
+      {
+        -- Open in the current git project root
+        "<leader>g",
+        function()
+          local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+          if vim.v.shell_error ~= 0 then
+            root = "%"
+          end
+          require("yazi").yazi(nil, root)
+        end,
+        desc = "Open the file manager in current git root" ,
+      },
     },
     opts = {
       open_for_directories = false,
@@ -114,22 +114,55 @@ require("lazy").setup({
 	"junegunn/fzf.vim",
 	"tpope/vim-fugitive",
   {
+    -- grugfar
     'MagicDuck/grug-far.nvim',
     config = function()
       local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
       if vim.v.shell_error ~= 0 then
         root = "%"
       end
+      vim.g.maplocalleader = ' ';
       require('grug-far').setup({
-        startInInsertMode = false,
+        transient = true,
+        startInInsertMode = true,
+        searchOnInsertLeave = true,
         prefills = {
           paths = root,
-        }
+        },
+        keymaps = {
+          replace = { n = '<localleader>r' },
+          qflist = { n = '<leader>q' },
+          syncLocations = { n = '<localleader>s' },
+          syncLine = { n = '<localleader>l' },
+          close = { n = '<c-space>' },
+          historyOpen = { n = '<localleader>t' },
+          historyAdd = { n = '<localleader>a' },
+          refresh = { n = '<localleader>f' },
+          -- openLocation = { n = '<tab>' },
+          openNextLocation = { n = '<down>' },
+          openPrevLocation = { n = '<up>' },
+          gotoLocation = { n = '<enter>' },
+          pickHistoryEntry = { n = '<enter>' },
+          abort = { n = '<localleader>b' },
+          help = { n = 'g?' },
+          toggleShowCommand = { n = '<leader>p' },
+          swapEngine = { n = '<localleader>e' },
+          previewLocation = { n = '<localleader>i' },
+        },
+        windowCreationCommand = 'tabnew % | vsplit',
+        -- windowCreationCommand = 'only | vsplit',
       })
     end
   },
-	{"nvim-pack/nvim-spectre", dependencies = "nvim-lua/plenary.nvim"},
 	-- disabled
+  {
+    "neoclide/coc.nvim",
+    branch = "master",
+    build = "npm ci",
+    enabled = false,
+  },
+  {"MunifTanjim/nui.nvim", enabled = false},
+	{"nvim-pack/nvim-spectre", dependencies = "nvim-lua/plenary.nvim", enabled = false},
 	{
     "nvim-tree/nvim-tree.lua",
     enabled = false,
@@ -161,6 +194,7 @@ require("vimSetup")
 require("lsps")
 Commentator = require("commentator")
 require('keymaps')
+require('websearch')
 -- require('mycmdline')
 
 -- autocmds
