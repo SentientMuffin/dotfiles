@@ -21,8 +21,9 @@ vim.keymap.set('n', '<leader>cd', '<cmd>let @+ = expand(\'%:p:h\')<cr>', {desc =
 
 -- text editting
 vim.keymap.set({'n', 'v'}, 'R', 'r', {desc = 'Replace'})
-vim.keymap.set('n', '\'', ':call append(line(\'.\')-1, \'\')<cr>', {desc = 'Insert empty line above'})
-vim.keymap.set('n', '"', ':call append(line(\'.\'), \'\')<cr>', {desc = 'Insert empty line above'})
+vim.keymap.set('n', '"', ':call append(line(\'.\')-1, \'\')<cr>', {desc = 'Insert empty line above'})
+vim.keymap.set('n', '\'', ':call append(line(\'.\')-1, \'\')<cr>k', {desc = 'Push current line down'})
+vim.keymap.set('n', '|', ':call append(line(\'.\'), \'\')<cr>', {desc = 'Insert empty line below'})
 vim.keymap.set('n', 'K', 'i<cr><esc>k$', {desc = 'split line from cursor'})
 vim.keymap.set('n', '<leader>e', Commentator.CommentLine, {desc = 'Comment current or highlighted lines'})
 vim.keymap.set('n', '<leader>r', Commentator.UncommentLine, {desc = 'Uncomment current or highlighted lines'})
@@ -301,7 +302,7 @@ vim.keymap.set('n', '<leader>,', function() JtoN() end, {desc = 'Switch j and n'
 
 -- nvim leap
 vim.keymap.set({'n', 'x', 'o'}, 'f',  '<Plug>(leap-forward-to)')
-vim.keymap.set({'n', 'x', 'o'}, 'F',  '<Plug>(leap-backward-to)')
+vim.keymap.set({'n', 'x', 'o'}, 'r',  '<Plug>(leap-backward-to)')
 vim.keymap.set({'n', 'x', 'o'}, 'gw', '<Plug>(leap-from-window)')
 -- vim.keymap.set({'n', 'x', 'o'}, ',',  '<Plug>(leap)')
 

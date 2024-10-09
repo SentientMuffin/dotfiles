@@ -54,7 +54,7 @@ require("lazy").setup({
 	"neovim/nvim-lspconfig",
 	"junegunn/vim-easy-align",
 	"osyo-manga/vim-over",
-  -- "yioneko/nvim-vtsls",
+  "yioneko/nvim-vtsls",
   {
     "pmizio/typescript-tools.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
@@ -149,8 +149,8 @@ require("lazy").setup({
           swapEngine = { n = '<localleader>e' },
           previewLocation = { n = '<localleader>i' },
         },
-        windowCreationCommand = 'tabnew % | vsplit',
-        -- windowCreationCommand = 'only | vsplit',
+        -- windowCreationCommand = 'tabnew % | vsplit',
+        windowCreationCommand = 'only | vsplit',
       })
     end
   },

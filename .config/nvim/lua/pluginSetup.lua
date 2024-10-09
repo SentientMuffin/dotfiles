@@ -333,24 +333,24 @@ vim.api.nvim_create_autocmd('ColorScheme', {
 
 -- require('leap').opts.safe_labels = 'sfnut,?\'SFNLHMUGTZ'
 
--- require('copilot').setup({
-  -- panel = { enabled = false },
-  -- suggestion = {
-    -- enabled = true,
-    -- auto_trigger = true,
-    -- debounce = 75,
-    -- keymap = {
-      -- accept = "<a-i>",
-      -- accept_word = "<a-w>",
-      -- accept_line = "<a-l>",
-      -- next = "<a-k>",
-      -- prev = "<a-j>",
-      -- dismiss = "<c-e>"
-    -- },
-  -- },
-  -- copilot_node_command = 'node', -- Node.js version must be > 18.x
-  -- server_opts_overrides = {},
--- })
+require('copilot').setup({
+  panel = { enabled = false },
+  suggestion = {
+    enabled = true,
+    auto_trigger = true,
+    debounce = 75,
+    keymap = {
+      accept = "<a-i>",
+      accept_word = "<a-a>",
+      accept_line = "<a-l>",
+      next = "<a-k>",
+      prev = "<a-j>",
+      dismiss = "<c-e>"
+    },
+  },
+  copilot_node_command = 'node', -- Node.js version must be > 18.x
+  server_opts_overrides = {},
+})
 
 -- require("mytabline")
 require("mystatusline")
