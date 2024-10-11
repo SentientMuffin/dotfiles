@@ -204,8 +204,10 @@ local function filename()
   if fname == "" then
       return ""
   end
+  local bufnr = vim.fn.winbufnr(vim.g.statusline_winid)
+  fname = "[" .. bufnr .. "] " .. fname
 	-- fname = "%F"
-  if vim.bo[0].modified then
+  if vim.bo[bufnr].modified then
     fname = "%#StatusLineFileModified#" .. fname
   end
   return fname .. " "
