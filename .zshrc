@@ -14,6 +14,7 @@ alias tst='/Users/xinjun.lin/tmuxStart'
 alias nviml='nvim -u ~/.dotfiles/home/.config/nvim/init-wip.lua'
 alias ll='{pwd && ls -lah | tail --lines=+2;}'
 
+export EDITOR=nvim
 source ~/.zsh_env_vars
 
 # styling

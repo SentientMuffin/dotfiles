@@ -35,7 +35,21 @@ vim.g.mapleader = ';';
 require("lazy").setup({
 	-- looks are everything
   'mhinz/vim-startify',
-	{"neanias/everforest-nvim", branch = "main"},
+	{
+    "neanias/everforest-nvim",
+    branch = "main",
+    version = false,
+    lazy = false,
+    priority = 1000, -- make sure to load this before all the other start plugins
+    -- Optional; default configuration will be used if setup isn't called.
+    config = function()
+      require("everforest").setup({
+        -- Your config here
+        background = "hard",
+      })
+    end,
+  },
+  "rebelot/kanagawa.nvim",
 	"NLKNguyen/papercolor-theme",
   {
     "eldritch-theme/eldritch.nvim",
@@ -43,13 +57,51 @@ require("lazy").setup({
     priority = 1000,
     opts = {},
   },
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
   {"shortcuts/no-neck-pain.nvim", version = "*"},
+  {
+    "nvchad/showkeys",
+    cmd = "ShowkeysToggle",
+    opts = {
+      timeout = 3, -- in secs
+      maxkeys = 3,
+      show_count = true,
+
+      -- bottom-left, bottom-right, bottom-center, top-left, top-right, top-center
+      position = "top-right",
+    },
+  },
 	-- editor
   {
     "hrsh7th/nvim-cmp",
     dependencies = { "hrsh7th/vim-vsnip", "hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp" },
   },
   "ggandor/leap.nvim",
+  -- {
+    -- "folke/flash.nvim",
+    -- event = "VeryLazy",
+    -- ---@type Flash.Config
+    -- opts = {
+      -- modes = {
+        -- search = {
+          -- enabled = true,
+        -- },
+      -- },
+    -- },
+    -- -- stylua: ignore
+    -- keys = {
+      -- { "f",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+      -- -- { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+      -- -- { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
+      -- -- { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      -- -- { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
+    -- },
+  -- },
 	{"zbirenbaum/copilot.lua"},
 	"neovim/nvim-lspconfig",
 	"junegunn/vim-easy-align",
@@ -196,6 +248,8 @@ Commentator = require("commentator")
 require('keymaps')
 require('websearch')
 -- require('mycmdline')
+
+require("showkeys").open()
 
 -- autocmds
 -- reload config on save

@@ -24,8 +24,12 @@ config.term = 'xterm-256color'
 -- For example, changing the color scheme:
 -- config.color_scheme_dirs = { '/Users/xinjun.lin/.config/wezterm/colors' }
 -- config.color_scheme = 'Everforest Dark (Gogh)'
+config.color_scheme = 'Kanagawa (Gogh)'
 -- config.color_scheme = 'Earthsong'
-config.color_scheme = 'Eldritch'
+-- config.color_scheme = 'Eldritch'
+-- config.color_scheme = 'Tokyo Night Storm (Gogh)'
+
+
 -- config.colors = {
   -- -- The default text color
   -- foreground = '#ebfafa',

@@ -15,7 +15,7 @@ vim.keymap.set('', '<c-s>', '<cmd>silent! write<cr>', {desc = 'Save'})
 vim.keymap.set('c', '<c-g>', '/g', {desc = 'replace all in command mode s&r'})
 -- vim.keymap.set('n', '<leader>c', '.', {desc = 'Repeat previous action'})
 -- vim.keymap.set('n', 'M', 'q', {desc = 'record macro'})
-vim.keymap.set('n', '<c-r>', '<c-y>', {desc = 'Page down'})
+vim.keymap.set({'n', 'v'}, '<c-r>', '<c-y>', {desc = 'Page down'})
 vim.keymap.set('n', 'U', '<c-r>', {desc = 'Redo'})
 vim.keymap.set('n', '<leader>cd', '<cmd>let @+ = expand(\'%:p:h\')<cr>', {desc = 'Copy current directory'})
 
@@ -52,6 +52,11 @@ vim.keymap.set('i', '<c-l>', '<c-o>A', {desc = 'End of line i'})
 vim.keymap.set('i', '<c-d>', '<left>', {desc = 'Input mode cursor left'})
 vim.keymap.set('i', '<c-f>', '<right>', {desc = 'Input mode cursor right'})
 
+vim.keymap.set({'n', 'v'}, '!', '?[[({\\])}]<cr>', {desc = 'Go to the previous bracket'})
+vim.keymap.set({'n', 'v'}, ',', '/[[({\\])}]<cr>', {desc = 'Go to the next bracket'})
+vim.keymap.set({'n', 'v'}, '^', '?[\'"`]<cr>', {desc = 'Go to the previous quote'})
+vim.keymap.set({'n', 'v'}, '&', '/[\'"`]<cr>', {desc = 'Go to the next quote'})
+
 -- vim.keymap.set('n', 'w', '?\\<<cr>', {desc = 'Beginning of previous word'})
 -- vim.keymap.set('n', 'W', '?\\><cr>h', {desc = 'End of previous word'})
 -- vim.keymap.set('v', 'w', '?\\<<cr>', {desc = 'Beginning of previous word'})
@@ -74,11 +79,11 @@ vim.keymap.set({'n', 'v'}, 'x', '~h', {desc = 'Toggle case under cursor'})
 vim.keymap.set('n', '<c-j>', 'Lzz', {desc = 'Center screen on page down'})
 vim.keymap.set('n', '<c-k>', 'Hzz', {desc = 'Center screen on page up'})
 vim.keymap.set('n', 'gm', '`', {desc = 'Jump to mark'})
-vim.keymap.set('n', 'gw', '*', {desc = 'Search word under cursor'})
+-- vim.keymap.set('n', 'gw', '*', {desc = 'Search word under cursor'})
 vim.keymap.set({'n', 'v'}, 'ge', 'G', {desc = 'End of buffer'})
 vim.keymap.set('n', '+', 'nzz', {desc = 'Next search'})
 vim.keymap.set('n', '-', 'Nzz', {desc = 'Previous search'})
-vim.keymap.set('v', 'f', 'y/<c-r>"<cr>', {desc = 'Search for selected content'})
+-- vim.keymap.set('v', ',', 'y/<c-r>"<cr>', {desc = 'Search for selected content'})
 
 vim.keymap.set({'n', 'v'}, 'zj', 'zjzz', {desc = 'Center next fold below'})
 vim.keymap.set({'n', 'v'}, 'zk', 'zkzz', {desc = 'Center previous fold above'})
@@ -103,7 +108,13 @@ vim.keymap.set('n', '<leader>tn', '<cmd>tabnew %<cr>', {desc = 'Open a copy of t
 vim.keymap.set('n', '<leader>tc', '<cmd>tabc<cr>', {desc = 'Close current tab'})
 
 -- GrugFar
-vim.keymap.set({'n', 'v'}, 'gf', '<cmd>GrugFar<cr>')
+-- vim.keymap.set({'n', 'v'}, 'gf', '<cmd>GrugFar<cr>')
+function GrugFarShowKeys()
+  vim.cmd('tabnew %')
+  vim.cmd('GrugFar')
+  require("showkeys").open()
+end
+vim.keymap.set({'n', 'v'}, 'gf', function() GrugFarShowKeys() end, {desc = 'GrugFar'})
 
 -- Spectre
 vim.keymap.set('', '<a-s>', '<cmd>ToggleSpectre<cr>')
@@ -302,7 +313,7 @@ vim.keymap.set('n', '<leader>,', function() JtoN() end, {desc = 'Switch j and n'
 
 -- nvim leap
 vim.keymap.set({'n', 'x', 'o'}, 'f',  '<Plug>(leap-forward-to)')
-vim.keymap.set({'n', 'x', 'o'}, 'r',  '<Plug>(leap-backward-to)')
+vim.keymap.set({'n', 'x', 'o'}, 'F',  '<Plug>(leap-backward-to)')
 vim.keymap.set({'n', 'x', 'o'}, 'gw', '<Plug>(leap-from-window)')
 -- vim.keymap.set({'n', 'x', 'o'}, ',',  '<Plug>(leap)')
 

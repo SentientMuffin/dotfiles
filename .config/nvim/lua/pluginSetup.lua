@@ -328,6 +328,34 @@ vim.api.nvim_create_autocmd('ColorScheme', {
         bg = '#bf4f8e',
       })
     end
+
+    if vim.g.colors_name == "everforest" then
+      -- Force using the defaults of Leap:
+      require('leap').init_highlight(true)
+      -- And/or make your own tweaks:
+      vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'ModeMsg' })
+      vim.api.nvim_set_hl(0, 'LeapLabel', {
+        bold = true,
+        underline = false,
+        fg = '#ff0000',
+        bg = '#ffffff',
+      })
+    end
+
+    if vim.g.colors_name == "kanagawa" then
+      -- Force using the defaults of Leap:
+      require('leap').init_highlight(true)
+      -- And/or make your own tweaks:
+      vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'CurSearch' })
+      vim.api.nvim_set_hl(0, 'LeapLabel', {
+        bold = true,
+        underline = false,
+        -- fg = '#2D4F67',
+        -- bg = '#D2CDB1',
+        fg = '#ff0000',
+        bg = '#dddddd',
+      })
+    end
   end
 })
 
