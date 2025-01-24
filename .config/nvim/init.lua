@@ -1,7 +1,5 @@
--- they were here, moved to vimSetup
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
--- vim.opt.termguicolors = true
 
 -- ======================= Start: plugins =======================
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -63,45 +61,34 @@ require("lazy").setup({
     priority = 1000,
     opts = {},
   },
-  {"shortcuts/no-neck-pain.nvim", version = "*"},
-  {
-    "nvchad/showkeys",
-    cmd = "ShowkeysToggle",
-    opts = {
-      timeout = 3, -- in secs
-      maxkeys = 3,
-      show_count = true,
-
-      -- bottom-left, bottom-right, bottom-center, top-left, top-right, top-center
-      position = "top-right",
-    },
-  },
 	-- editor
   {
     "hrsh7th/nvim-cmp",
     dependencies = { "hrsh7th/vim-vsnip", "hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp" },
   },
-  "ggandor/leap.nvim",
-  -- {
-    -- "folke/flash.nvim",
-    -- event = "VeryLazy",
-    -- ---@type Flash.Config
-    -- opts = {
-      -- modes = {
-        -- search = {
-          -- enabled = true,
-        -- },
-      -- },
-    -- },
-    -- -- stylua: ignore
-    -- keys = {
-      -- { "f",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
-      -- -- { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
-      -- -- { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
-      -- -- { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-      -- -- { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
-    -- },
-  -- },
+  -- "ggandor/leap.nvim",
+  {
+    "folke/flash.nvim",
+    lazy = false,
+    opts = {
+      search = {
+        wrap = false,
+      },
+      modes = {
+        search = {
+          enabled = true,
+        },
+      },
+    },
+    -- stylua: ignore
+    keys = {
+      -- { "<a-f>",     mode = { "n" }, function() require("flash").jump() end,              desc = "Flash" },
+      -- { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+      -- { "f",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
+      -- { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      -- { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
+    },
+  },
 	{"zbirenbaum/copilot.lua"},
 	"neovim/nvim-lspconfig",
 	"junegunn/vim-easy-align",
@@ -207,49 +194,13 @@ require("lazy").setup({
     end
   },
 	-- disabled
-  {
-    "neoclide/coc.nvim",
-    branch = "master",
-    build = "npm ci",
-    enabled = false,
-  },
-  {"MunifTanjim/nui.nvim", enabled = false},
-	{"nvim-pack/nvim-spectre", dependencies = "nvim-lua/plenary.nvim", enabled = false},
-	{
-    "nvim-tree/nvim-tree.lua",
-    enabled = false,
-  },
-  {
-    "nvim-telescope/telescope.nvim",
-    tag = "0.1.6",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope-fzf-native.nvim",
-    },
-    enabled = false,
-  },
-	{'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons', enabled = false},
-  {'karb94/neoscroll.nvim', enabled = false},
-	{"preservim/nerdtree", enabled = false},
-	{"vim-test/vim-test", enabled = false},
-	{"yegappan/mru", enabled = false},
-	{"vim-airline/vim-airline", enabled = false},
-	{"vim-airline/vim-airline-themes", enabled = false},
-	{"fatih/vim-go", build = "GoUpdateBinaries", enabled = false},
- 	{"autozimu/LanguageClient-neovim", branch = "next", build = "bash install.sh", enabled = false},
-	{"pangloss/vim-javascript", enabled = false},
-	{"jparise/vim-graphql", enabled = false},
-}) -- can add }, opts)
+})
 
 require("pluginSetup")
 require("vimSetup")
 require("lsps")
 Commentator = require("commentator")
 require('keymaps')
-require('websearch')
--- require('mycmdline')
-
-require("showkeys").open()
 
 -- autocmds
 -- reload config on save

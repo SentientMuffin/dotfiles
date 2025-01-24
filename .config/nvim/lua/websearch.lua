@@ -1,6 +1,11 @@
 local M = {}
 local search_engine = "google"
 
+-- currently not using
+
+-- Add below to your init.lua
+-- require('websearch')
+
 M.wit_search = function(query)
 	query = query:gsub(" ", "+")
 	local url = "https://www." .. search_engine .. ".com/search?q=" .. query

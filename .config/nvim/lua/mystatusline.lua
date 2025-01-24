@@ -153,8 +153,6 @@ local function updateGitFilesChanged()
     "%#GitLineDeletions#",
     "--" .. lineDeletions .. " ",
   }
-
-  -- FilesChanged = string.format("| f:%s, ++%s --%s ", filesCount, lineAdditions, lineDeletions)
 end
 
 local function statusline_section_b()
@@ -188,12 +186,6 @@ end
 vim.api.nvim_create_autocmd("BufEnter", {
   callback = function() updateGitBranchName() end,
 })
--- update files changed info
--- breaks on very large git repos!!!
--- saving will hang for a really long time
--- vim.api.nvim_create_autocmd("BufWritePost", {
-  -- callback = function() updateGitFilesChanged() end,
--- })
 
 -- ===================== Section C: File Info =====================
 
@@ -272,19 +264,9 @@ _G.lsp_progress = function()
 	return ""
 end
 
--- vim.opt.statusline = [[%{%v:lua.lsp_progress()%}]]
-
--- local function filetype()
-  -- return string.format(" %s ", vim.bo.filetype):upper()
--- end
-
 local function fileInfo()
   return " %l/%L "
 end
-
--- local function leftseparator(left, right)
-  -- local leftgroup = nvim_get_hl(0, left)
--- end
 
 -- show statusline
 Statusline = {}
