@@ -6,9 +6,11 @@ local endComment = ""
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 augroup("StartEndComment", {clear = true})
+
+-- to match all hidden files that do not have file extension: .*[!.][!.]*
 autocmd({"BufEnter", "BufRead", "BufNewFile"}, {
 	group = "StartEndComment",
-	pattern = {"*.sh", "*pl", "*.tcl"},
+	pattern = {"*.sh", "*pl", "*.tcl", ".env", ".conf"},
 	callback = function()
 		startComment = "# "
 		endComment = ""

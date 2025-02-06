@@ -1,7 +1,6 @@
 local Commentator = require('commentator')
 
 -- keymaps
--- vim.keymap.set({'', 't'}, '<c-space>', '<esc>', {desc = 'Escape'})
 vim.keymap.set('n', '<c-space>', '<nop>', {desc = 'No op in normal mode'})
 vim.keymap.set('c', '<c-space>', '<c-c>', {desc = 'Ctrl-c to escape in command mode'})
 vim.keymap.set('i', '<c-space>', '<esc>l', {desc = 'Escape and move cursor right'})
@@ -30,8 +29,7 @@ vim.keymap.set('v', '<leader>sr', ':s/', {desc = "Search and replace within visu
 vim.keymap.set('n', '<leader>sl', 'V:%s/', {desc = "Search and replace within current line"})
 vim.keymap.set('v', '<leader>sl', ':s/', {desc = "Search and replace within current line"})
 vim.keymap.set('n', 'J', 'gJ', {desc = 'Join lines without space'})
-vim.keymap.set('v', 's', 'S', {desc = 'Visual mode surround'})
-vim.keymap.set('v', 't', "/\\%.l", {desc = 'Visual mode select till search result on current line'})
+-- vim.keymap.set('v', '<c-t>', "/\\%.l", {desc = 'Visual mode select till search result on current line'})
 vim.keymap.set({'n', 'v'}, 'c', '"_c', {desc = 'c actions to void register'})
 vim.keymap.set({'n', 'v'}, 'X', 'd', {desc = 'X for cut (delete and write to shared register)'})
 vim.keymap.set('n', 'd', '"dd', {desc = 'd actions to d register -'})
@@ -41,6 +39,7 @@ vim.keymap.set({'n', 'v'}, '<c-p>', '"dp', {desc = 'paste from d register -'})
 vim.keymap.set('v', 'p', '"ddP', {desc = 'visual mode paste without overwritting register'})
 
 -- motion keymaps
+vim.keymap.set('c', '<c-g>', '<up>', {desc = 'Previous command/search'})
 vim.keymap.set('', '<c-h>', '_', {desc = 'Start of line'})
 vim.keymap.set('i', '<c-h>', '<c-o>I', {desc = 'Start of line i'})
 vim.keymap.set('', '<c-l>', 'g_', {desc = 'End of line'})
@@ -52,6 +51,16 @@ vim.keymap.set({'n', 'v'}, '!', '?[[({\\])}]<cr>', {desc = 'Go to the previous b
 vim.keymap.set({'n', 'v'}, ',', '/[[({\\])}]<cr>', {desc = 'Go to the next bracket'})
 vim.keymap.set({'n', 'v'}, '^', '?[\'"`]<cr>', {desc = 'Go to the previous quote'})
 vim.keymap.set({'n', 'v'}, '&', '/[\'"`]<cr>', {desc = 'Go to the next quote'})
+
+vim.keymap.set({'n', 'v'}, '<c-t>', function() VerticalNonSpaceJump() end, {desc = 'jump to vertical non space'})
+vim.keymap.set({'n', 'v'}, '<c-y>', function() VerticalNonSpaceJump(true) end, {desc = 'jump to vertical non space'})
+function VerticalNonSpaceJump(backwards)
+  require("flash").toggle(false)
+  local flags = backwards and 'bW' or 'W'
+
+  local pos = vim.api.nvim_win_get_cursor(0)
+  vim.fn.search('\\%' .. tostring(pos[2] + 1) .. 'c\\S', flags)
+end
 
 vim.keymap.set({'n', 'v'}, 'W', function() WordBeginningJump(true) end, {desc = 'Beginning of previous word'})
 vim.keymap.set({'n', 'v'}, 'E', function() WordEndJump(true) end, {desc = 'End of previous word'})
@@ -79,7 +88,7 @@ vim.keymap.set('n', '+', 'nzz', {desc = 'Next search'})
 vim.keymap.set('n', '-', 'Nzz', {desc = 'Previous search'})
 
 vim.keymap.set({'n', 'v'}, 'f', function() AdvancedSearch('/', true) end, {desc = 'Flash forward'})
-vim.keymap.set({'n', 'v'}, 'F', function() AdvancedSearch('?', true) end, {desc = 'Flash backward'})
+vim.keymap.set({'n', 'v'}, 'r', function() AdvancedSearch('?', true) end, {desc = 'Flash backward'})
 vim.keymap.set({'n', 'v'}, '/', function() AdvancedSearch('/', false) end, {desc = 'Search forward'})
 vim.keymap.set({'n', 'v'}, '?', function() AdvancedSearch('?', false) end, {desc = 'Search backward'})
 
@@ -95,24 +104,21 @@ vim.keymap.set('n', 'B', '<c-i>', {desc = 'Next location'})
 
 -- buffer actions
 vim.keymap.set('n', '<leader>q', '<cmd>bp | bd #<cr>', {desc = 'delete current buffer'})
-vim.keymap.set('n', '<leader>aa', '<cmd>ls<cr>:b<space>', {desc = 'list and fuzzy search open buffers'})
-vim.keymap.set('n', '<leader>as', '<cmd>ls<cr>:sb<space>', {desc = 'list and fuzzy search buffers, open in split'})
-vim.keymap.set('n', '<leader>av', '<cmd>ls<cr>:vert sb<space>', {desc = 'list and fuzzy search buffers, open in vertical split'})
-vim.keymap.set('n', '<a-s>', '<cmd>bp<cr>', {desc = 'previous buffer in list'})
-vim.keymap.set('n', '<a-f>', '<cmd>bn<cr>', {desc = 'next buffer in list'})
-vim.keymap.set('n', '<leader>6', '<c-6>', {desc = 'toggle previous buffer'})
 vim.keymap.set('n', 'gs', '<c-w>o<c-w>v<c-w><right>gd', {desc = 'split and move definition to the right'})
 
 vim.keymap.set('v', 's', '<Plug>VSurround', {desc = 'visual surround selection'})
-vim.keymap.set('n', 's', '<Plug>YSusround', {desc = 'Surround followed by textobject'})
+vim.keymap.set('n', 's', 'viw<Plug>VSurround', {desc = 'Surround followed by textobject'})
 
 -- tab actions
 vim.keymap.set('n', '<leader>tn', '<cmd>tabnew<cr>', {desc = 'Open a copy of the current buffer in new tab'})
 vim.keymap.set('n', '<leader>tc', '<cmd>tabc<cr>', {desc = 'Close current tab'})
 
+-- quit
+vim.keymap.set('n', '<leader>z', '<cmd>qa<cr>', {desc = 'Quit vim'})
+
 -- GrugFar
 function GrugFarNewWindow()
-  vim.cmd('tabnew %')
+  -- vim.cmd('tabnew %')
   vim.cmd('GrugFar')
 end
 vim.keymap.set({'n', 'v'}, 'gf', function() GrugFarNewWindow() end, {desc = 'GrugFar'})
@@ -170,33 +176,37 @@ function NtoJ()
   vim.keymap.set({'', 'v'}, 'N', 'gJ', {desc = 'Switch n and j'})
   vim.keymap.set({'', 'v'}, 'J', '<cmd>Buffers<cr>', {desc = 'Switch n and j'})
   vim.keymap.set('n', '<c-n>', 'Lzz', {desc = 'Switch n and j'})
+
   vim.keymap.set({'n', 'v'}, '<c-w>n', '<c-w>j', {desc = 'Switch n and j'})
   vim.keymap.set({'n', 'v'}, '<c-w>N', '<c-w>J', {desc = 'Switch n and j'})
   vim.keymap.set({'n', 'v'}, '<c-w><c-n>', '<c-w><c-j>', {desc = 'Switch n and j'})
   vim.keymap.set({'n', 'v'}, '<c-w>j', '<c-w>n', {desc = 'Switch n and j'})
   vim.keymap.set({'n', 'v'}, '<c-w>J', '<c-w>N', {desc = 'Switch n and j'})
   vim.keymap.set({'n', 'v'}, '<c-w><c-j>', '<c-w><c-n>', {desc = 'Switch n and j'})
+
   vim.keymap.set({'n', 'v'}, 'zn', 'zjzz', {desc = 'Switch n and j'})
   vim.keymap.set({'n', 'v'}, 'zN', 'zJ', {desc = 'Switch n and j'})
   vim.keymap.set({'n', 'v'}, 'zj', 'zn', {desc = 'Switch n and j'})
   vim.keymap.set({'n', 'v'}, 'zJ', 'zN', {desc = 'Switch n and j'})
 
   -- O <> L switch !!!
-  vim.keymap.set({'', 'v'}, 'l', 'o', {desc = 'Switch o and l'})
-  vim.keymap.set({'', 'v'}, 'o', 'l', {desc = 'Switch o and l'})
+  vim.keymap.set({'', 'v'}, 'l', 'o', { desc = 'Switch o and l'})
+  vim.keymap.set({'', 'v'}, 'o', 'l', { desc = 'Switch o and l'})
   vim.keymap.set({'', 'v'}, 'O', 'L', {desc = 'Switch o and l'})
   vim.keymap.set({'', 'v'}, 'L', 'O', {desc = 'Switch o and l'})
   vim.keymap.set('', '<c-l>', '<c-o>', {desc = 'Switch o and l'})
   vim.keymap.set('', '<c-o>', 'g_', {desc = 'End of line'})
-  vim.keymap.set({'n', 'v'}, '<c-w>o', '<c-w>l', {desc = 'Switch o and l'})
   vim.keymap.set('i', '<c-l>', '<c-o>', {desc = 'Switch o and l'})
   vim.keymap.set('i', '<c-o>', '<c-o>A', {desc = 'End of line i'})
+
+  vim.keymap.set({'n', 'v'}, '<c-w>o', '<c-w>l', {desc = 'switch o and l'})
   vim.keymap.set({'n', 'v'}, '<c-w>o', '<c-w>l', {desc = 'Switch o and l'})
   vim.keymap.set({'n', 'v'}, '<c-w>l', '<c-w>o', {desc = 'Switch o and l'})
   vim.keymap.set({'n', 'v'}, '<c-w>O', '<c-w>L', {desc = 'Switch o and l'})
   vim.keymap.set({'n', 'v'}, '<c-w>L', '<c-w>O', {desc = 'Switch o and l'})
   vim.keymap.set({'n', 'v'}, '<c-w><c-o>', '<c-w>l', {desc = 'Switch o and l'})
   vim.keymap.set({'n', 'v'}, '<c-w><c-l>', '<c-w><c-o>', {desc = 'Switch o and l'})
+
   vim.keymap.set({'n', 'v'}, 'zo', 'zl', {desc = 'Switch n and j'})
   vim.keymap.set({'n', 'v'}, 'zO', 'zL', {desc = 'Switch n and j'})
   vim.keymap.set({'n', 'v'}, 'zl', 'zo', {desc = 'Switch n and j'})
