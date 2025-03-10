@@ -60,16 +60,20 @@ local function ToggleLine(force)
 end
 
 local function ToggleRange(force)
-  local startLine = vim.fn.line("v")
-  local endLine = vim.fn.line(".")
+  local originalStartLine = vim.fn.line("v")
+  local originalEndLine = vim.fn.line(".")
   local flags = "cn"
-  local reversed = startLine > endLine
+  local reversed = originalStartLine > originalEndLine
 
+  local startLine, endLine = originalStartLine, originalEndLine
   if reversed then
-    startLine, endLine = endLine, startLine
+    startLine, endLine = originalEndLine, originalStartLine
   end
 
   vim.fn.cursor({startLine, 0})
+
+  -- match non commented lines
+  -- "^\\s*\\(\\s\\@!\\)\\@=\\(" .. startComment .. "\\)\\@!.*$"
 
   local commented = vim.fn.search("^\\s*" .. startComment, flags, endLine) ~= 0
   if force then
@@ -88,9 +92,17 @@ local function ToggleRange(force)
     vim.cmd(":silent! '<,'>s@$@" .. endComment .. "@")
   end
 
+  -- vim.cmd.normal("<esc>")
+
   if reversed then
-    vim.fn.cursor({startLine, 0})
+    vim.fn.cursor({ startLine, 0 })
+  -- vim.api.nvim_buf_set_mark(0, "<", originalStartLine, 0, {})
+  -- vim.api.nvim_buf_set_mark(0, ">", originalEndLine, 0, {})
+  else
+  -- vim.api.nvim_buf_set_mark(0, "<", originalEndLine, 0, {})
+  -- vim.api.nvim_buf_set_mark(0, ">", originalStartLine, 0, {})
   end
+
 end
 
 local function ToggleComments(force)

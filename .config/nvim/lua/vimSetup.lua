@@ -42,4 +42,7 @@ vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.wo.foldlevel = 99
 
+vim.o.langmap = 'ol,lo,OL,LO,jn,nj,JN,NJ'
+vim.o.langremap = false
+
 vim.g.maplocalleader = ','

@@ -66,13 +66,15 @@ require("lazy").setup({
     "hrsh7th/nvim-cmp",
     dependencies = { "hrsh7th/vim-vsnip", "hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp" },
   },
-  -- "ggandor/leap.nvim",
   {
     "folke/flash.nvim",
     lazy = false,
     opts = {
       search = {
+        mode = "fuzzy",
         wrap = false,
+        -- how does this even work?
+        -- trigger = "<c-i>",
       },
       modes = {
         search = {
@@ -149,6 +151,13 @@ require("lazy").setup({
 	"nvim-treesitter/nvim-treesitter-textobjects",
 	'kevinhwang91/nvim-bqf',
 	-- tools
+  {
+    "yorickpeterse/nvim-window",
+    keys = {
+      { "<leader><space>", "<cmd>lua require('nvim-window').pick()<cr>", desc = "nvim-window: Jump to window" },
+    },
+    config = true,
+  },
 	{"junegunn/fzf", dir = "~/.fzf", build = "./install -all"},
 	"junegunn/fzf.vim",
 	"tpope/vim-fugitive",
@@ -168,7 +177,7 @@ require("lazy").setup({
         searchOnInsertLeave = true,
         prefills = {
           paths = root,
-          flags = '--hidden',
+          -- flags = '--hidden',
         },
         keymaps = {
           replace = { n = '<localleader>r' },
@@ -223,7 +232,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
     local filepath = vim.fn.expand("%")
     dofile(filepath)
 
-		-- write via <c-s> is silent!
+    -- write via <c-s> is silent!
     -- vim.notify("[" .. filepath .. "]: Configuration reloaded", nil)
   end,
   -- group = mygroup,
