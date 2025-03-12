@@ -41,8 +41,8 @@ vim.keymap.set('n', 'K', 'i<cr><esc>k$', {desc = 'split line from cursor'})
 -- vim.keymap.set({'n', 'v'}, '\\', Commentator.ForceComment, {desc = 'Force comment'})
 vim.keymap.set('n', '`', 'gcc', {desc = 'Toggle comment', remap = true})
 vim.keymap.set('v', '`', 'gc', {desc = 'Toggle comment', remap = true})
-vim.keymap.set('n', '<leader>r', ':%s/', {desc = "Search and replace entire file"})
-vim.keymap.set('v', '<leader>r', ':s/', {desc = "Search and replace within visual selection"})
+vim.keymap.set('n', '<leader>sr', ':%s/', {desc = "Search and replace entire file"})
+vim.keymap.set('v', '<leader>sr', ':s/', {desc = "Search and replace within visual selection"})
 -- vim.keymap.set('n', '<leader><space>', 'V:%s/', {desc = "Search and replace within current line"})
 -- vim.keymap.set('v', '<leader><space>', ':s/', {desc = "Search and replace within current line"})
 vim.keymap.set('n', 'J', 'gJ', {desc = 'Join lines without space'})
@@ -81,8 +81,10 @@ function VerticalNonSpaceJump(backwards)
   vim.fn.search('\\%' .. tostring(firstCharColumn + 1) .. 'c\\S', flags)
 end
 
-vim.keymap.set('n', 'F', function() SelectWord(true) end, {desc = 'Select word'})
-vim.keymap.set('n', 'R', function() SelectWord(false) end, {desc = 'Select word'})
+-- vim.keymap.set('n', 'F', function() SelectWord(true) end, {desc = 'Select word'})
+-- vim.keymap.set('n', 'R', function() SelectWord(false) end, {desc = 'Select word'})
+vim.keymap.set('n', '<leader>f', function() SelectWord(true) end, {desc = 'Select word'})
+vim.keymap.set('n', '<leader>r', function() SelectWord(true) end, {desc = 'Select word'})
 function SelectWord(forward)
   require("flash").jump({
     pattern = ".", -- initialize pattern with any char

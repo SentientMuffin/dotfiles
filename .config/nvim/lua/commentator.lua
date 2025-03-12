@@ -12,6 +12,7 @@ autocmd({"BufEnter", "BufRead", "BufNewFile"}, {
 	group = "StartEndComment",
 	pattern = {"*.sh", "*pl", "*.tcl", ".env", ".conf"},
 	callback = function()
+    vim.bo.commentstring = "# %s"
 		startComment = "# "
 		endComment = ""
 	end
@@ -20,6 +21,10 @@ autocmd({"BufEnter", "BufRead", "BufNewFile"}, {
 	group = "StartEndComment",
 	pattern = {"*.js", "*.jsx", "*.ts", "*.tsx", "*.go"},
 	callback = function()
+    -- vim.cmd("setlocal commentstring=//\\ %s")
+    -- vim.bo.commentstring = "//\\ %s"
+    -- autocmd FileType cpp setlocal commentstring=// %s
+    -- vim.nvim_api.set_option("commentstring", "// %s")
 		startComment = "// "
 		endComment = ""
 	end
@@ -28,6 +33,7 @@ autocmd({"BufEnter", "BufRead", "BufNewFile"}, {
 	group = "StartEndComment",
 	pattern = {".vimrc", "*.vim"},
 	callback = function()
+    vim.bo.commentstring = "\" %s"
 		startComment = "\\\" "
 		endComment = ""
 	end
@@ -36,6 +42,7 @@ autocmd({"BufEnter", "BufRead", "BufNewFile"}, {
 	group = "StartEndComment",
 	pattern = {"*.lua"},
 	callback = function()
+    vim.bo.commentstring = "-- %s"
 		startComment = "-- "
 		endComment = ""
 	end

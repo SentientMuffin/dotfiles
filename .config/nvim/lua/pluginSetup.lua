@@ -32,9 +32,23 @@ require("ibl").setup({
 	},
 })
 
-require("eldritch")
-
-require('nvim-treesitter.configs').setup{
+-- require("eldritch")
+local treesitterconfig = require("nvim-treesitter.configs")
+treesitterconfig.typescript = {
+  enable = true,
+  -- disable = { "javascript" },
+}
+treesitterconfig.tsx = {
+  enable = true,
+  -- disable = { "typescript" },
+}
+treesitterconfig.go = {
+  enable = true,
+}
+treesitterconfig.lua = {
+  enable = true,
+}
+treesitterconfig.setup{
 	highlight = {
 		enable = true,
     disable = {
