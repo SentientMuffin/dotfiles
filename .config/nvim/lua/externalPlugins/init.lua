@@ -11,6 +11,7 @@ local M = {
 
   nvimWindow = require('externalPlugins.nvimWindow'),
   grugFar = require('externalPlugins.grugFar'),
+  diffView = require('externalPlugins.diffView'),
 }
 
 return M

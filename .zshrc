@@ -13,7 +13,16 @@ alias runall='/Users/xinjun.lin/Documents/VTS/repos/personalNotes/bpRunScript'
 alias tst='/Users/xinjun.lin/tmuxStart'
 alias nviml='nvim -u ~/.dotfiles/home/.config/nvim/init-wip.lua'
 alias ll='{pwd && ls -lah | tail --lines=+2;}'
-alias gb='git rev-parse --abbrev-ref HEAD | pbcopy && echo "Branch name copied to clipboard"'
+
+# git shorthands
+alias gn='git rev-parse --abbrev-ref HEAD | pbcopy && echo "Branch name copied to clipboard"'
+alias gp='git pull'
+alias gpb='git push -u origin HEAD'
+alias gc='git checkout'
+alias gcb='git checkout -b'
+alias gb='git branch'
+alias gs='git status'
+
 alias lint='npx eslint --fix'
 
 export EDITOR=nvim

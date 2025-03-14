@@ -23,17 +23,17 @@ local M = {
       end,
       desc = "Open the file manager in nvim's working directory" ,
     },
-    { -- Open in the current git project root
-      "<leader>g",
-      function()
-        local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
-        if vim.v.shell_error ~= 0 then
-          root = "%"
-        end
-        require("yazi").yazi(nil, root)
-      end,
-      desc = "Open the file manager in current git root" ,
-    },
+    -- { -- Open in the current git project root
+    --   "<leader>g",
+    --   function()
+    --     local root = string.gsub(vim.fn.system("git rev-parse --show-toplevel"), "\n", "")
+    --     if vim.v.shell_error ~= 0 then
+    --       root = "%"
+    --     end
+    --     require("yazi").yazi(nil, root)
+    --   end,
+    --   desc = "Open the file manager in current git root" ,
+    -- },
     opts = {
       open_for_directories = false,
     },

@@ -162,3 +162,15 @@ require('nvim-window').setup({
   --   allowing you to show the hints in a status or winbar line
   render = 'float',
 })
+
+-- Lua config
+local actions = require("diffview.actions")
+
+require("diffview").setup({
+  keymaps = {
+    file_panel = {
+      { "n", "<space>",           actions.select_entry,                   { desc = "Open the diff for the selected entry" } },
+    },
+  },
+})
+
