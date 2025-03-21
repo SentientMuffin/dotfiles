@@ -36,7 +36,7 @@ load("kevinhwang91/nvim-bqf")
 
 -- Tools
 load(externalPlugins.nvimWindow)
-load({"junegunn/fzf", dir = "~/.fzf", build = "./install -all"})
+load({"junegunn/fzf", build = "fzf#install"})
 load("junegunn/fzf.vim")
 load("tpope/vim-fugitive")
 load(externalPlugins.grugFar)
