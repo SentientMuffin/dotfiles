@@ -9,7 +9,7 @@
   - fonts, download and install: https://www.jetbrains.com/lp/mono/
   - z jump around: https://github.com/rupa/z
 
-# Clone config repo: `git clone git@github.com:SentientMuffin/dotfiles.git`
+# Clone config repo
   - SSH key setup: https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
     - Generate ssh key: `ssh-keygen -t ed25519 -C "powell.lin.cs@gmail.com"`
     - Ensure ssh-agent is running: `eval "$(ssh-agent -s)"`
@@ -23,3 +23,4 @@
       ```
     - Add ssh key to ssh-agent: `ssh-add --apple-use-keychain ~/.ssh/id_ed25519`
     - Add the SSH public key to your account on GitHub: https://github.com/settings/ssh/new
+  - `git clone git@github.com:SentientMuffin/dotfiles.git`
