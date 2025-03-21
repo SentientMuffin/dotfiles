@@ -7,6 +7,7 @@
    - fzf: `brew install fzf bat ripgrep the_silver_searcher perl universal-ctags`
    - yazi: `brew install yazi ffmpeg sevenzip jq poppler fd ripgrep fzf zoxide imagemagick font-symbols-only-nerd-font`
    - fonts, download and install: https://www.jetbrains.com/lp/mono/
+   - z jump around: https://github.com/rupa/z
 
    # install lsp servers
    - lua: `brew install lua-language-server`
