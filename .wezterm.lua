@@ -114,7 +114,7 @@ config.window_padding = {
   bottom = 0,
 }
 
-config.show_tab_index_in_tab_bar = true
+config.show_tab_index_in_tab_bar = false
 config.enable_tab_bar = false
 
 config.initial_cols = 120

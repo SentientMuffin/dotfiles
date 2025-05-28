@@ -55,7 +55,7 @@ treesitterconfig.setup{
     },
 	},
 	ensure_installed = {
-		"c", "lua", "go", "tsx",
+		"c", "lua", "go", "tsx", "rust"
 	},
 	incremental_selection = {
 		enable = true,

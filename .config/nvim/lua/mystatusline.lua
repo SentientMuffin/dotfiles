@@ -241,9 +241,12 @@ end
 
 -- better than nothing
 _G.lsp_progress = function()
-	if #vim.lsp.buf_get_clients() == 0 then
+	if #vim.lsp.get_clients() == 0 then
 		return ""
 	end
+	-- if #vim.lsp.buf_get_clients() == 0 then
+	-- 	return ""
+	-- end
 
 	-- return vim.lsp.status()
   if vim.lsp.status ~= nil then

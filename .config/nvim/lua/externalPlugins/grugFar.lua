@@ -11,7 +11,8 @@ local M = {
     require('grug-far').setup({
       transient = true,
       startInInsertMode = true,
-      searchOnInsertLeave = true,
+      -- searchOnInsertLeave = true,
+      normalModeSearch = true,
       prefills = {
         paths = root,
         -- flags = '--hidden',
