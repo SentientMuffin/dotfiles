@@ -16,7 +16,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 -- ======================= End: plugins   =======================
 
-vim.keymap.set({''}, ' ', '<nop>', {desc = 'remove default behaviour of <space>'});
+-- vim.keymap.set({''}, ' ', '<nop>', {desc = 'remove default behaviour of <space>'});
 vim.g.mapleader = ';';
 -- vim.g.maplocalleader = '^';
 

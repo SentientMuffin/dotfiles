@@ -19,7 +19,10 @@ load("mhinz/vim-startify")
 -- Editing plugins
 load(externalPlugins.cmp)
 load(externalPlugins.flash)
-load("zbirenbaum/copilot.lua")
+
+-- load("zbirenbaum/copilot.lua")
+load(externalPlugins.windsurf)
+
 load("neovim/nvim-lspconfig")
 load("junegunn/vim-easy-align")
 load("osyo-manga/vim-over")

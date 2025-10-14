@@ -8,6 +8,9 @@ vim.g.surround_no_mapping = 1
 -- not quite working
 vim.g.fugitive_pty = 0
 
+-- remove tab fallback behaviour with windsurf
+vim.g.codeium_no_map_tab = true
+
 -- vim options
 vim.opt.termguicolors = true
 -- vim.g.have_nerd_font = true

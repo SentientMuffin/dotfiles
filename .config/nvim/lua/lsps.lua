@@ -1,6 +1,7 @@
 local lspconfig = require('lspconfig')
 local util = require('lspconfig/util')
 local autocmd = vim.api.nvim_create_autocmd
+local lsp = vim.lsp
 
 -- ======================================= TS LSP =======================================
 
@@ -81,7 +82,6 @@ lspconfig.lua_ls.setup {
 -- =======================================================================================
 
 -- keymap
-local lsp = vim.lsp
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
 		vim.keymap.set('n', '<c-i>', lsp.buf.hover, {
@@ -103,3 +103,19 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		vim.keymap.set('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float(0, {scope="line"})<cr>', {desc = 'Show error/diagnostic from lsp'})
   end,
 })
+
+-- ==================================== Haskell LSP ====================================
+
+-- require("lspconfig.configs").hls = require("hls").lspconfig -- set default server config, optional but recommended
+-- 
+-- -- If the lsp setup is taken over by other plugin, it is the same to call the counterpart setup function
+lspconfig.hls.setup({
+  root_dir = util.root_pattern(".git"),
+  single_file_support = false,
+  settings = {
+    filetypes = { 'haskell', 'lhaskell', 'cabal' },
+  },
+})
+
+lsp.enable('hls')
+-- ======================================================================================
