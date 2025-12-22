@@ -2,6 +2,7 @@
 
 -- keymaps
 vim.keymap.set('n', '<c-space>', '<nop>', {desc = 'No op in normal mode'})
+vim.keymap.set('t', '<c-x>', '<c-\\><c-n><c-w><c-w>', {desc = 'Enter normal mode from terminal mode and switch to previous window'})
 vim.keymap.set('c', '<c-space>', '<c-c>', {desc = 'Ctrl-c to escape in command mode'})
 vim.keymap.set('i', '<c-space>', '<esc>l', {desc = 'Escape and move cursor right'})
 vim.keymap.set('v', '<c-space>', '<esc>', {desc = 'Escape'})
@@ -16,11 +17,17 @@ vim.keymap.set('', '<c-s>', '<cmd>silent! write<cr>', {desc = 'Save'})
 vim.keymap.set({'n', 'v'}, '<c-r>', '<c-y>', {desc = 'Page down'})
 vim.keymap.set('n', 'U', '<c-r>', {desc = 'Redo'})
 vim.keymap.set('n', '<leader>cd', '<cmd>let @+ = expand(\'%:p:h\')<cr>', {desc = 'Copy current directory'})
-vim.keymap.set({'n', 'v'}, '<leader>w', '<c-w>', {desc = 'Window management prefix'})
+-- vim.keymap.set({'n', 'v'}, '<leader>w', '<c-w>', {desc = 'Window management prefix'})
+
+
+function PickWindow()
+  print(require('window-picker').pick_window())
+end
+vim.keymap.set('n', '<c-j>', function() PickWindow() end, {desc = 'vimChooseWin trigger prefix'})
 
 -- text editting
 vim.keymap.set({'n', 'v'}, 'R', 'r', {desc = 'Replace'})
-vim.keymap.set('n', '<space><space>', function()
+vim.keymap.set('n', '<leader><space>', function()
   -- get character under cursor
   local pos = vim.api.nvim_win_get_cursor(0)
   local char = vim.fn.getline('.'):sub(pos[2]+1, pos[2]+1)
@@ -37,7 +44,7 @@ vim.keymap.set('n', '<space><space>', function()
     vim.fn.feedkeys('', 'n')
   end
 end, {desc = 'Replace consecutive white spaces under cursor with a single space'})
-vim.keymap.set('n', '<space>d', function() -- get character under cursor
+vim.keymap.set('n', '<leader>d', function() -- get character under cursor
   local pos = vim.api.nvim_win_get_cursor(0)
   local char = vim.fn.getline('.'):sub(pos[2]+1, pos[2]+1)
   if char == ' ' then
@@ -105,7 +112,7 @@ vim.keymap.set({'n', 'v'}, '&', '/[\'"`]<cr>', {desc = 'Go to the next quote'})
 vim.keymap.set({'n', 'v'}, '<c-t>', function() VerticalNonSpaceJump() end, {desc = 'jump to vertical non space'})
 vim.keymap.set({'n', 'v'}, '<c-y>', function() VerticalNonSpaceJump(true) end, {desc = 'jump to vertical non space'})
 function VerticalNonSpaceJump(backwards)
-  require("flash").toggle(false)
+  require("externalPlugins.flash").toggle(false)
   local flags = backwards and 'bW' or 'W'
 
   local firstCharColumn = vim.fn.match(vim.fn.getline('.'), '\\S')
@@ -116,10 +123,10 @@ end
 
 -- vim.keymap.set('n', 'F', function() SelectWord(true) end, {desc = 'Select word'})
 -- vim.keymap.set('n', 'R', function() SelectWord(false) end, {desc = 'Select word'})
-vim.keymap.set('n', '<leader>f', function() SelectWord(true) end, {desc = 'Select word'})
-vim.keymap.set('n', '<leader>r', function() SelectWord(true) end, {desc = 'Select word'})
+vim.keymap.set('n', '<leader>w', function() SelectWord(false) end, {desc = 'Select previous word'})
+vim.keymap.set('n', '<leader>x', function() SelectWord(true) end, {desc = 'Select word'})
 function SelectWord(forward)
-  require("flash").jump({
+  require("externalPlugins.flash").jump({
     pattern = ".", -- initialize pattern with any char
     search = {
       forward = forward,
@@ -196,6 +203,10 @@ function GrugFarNewWindow()
   vim.cmd('GrugFar')
 end
 vim.keymap.set({'n', 'v'}, 'gf', function() GrugFarNewWindow() end, {desc = 'GrugFar'})
+function GrugFarWordNewWindow()
+  vim.cmd(":lua require('grug-far').open({ startInInsertMode = false, prefills = { search = vim.fn.expand('<cword>') } })")
+end
+vim.keymap.set('n', 'gw', function() GrugFarWordNewWindow() end, {desc = 'GrugFar with word under cursor'})
 vim.api.nvim_create_autocmd('FileType', {
   group = vim.api.nvim_create_augroup('grug-far-keybindings', { clear = true }),
   pattern = { 'grug-far' },
@@ -228,7 +239,7 @@ vim.keymap.set('n', '<leader>gc', '<cmd>G branch<cr>', {desc = 'Git branch'})
 vim.keymap.set('n', '<leader>gb', '<cmd>G blame<cr>', {desc = 'Git blame'})
 
 -- git branch management
-vim.keymap.set('n', '<leader>d', function() GBranchDelete() end, {desc = 'Delete branch'})
+vim.keymap.set('n', '<leader>gd', function() GBranchDelete() end, {desc = 'Delete branch'})
 function GBranchDelete()
 	local filetype = vim.bo[0].filetype
 	if filetype ~= 'git' then

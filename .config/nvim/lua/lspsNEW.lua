@@ -1,16 +1,21 @@
-local lspconfig = require('lspconfig')
--- local lspconfig = vim.lsp.config
-local util = require('lspconfig/util')
 local autocmd = vim.api.nvim_create_autocmd
 local lsp = vim.lsp
 
+-- Helper function to find root directory
+local function root_pattern(...)
+  local patterns = {...}
+  return function(fname)
+    return vim.fs.dirname(vim.fs.find(patterns, { path = fname, upward = true })[1])
+  end
+end
+
 -- ======================================= TS LSP =======================================
 
-require("lspconfig.configs").vtsls = require("vtsls").lspconfig -- set default server config, optional but recommended
+-- Configure vtsls
+vim.lsp.config.vtsls = require("vtsls").lspconfig
 
--- If the lsp setup is taken over by other plugin, it is the same to call the counterpart setup function
-lspconfig.vtsls.setup({
-  root_dir = util.root_pattern(".git", "package.json"),
+vim.lsp.enable('vtsls', {
+  root_dir = root_pattern(".git", "package.json"),
   single_file_support = false,
   settings = {
     typescript = {
@@ -29,21 +34,21 @@ lspconfig.vtsls.setup({
 -- ======================================================================================
 
 
--- ======================================= Golang LSP =======================================
+-- ======================================= Rust LSP =======================================
 
-lspconfig.rust_analyzer.setup{}
+vim.lsp.enable('rust_analyzer')
 
 -- ======================================================================================
 
 
 -- ======================================= Golang LSP =======================================
 
-lspconfig.gopls.setup {
+vim.lsp.enable('gopls', {
 	cmd = {"gopls"},
 	filetypes = {"go", "gomod", "gowork", "gotmpl"},
-	root_dir = util.root_pattern("go.mod", ".git"), -- for current work, it will always be a git repo
+	root_dir = root_pattern("go.mod", ".git"), -- for current work, it will always be a git repo
 	single_file_support = true,
-}
+})
 
 -- auto formatting on save
 -- source: https://github.com/golang/tools/blob/master/gopls/doc/vim.md#imports-and-formatting 
@@ -69,8 +74,8 @@ autocmd("BufWritePre", {
 
 -- ======================================= LUA LSP =======================================
 
-lspconfig.lua_ls.setup {
-	root_dir = util.root_pattern(".git", ".zshrc"),
+vim.lsp.enable('lua_ls', {
+	root_dir = root_pattern(".git", ".zshrc"),
 	settings = {
     Lua = {
       diagnostics = {
@@ -78,30 +83,30 @@ lspconfig.lua_ls.setup {
       },
     },
   },
-}
+})
 
 -- =======================================================================================
 
 -- keymap
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
-		vim.keymap.set('n', '<c-i>', lsp.buf.hover, {
-			buffer = args.buf,
-			desc = 'Open hover quickfix window',
-		})
-		vim.keymap.set('n', 'gr', lsp.buf.references, {
-			buffer = args.buf,
-			desc = 'Find references of symbol under cursor',
-		})
-		vim.keymap.set('n', 'gd', lsp.buf.definition, {
-			buffer = args.buf,
-			desc = 'Find definition of symbol under cursor',
-		})
-		vim.keymap.set('n', '<leader>i', lsp.buf.code_action, {
-			buffer = args.buf,
-			desc = 'Code action',
-		})
-		vim.keymap.set('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float(0, {scope="line"})<cr>', {desc = 'Show error/diagnostic from lsp'})
+    vim.keymap.set('n', '<c-i>', lsp.buf.hover, {
+      buffer = args.buf,
+      desc = 'Open hover quickfix window',
+    })
+    vim.keymap.set('n', 'gr', lsp.buf.references, {
+      buffer = args.buf,
+      desc = 'Find references of symbol under cursor',
+    })
+    vim.keymap.set('n', 'gd', lsp.buf.definition, {
+      buffer = args.buf,
+      desc = 'Find definition of symbol under cursor',
+    })
+    vim.keymap.set('n', '<leader>i', lsp.buf.code_action, {
+      buffer = args.buf,
+      desc = 'Code action',
+    })
+    vim.keymap.set('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float(0, {scope="line"})<cr>', {desc = 'Show error/diagnostic from lsp'})
     vim.keymap.set("n", "<leader>f", vim.diagnostic.goto_next)
     vim.keymap.set("n", "<leader>b", vim.diagnostic.goto_prev)
   end,
@@ -109,16 +114,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 -- ==================================== Haskell LSP ====================================
 
--- require("lspconfig.configs").hls = require("hls").lspconfig -- set default server config, optional but recommended
--- 
--- -- If the lsp setup is taken over by other plugin, it is the same to call the counterpart setup function
-lspconfig.hls.setup({
-  root_dir = util.root_pattern(".git"),
+vim.lsp.enable('hls', {
+  root_dir = root_pattern(".git"),
   single_file_support = false,
-  settings = {
-    filetypes = { 'haskell', 'lhaskell', 'cabal' },
-  },
+  filetypes = { 'haskell', 'lhaskell', 'cabal' },
 })
 
-lsp.enable('hls')
 -- ======================================================================================
+

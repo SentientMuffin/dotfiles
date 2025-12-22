@@ -20,8 +20,12 @@ load("mhinz/vim-startify")
 load(externalPlugins.cmp)
 load(externalPlugins.flash)
 
+-- AI plugins
 -- load("zbirenbaum/copilot.lua")
 load(externalPlugins.windsurf)
+-- Claude Code for NVIM
+load(externalPlugins.claudeCode)
+
 
 load("neovim/nvim-lspconfig")
 load("junegunn/vim-easy-align")
@@ -31,6 +35,7 @@ load(externalPlugins.typescriptTools)
 load("tmsvg/pear-tree")
 load("farmergreg/vim-lastplace")
 load("tpope/vim-surround")
+-- load("t9md/vim-choosewin")
 load(externalPlugins.yazi)
 load({"lukas-reineke/indent-blankline.nvim", main = "ibl"})
 load({"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"})
@@ -39,6 +44,7 @@ load("kevinhwang91/nvim-bqf")
 
 -- Tools
 load(externalPlugins.nvimWindow)
+load(externalPlugins.vimChooseWin)
 load({"junegunn/fzf", build = "fzf#install"})
 load("junegunn/fzf.vim")
 load("tpope/vim-fugitive")

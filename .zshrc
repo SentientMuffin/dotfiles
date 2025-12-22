@@ -66,6 +66,8 @@ export PATH="$PATH:$(go env GOPATH)/bin"
 source <(fzf --zsh)
 export FZF_DEFAULT_OPTS='--color=fg:#ebfafa,bg:#282a36,hl:#37f499 --color=fg+:#ebfafa,bg+:#212337,hl+:#37f499 --color=info:#f7c67f,prompt:#04d1f9,pointer:#7081d0 --color=marker:#7081d0,spinner:#f7c67f,header:#323449'
 
+# FLutter
+export PATH=$HOME/dev/flutter/bin:$PATH
 
 # Added by Windsurf
 export PATH="/Users/powelllin/.codeium/windsurf/bin:$PATH"
@@ -73,3 +75,5 @@ export PATH="/Users/powelllin/.codeium/windsurf/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+source ${HOME}/.ghcup/env
+export PATH="$HOME/.local/bin:$PATH"

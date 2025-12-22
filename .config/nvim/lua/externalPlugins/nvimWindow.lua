@@ -1,9 +1,11 @@
 local M = {
-  "yorickpeterse/nvim-window",
-  keys = {
-    { "<leader><space>", "<cmd>lua require('nvim-window').pick()<cr>", desc = "nvim-window: Jump to window" },
-  },
-  config = true,
+    's1n7ax/nvim-window-picker',
+    name = 'window-picker',
+    event = 'VeryLazy',
+    version = '2.*',
+    config = function()
+        require('window-picker').setup()
+    end,
 }
 
 return M
