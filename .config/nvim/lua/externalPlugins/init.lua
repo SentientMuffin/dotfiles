@@ -3,6 +3,7 @@ local M = {
   eldritch = require('externalPlugins.eldritch'),
   tokyonight = require('externalPlugins.tokyonight'),
 
+  lazydev = require('externalPlugins.lazydev'),
   cmp = require('externalPlugins.cmp'),
   flash = require('externalPlugins.flash'),
 

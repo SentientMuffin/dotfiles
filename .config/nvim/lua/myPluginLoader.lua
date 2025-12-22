@@ -17,6 +17,7 @@ load(externalPlugins.tokyonight)
 load("mhinz/vim-startify")
 
 -- Editing plugins
+load(externalPlugins.lazydev)
 load(externalPlugins.cmp)
 load(externalPlugins.flash)
 
