@@ -2,7 +2,7 @@
 
 -- keymaps
 vim.keymap.set('n', '<c-space>', '<nop>', {desc = 'No op in normal mode'})
-vim.keymap.set('t', '<c-x>', '<c-\\><c-n><c-w><c-w>', {desc = 'Enter normal mode from terminal mode and switch to previous window'})
+vim.keymap.set('t', '<a-w>', '<c-\\><c-n>', {desc = 'Enter normal mode from terminal mode'})
 vim.keymap.set('c', '<c-space>', '<c-c>', {desc = 'Ctrl-c to escape in command mode'})
 vim.keymap.set('i', '<c-space>', '<esc>l', {desc = 'Escape and move cursor right'})
 vim.keymap.set('v', '<c-space>', '<esc>', {desc = 'Escape'})
@@ -18,12 +18,6 @@ vim.keymap.set({'n', 'v'}, '<c-r>', '<c-y>', {desc = 'Page down'})
 vim.keymap.set('n', 'U', '<c-r>', {desc = 'Redo'})
 vim.keymap.set('n', '<leader>cd', '<cmd>let @+ = expand(\'%:p:h\')<cr>', {desc = 'Copy current directory'})
 -- vim.keymap.set({'n', 'v'}, '<leader>w', '<c-w>', {desc = 'Window management prefix'})
-
-
-function PickWindow()
-  print(require('window-picker').pick_window())
-end
-vim.keymap.set('n', '<c-j>', function() PickWindow() end, {desc = 'vimChooseWin trigger prefix'})
 
 -- text editting
 vim.keymap.set({'n', 'v'}, 'R', 'r', {desc = 'Replace'})

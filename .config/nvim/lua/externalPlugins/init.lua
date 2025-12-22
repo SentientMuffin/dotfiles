@@ -11,7 +11,6 @@ local M = {
   yazi = require('externalPlugins.yazi'),
 
   nvimWindow = require('externalPlugins.nvimWindow'),
-  vimChooseWin = require('externalPlugins.vimChooseWin'),
   grugFar = require('externalPlugins.grugFar'),
   diffView = require('externalPlugins.diffView'),
 

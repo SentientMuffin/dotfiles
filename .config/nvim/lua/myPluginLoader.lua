@@ -5,6 +5,7 @@ local function load(plugin)
 end
 
 local externalPlugins = require("externalPlugins")
+load(externalPlugins.yazi)
 
 -- themes
 load(externalPlugins.everforest)
@@ -36,8 +37,6 @@ load(externalPlugins.typescriptTools)
 load("tmsvg/pear-tree")
 load("farmergreg/vim-lastplace")
 load("tpope/vim-surround")
--- load("t9md/vim-choosewin")
-load(externalPlugins.yazi)
 load({"lukas-reineke/indent-blankline.nvim", main = "ibl"})
 load({"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"})
 load("nvim-treesitter/nvim-treesitter-textobjects")
@@ -45,7 +44,6 @@ load("kevinhwang91/nvim-bqf")
 
 -- Tools
 load(externalPlugins.nvimWindow)
-load(externalPlugins.vimChooseWin)
 load({"junegunn/fzf", build = "fzf#install"})
 load("junegunn/fzf.vim")
 load("tpope/vim-fugitive")
