@@ -112,13 +112,14 @@ vim.keymap.set({'n', 'v'}, '&', '/[\'"`]<cr>', {desc = 'Go to the next quote'})
 vim.keymap.set({'n', 'v'}, '<c-t>', function() VerticalNonSpaceJump() end, {desc = 'jump to vertical non space'})
 vim.keymap.set({'n', 'v'}, '<c-y>', function() VerticalNonSpaceJump(true) end, {desc = 'jump to vertical non space'})
 function VerticalNonSpaceJump(backwards)
-  require("externalPlugins.flash").toggle(false)
+  require("flash").toggle(false)
   local flags = backwards and 'bW' or 'W'
 
   local firstCharColumn = vim.fn.match(vim.fn.getline('.'), '\\S')
 
   vim.fn.cursor({0, firstCharColumn + 1})
-  vim.fn.search('\\%' .. tostring(firstCharColumn + 1) .. 'c\\S', flags)
+  local virtualColumn = vim.fn.virtcol('.')
+  vim.fn.search('\\%' .. tostring(virtualColumn) .. 'v\\S', flags)
 end
 
 -- vim.keymap.set('n', 'F', function() SelectWord(true) end, {desc = 'Select word'})
@@ -126,22 +127,22 @@ end
 vim.keymap.set('n', '<leader>w', function() SelectWord(false) end, {desc = 'Select previous word'})
 vim.keymap.set('n', '<leader>x', function() SelectWord(true) end, {desc = 'Select word'})
 function SelectWord(forward)
-  require("externalPlugins.flash").jump({
-    pattern = ".", -- initialize pattern with any char
-    search = {
-      forward = forward,
-      mode = function(pattern)
-        -- remove leading dot
-        if pattern:sub(1, 1) == "." then
-          pattern = pattern:sub(2)
-        end
-        -- return word pattern and proper skip pattern
-        return ([[\<%s\w*\>]]):format(pattern), ([[\<%s]]):format(pattern)
-      end,
-    },
-    -- select the range
-    jump = { pos = "range" },
-  })
+  require("flash").jump({
+  pattern = ".", -- initialize pattern with any char
+  search = {
+    forward = forward,
+    mode = function(pattern)
+      -- remove leading dot
+      if pattern:sub(1, 1) == "." then
+        pattern = pattern:sub(2)
+      end
+      -- return word pattern and proper skip pattern
+      return ([[\<%s\w*\>]]):format(pattern), ([[\<%s]]):format(pattern)
+    end,
+  },
+  -- select the range
+  jump = { pos = "range" },
+})
 end
 
 vim.keymap.set({'n', 'v'}, 'W', function() WordBeginningJump(true) end, {desc = 'Beginning of previous word'})

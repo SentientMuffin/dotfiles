@@ -18,8 +18,8 @@ local M = {
       -- "<leader>f",
       "<c-d>",
       function()
-        require("yazi").yazi(nil, vim.fn.getcwd())
-        -- require("yazi").yazi(nil, vim.fn.expand('%'))
+        -- require("yazi").yazi(nil, vim.fn.getcwd())
+        require("yazi").yazi(nil, vim.fn.expand('%'))
       end,
       desc = "Open the file manager in nvim's working directory" ,
     },

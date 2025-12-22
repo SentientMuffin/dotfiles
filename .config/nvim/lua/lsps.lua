@@ -1,20 +1,13 @@
 local autocmd = vim.api.nvim_create_autocmd
 local lsp = vim.lsp
 
--- Helper function to find root directory
-local function root_pattern(...)
-  local patterns = {...}
-  return function(fname)
-    return vim.fs.dirname(vim.fs.find(patterns, { path = fname, upward = true })[1])
-  end
-end
-
 -- ======================================= TS LSP =======================================
 
 -- Configure vtsls
 vim.lsp.config['vtsls'] = require("vtsls").lspconfig
-vim.lsp.config['vtsls'].root_dir = root_pattern("package.json", "tsconfig.json")
+vim.lsp.config['vtsls'].root_markers = {"package.json", "tsconfig.json", ".git"}
 vim.lsp.config['vtsls'].single_file_support = false
+vim.lsp.config['vtsls'].filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx' }
 vim.lsp.config['vtsls'].settings = {
   typescript = {
     tsserver = {
@@ -34,7 +27,7 @@ vim.lsp.config['vtsls'].settings = {
 vim.lsp.config['gopls'] = {
 	cmd = {"gopls"},
 	filetypes = {"go", "gomod", "gowork", "gotmpl"},
-	root_dir = root_pattern("go.mod", ".git"), -- for current work, it will always be a git repo
+	root_markers = {"go.mod", ".git"},
 	single_file_support = true,
 }
 
@@ -63,24 +56,27 @@ autocmd("BufWritePre", {
 -- ======================================= LUA LSP =======================================
 
 vim.lsp.config['lua_ls'] = {
-	root_dir = root_pattern(".git", ".zshrc"),
+	cmd = {"lua-language-server"},
+	root_markers = {".zshrc", ".git"},
+  single_file_support = false,
+  filetypes = { 'lua' },
 	settings = {
-    Lua = {
-      diagnostics = {
-        globals = {
-          'vim',
-          'require',
-        },
-      },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file("", true),
-        checkThirdParty = false,
-      },
-      telemetry = {
-        enable = false,
-      },
-    },
-  },
+	   Lua = {
+	     diagnostics = {
+	       globals = {
+	         'vim',
+	         'require',
+	       },
+	     },
+	     workspace = {
+	       library = vim.api.nvim_get_runtime_file("", true),
+	       checkThirdParty = false,
+	     },
+	     telemetry = {
+	       enable = false,
+	     },
+	   },
+	 },
 }
 
 -- =======================================================================================
@@ -105,17 +101,29 @@ vim.api.nvim_create_autocmd('LspAttach', {
       desc = 'Code action',
     })
     vim.keymap.set('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float(0, {scope="line"})<cr>', {desc = 'Show error/diagnostic from lsp'})
-    vim.keymap.set("n", "<leader>f", vim.diagnostic.jump({count=1, float=true}))
-    vim.keymap.set("n", "<leader>b", vim.diagnostic.jump({count=-1, float=true}))
+    vim.keymap.set("n", "<leader>f", function() vim.diagnostic.jump({count=1, float=true}) end, {desc = "Jump to next diagnostic" })
+    vim.keymap.set("n", "<leader>b", function() vim.diagnostic.jump({count=-1, float=true}) end, {desc = "Jump to previous diagnostic" })
   end,
 })
 
 -- ==================================== Haskell LSP ====================================
 
 vim.lsp.config['hls'] = {
-  root_dir = root_pattern(".git"),
+  cmd = {"haskell-language-server-wrapper", "--lsp"},
+  root_markers = {".git"},
   single_file_support = false,
   filetypes = { 'haskell', 'lhaskell', 'cabal' },
+}
+
+-- ======================================================================================
+
+-- ==================================== Rust LSP ====================================
+
+vim.lsp.config['rust_analyzer'] = {
+  cmd = {"rust-analyzer"},
+  root_markers = {"Cargo.toml", ".git"},
+  single_file_support = false,
+  filetypes = { 'rust' },
 }
 
 -- ======================================================================================

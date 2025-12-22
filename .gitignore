@@ -5,3 +5,13 @@
 .DS_Store
 
 */**/lazy-lock.json
+
+**/yarn/**
+**/node_modules/**
+
+**/wireshark/**
+
+**/clash/**
+
+**/cabal/**
+**/github-copilot/**
