@@ -156,9 +156,10 @@ function WordEndJump(backwards)
   vim.fn.search('\\<\\w*\\>', flags)
 end
 
+vim.keymap.set('n', '~', ':qa<cr>', {desc = 'Exit nvim'})
+
 vim.keymap.set({'n', 'v'}, 'x', '~h', {desc = 'Toggle case under cursor'})
 vim.keymap.set('n', 'gm', '`', {desc = 'Jump to mark'})
-vim.keymap.set('n', '~', '`', {desc = 'Jump to mark'})
 vim.keymap.set({'n', 'v'}, 'ge', 'G', {desc = 'End of buffer'})
 
 vim.keymap.set({'n', 'v'}, 'f', function() AdvancedSearch('/', true) end, {desc = 'Flash forward'})

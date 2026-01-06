@@ -7,7 +7,8 @@ local M = {
     local picker = require("window-picker")
     picker.setup({
       hint = 'floating-big-letter',
-      selection_chars = 'fndksoaleiru',
+      -- selection_chars = 'fndksoaleiru',
+      selection_chars = '0123456789',
       filter_rules = {
         -- filter using buffer options
         bo = {
