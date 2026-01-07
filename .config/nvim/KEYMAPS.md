@@ -215,12 +215,39 @@ This document provides a comprehensive overview of all custom keymaps configured
 | Normal | `<C-f>` | `:GFiles` | Search git files |
 | Normal | `G` | `:GitGrep` | Git grep search |
 
+### Yazi File Manager
+| Mode | Keymap | Action | Description |
+|------|--------|--------|-------------|
+| Normal | `<C-d>` | Open Yazi | Open Yazi file manager in current file's directory |
+
 ### GrugFar (Find & Replace)
+
+#### Opening GrugFar
 | Mode | Keymap | Action | Description |
 |------|--------|--------|-------------|
 | Normal/Visual | `gf` | Open GrugFar | Open find and replace in new window |
 | Normal | `gw` | GrugFar word | Open GrugFar with word under cursor |
-| Normal (in GrugFar) | `gf` | Clear search | Clear search field |
+
+#### Inside GrugFar Buffer
+| Mode | Keymap | Action | Description |
+|------|--------|--------|-------------|
+| Normal | `gf` | Clear search | Clear search field (goes to line 2) |
+| Normal | `<LocalLeader>r` | Replace | Execute replace operation |
+| Normal | `<Leader>q` | Quickfix list | Send results to quickfix list |
+| Normal | `<LocalLeader>s` | Sync locations | Sync all locations |
+| Normal | `<LocalLeader>l` | Sync line | Sync current line |
+| Normal | `<C-Space>` | Close | Close GrugFar window |
+| Normal | `<LocalLeader>t` | History open | Open history |
+| Normal | `<LocalLeader>a` | History add | Add to history |
+| Normal | `<LocalLeader>f` | Refresh | Refresh results |
+| Normal | `<Down>` | Next location | Open next location |
+| Normal | `<Up>` | Previous location | Open previous location |
+| Normal | `<Enter>` | Go to location | Go to selected location |
+| Normal | `<LocalLeader>b` | Abort | Abort current operation |
+| Normal | `g?` | Help | Show help |
+| Normal | `<Leader>p` | Toggle command | Toggle show command |
+| Normal | `<LocalLeader>e` | Swap engine | Swap search engine |
+| Normal | `<LocalLeader>i` | Preview | Preview location |
 
 ## LSP Keymaps
 
@@ -239,6 +266,20 @@ These keymaps are only available when an LSP is attached to a buffer.
 **Note:** When no LSP is attached, `gr` defaults to `*` (search word) to prevent accidental replace.
 
 ## Plugin-Specific Keymaps
+
+### Claude Code AI Assistant
+| Mode | Keymap | Action | Description |
+|------|--------|--------|-------------|
+| Normal | `<Leader>ac` | Toggle Claude | Toggle Claude Code terminal |
+| Normal | `<Leader>af` | Focus Claude | Focus Claude Code window |
+| Normal | `<Leader>ar` | Resume Claude | Resume previous Claude session |
+| Normal | `<Leader>aC` | Continue Claude | Continue Claude conversation |
+| Normal | `<Leader>am` | Select model | Select Claude model |
+| Normal | `<Leader>ab` | Add buffer | Add current buffer to Claude context |
+| Visual | `<Leader>as` | Send to Claude | Send selection to Claude |
+| Normal (file tree) | `<Leader>as` | Add file | Add file from file tree to Claude |
+| Normal | `<Leader>aa` | Accept diff | Accept Claude's diff suggestion |
+| Normal | `<Leader>ad` | Deny diff | Deny Claude's diff suggestion |
 
 ### Windsurf AI Completions
 | Mode | Keymap | Action | Description |
@@ -266,10 +307,13 @@ These keymaps are only available when an LSP is attached to a buffer.
 ## Key Terminology
 
 - **Leader key**: The leader key is typically `\` or `,` (check `:let mapleader` in your config)
+- **LocalLeader key**: A secondary leader key for buffer-local mappings (check `:let maplocalleader`)
 - **Flash**: A plugin for enhanced navigation with visual hints
 - **VSurround**: vim-surround plugin for surrounding text with quotes, brackets, etc.
-- **GrugFar**: Advanced find and replace plugin
-- **FZF**: Fuzzy file finder
+- **GrugFar**: Advanced find and replace plugin with project-wide search capabilities
+- **FZF**: Fuzzy file finder for quick file navigation
+- **Yazi**: Terminal file manager with preview capabilities
+- **Claude Code**: AI pair programming assistant powered by Claude
 
 ## Notes
 
@@ -278,12 +322,19 @@ These keymaps are only available when an LSP is attached to a buffer.
 3. Centered search results for better visibility
 4. Custom vertical and horizontal navigation optimized for code editing
 5. LSP keymaps are buffer-local and only active when LSP is attached
+6. Some keys have different mappings depending on mode (e.g., `<C-d>` opens Yazi in normal mode but moves cursor left in insert mode)
+7. GrugFar has extensive keymaps that only work within the GrugFar buffer
+8. Claude Code keymaps all start with `<Leader>a` for easy access to AI features
 
 ## File References
 
 - Main keymaps: `lua/keymaps.lua`
 - LSP keymaps: `lua/lsps.lua`
 - Plugin keymaps:
-  - `lua/externalPlugins/nvimWindow.lua`
-  - `lua/externalPlugins/windsurf.lua`
-  - `lua/externalPlugins/diffview.lua`
+  - `lua/externalPlugins/claudeCode.lua` - Claude Code AI assistant
+  - `lua/externalPlugins/yazi.lua` - Yazi file manager
+  - `lua/externalPlugins/grugFar.lua` - GrugFar find & replace
+  - `lua/externalPlugins/nvimWindow.lua` - Window picker
+  - `lua/externalPlugins/windsurf.lua` - Windsurf AI completions
+  - `lua/externalPlugins/diffview.lua` - Git diff view
+  - `lua/externalPlugins/flash.lua` - Flash navigation (config only, keymaps in keymaps.lua)
