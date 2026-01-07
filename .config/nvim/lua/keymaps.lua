@@ -60,7 +60,7 @@ end, {desc = 'Replace consecutive white spaces under cursor with a single space'
 -- vim.keymap.set({'x', 'o'}, 'as', , {desc = 'continuous space as text object'})
 
 -- linting
-vim.api.nvim_create_user_command('Lint', function(c)
+vim.api.nvim_create_user_command('Lint', function()
   vim.cmd('silent! w!')
   vim.notify('Linting...' .. vim.fn.system("pwd"))
 end, { bang = true, nargs = '*' })
